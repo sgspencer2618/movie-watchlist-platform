@@ -20,6 +20,7 @@ public class API {
 
         try {
             Response response = client.newCall(request).execute();
+            System.out.println("Got Response Code: " + response.code());
 
             JSONObject responseBody = new JSONObject(response.body().string());
             return responseBody.getString("Title");
@@ -29,8 +30,8 @@ public class API {
     }
 
     public static void main(String[] args) {
-
-        String title = getMovieTitle("tt3896198");
-        System.out.println(title);
+        String imdbID = "tt3896198";
+        String title = getMovieTitle(imdbID);
+        System.out.println(String.format("Movie title for id %s is %s", imdbID, title));
     }
 }
