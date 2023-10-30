@@ -25,4 +25,5 @@ public class Movie {
     public List<Integer> getRatings() {
         return ratings;
     }
+
 }
