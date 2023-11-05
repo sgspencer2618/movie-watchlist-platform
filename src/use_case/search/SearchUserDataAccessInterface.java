@@ -1,5 +1,5 @@
 package use_case.search;
 
-public class SearchAPICallerDataAccessInterface {
-
+public interface SearchUserDataAccessInterface {
+    String getCurrUser();
 }
