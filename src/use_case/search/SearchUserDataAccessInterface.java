@@ -1,4 +1,4 @@
-package use_case.search;
+package search;
 
 public interface SearchUserDataAccessInterface {
     String getCurrUser();

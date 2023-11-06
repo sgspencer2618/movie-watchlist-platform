@@ -15,14 +15,17 @@ public class Movie {
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public String getSummary() {
+
         return summary;
     }
 
     public List<Integer> getRatings() {
+
         return ratings;
     }
 
