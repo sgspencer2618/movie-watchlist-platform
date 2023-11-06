@@ -1,7 +1,6 @@
 //Data_Access
 package data_access;
-
-import search.SearchUserDataAccessInterface;
+import use_case.search.SearchUserDataAccessInterface;
 
 public class UserAccessObject implements SearchUserDataAccessInterface {
 
