@@ -39,3 +39,4 @@ build/
 
 ### Our API TOKEN! ###
 username.txt
+.secret.txt
