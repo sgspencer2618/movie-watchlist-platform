@@ -1,2 +1,5 @@
-package update_rating;public class UpdateRatingOutputBoundary {
+package update_rating;
+
+public interface UpdateRatingOutputBoundary {
+
 }

@@ -1,2 +1,4 @@
-package remove_rating;public class RemoveRatingPresenter {
+package remove_rating;
+
+public class RemoveRatingPresenter {
 }

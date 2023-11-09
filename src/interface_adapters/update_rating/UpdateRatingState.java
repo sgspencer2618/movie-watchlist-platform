@@ -1,2 +1,4 @@
-package update_rating;public class UpdateRatingState {
+package update_rating;
+
+public class UpdateRatingState {
 }

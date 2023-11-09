@@ -1,2 +1,4 @@
-package remove_rating;public class RemoveRatingOutputBoundary {
+package remove_rating;
+
+public interface RemoveRatingOutputBoundary {
 }

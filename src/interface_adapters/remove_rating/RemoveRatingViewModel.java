@@ -1,2 +1,4 @@
-package remove_rating;public class RemoveRatingViewModel {
+package remove_rating;
+
+public class RemoveRatingViewModel {
 }

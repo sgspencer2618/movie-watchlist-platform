@@ -1,2 +1,4 @@
-package remove_rating;public class RemoveRatingController {
+package remove_rating;
+
+public class RemoveRatingController {
 }

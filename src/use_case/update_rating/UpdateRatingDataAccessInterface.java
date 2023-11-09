@@ -1,2 +1,6 @@
-package update_rating;public class UpdateRatingDataAccessInterface {
+package update_rating;
+import entity.UserRating;
+
+public interface UpdateRatingDataAccessInterface {
+    public void updateRating(UserRating userRating);
 }

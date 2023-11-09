@@ -1,2 +1,4 @@
-package update_rating;public class UpdateRatingController {
+package update_rating;
+
+public class UpdateRatingController {
 }

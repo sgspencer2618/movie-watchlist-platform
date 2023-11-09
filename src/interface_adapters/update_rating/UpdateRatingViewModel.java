@@ -1,2 +1,4 @@
-package update_rating;public class UpdateRatingViewModel {
+package update_rating;
+
+public class UpdateRatingViewModel {
 }

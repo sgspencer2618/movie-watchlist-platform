@@ -1,2 +1,4 @@
-package remove_rating;public class RemoveRatingInteractor {
+package remove_rating;
+
+public class RemoveRatingInteractor {
 }

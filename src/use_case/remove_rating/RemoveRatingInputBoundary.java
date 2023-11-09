@@ -1,2 +1,5 @@
-package remove_rating;public class RemoveRatingInputBoundary {
+package remove_rating;
+
+public interface RemoveRatingInputBoundary {
+    void execute();
 }
