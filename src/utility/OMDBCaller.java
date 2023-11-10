@@ -9,11 +9,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-public class OMDPCaller implements ApiInterface{
+public class OMDBCaller implements ApiInterface{
     private String API_TOKEN;
     private final OkHttpClient client;
     private final String url;
 
+    public OMDBCaller() {
+        this.url = "https://www.omdbapi.com/";
+        this.client = new OkHttpClient().newBuilder().build();
+        this.set_API_TOKEN();
+    }
     private void set_API_TOKEN () {
         try {
             String userDir = System.getProperty("user.dir");
@@ -25,11 +30,6 @@ public class OMDPCaller implements ApiInterface{
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-    }
-    public OMDPCaller() {
-        this.url = "https://www.omdbapi.com/";
-        this.client = new OkHttpClient().newBuilder().build();
-        this.set_API_TOKEN();
     }
     public JSONObject getSearch(String search, int page) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
