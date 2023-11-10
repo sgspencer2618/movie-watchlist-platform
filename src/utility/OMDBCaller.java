@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-public class OMDPCaller implements ApiInterface{
+
+
+public class OMDBCaller implements ApiInterface{
     private String API_TOKEN;
     private final OkHttpClient client;
     private final String url;
@@ -26,7 +28,7 @@ public class OMDPCaller implements ApiInterface{
             e.printStackTrace();
         }
     }
-    public OMDPCaller() {
+    public OMDBCaller() {
         this.url = "https://www.omdbapi.com/";
         this.client = new OkHttpClient().newBuilder().build();
         this.set_API_TOKEN();
