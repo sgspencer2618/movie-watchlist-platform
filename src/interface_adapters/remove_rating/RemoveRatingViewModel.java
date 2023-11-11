@@ -1,4 +1,4 @@
-package remove_rating;
+package interface_adapters.remove_rating;
 
 public class RemoveRatingViewModel {
 }
