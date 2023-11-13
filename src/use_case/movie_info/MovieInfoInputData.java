@@ -7,4 +7,8 @@ public class MovieInfoInputData {
     public MovieInfoInputData(String imdbID) {
         this.imdbID = imdbID;
     }
+
+    public String getImdbID() {
+        return imdbID;
+    }
 }
