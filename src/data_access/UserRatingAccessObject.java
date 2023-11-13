@@ -10,7 +10,7 @@ public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterf
 
     }
 
-    public Integer getUserRating(String user, Integer movieID){
+    public Integer getUserRating(String user, String movieID){
         return 1;
     }
 
