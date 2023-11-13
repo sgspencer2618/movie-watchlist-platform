@@ -27,4 +27,4 @@ jobs:
           pwd
           ls -a
       - name: Run tests with Maven
-        run: mvn -B test --file pom.xml
+        run: mvn -B -X test --file pom.xml
