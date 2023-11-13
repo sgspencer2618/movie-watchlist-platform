@@ -1,6 +1,6 @@
-package update_rating;
+package use_case.update_rating;
 
-import remove_rating.RemoveRatingInputData;
+import use_case.remove_rating.RemoveRatingInputData;
 
 public interface UpdateRatingInputBoundary {
     void execute(UpdateRatingInputData updateRatingInputData);
