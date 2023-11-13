@@ -11,7 +11,11 @@ public class UpdateRatingController {
         this.updateRatingUseCaseInteractor = updateRatingUseCaseInteractor;
     }
 
-    public void execute() {
+    public void execute(int newRating, int userId, int movieId) {
+        UpdateRatingInputData updateRatingInputData = new UpdateRatingInputData(
+                newRating, userId, movieId);
+
+        updateRatingUseCaseInteractor.execute(updateRatingInputData);
 
     }
 }
