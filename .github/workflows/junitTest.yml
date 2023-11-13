@@ -23,8 +23,8 @@ jobs:
       - name: Create secret
         shell: bash
         run: |
-          echo tests > .secret.txt
+          echo ${{ secrets.API_KEY }}$ > .secret.txt
           pwd
           ls -a
       - name: Run tests with Maven
-        run: mvn -B -X test --file pom.xml
+        run: mvn -B test --file pom.xml
