@@ -21,7 +21,8 @@ public class OMDBCaller implements ApiInterface{
             String userDir = System.getProperty("user.dir");
             File myFile = new File(userDir + "/.secret.txt");
             Scanner reader = new Scanner(myFile);
-            this.API_TOKEN = reader.nextLine();
+            this.API_TOKEN = Integer.valueOf(reader.nextInt())
+                    .toString();
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
