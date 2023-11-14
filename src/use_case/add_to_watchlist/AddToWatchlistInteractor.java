@@ -1,6 +1,7 @@
 package use_case.add_to_watchlist;
 
 import entity.Movie;
+import entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
 
     @Override
     public void execute(AddToWatchlistInputData addToWatchlistInputData) {
-        List<Movie> watchlist = watchlistAccessObject.getWatchlist(new ArrayList<>(0));
+        List<Movie> watchlist = watchlistAccessObject.getWatchlist(new User("",""));
         boolean added = false;
 
         try {
