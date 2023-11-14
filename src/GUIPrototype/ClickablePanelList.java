@@ -83,16 +83,19 @@ public class ClickablePanelList extends JPanel {
         JLabel label = new JLabel(labelText);
         panel.add(label, BorderLayout.CENTER);
 
+        // Create the dropdown (combobox) for ratings
+        String[] ratingOptions = {"1", "2", "3", "4", "5", "-"};
+        JComboBox<String> ratingsDropdown = new JComboBox<>(ratingOptions);
+
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
         JButton add = new JButton("+");
         controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
         add.setPreferredSize(new Dimension(50,50));
         add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
-        JLabel rating = new JLabel("1");
 
         controlsubpanel.add(add, BorderLayout.CENTER);
-        controlsubpanel.add(rating, BorderLayout.LINE_END);
+        controlsubpanel.add(ratingsDropdown, BorderLayout.LINE_END);
         panel.add(controlsubpanel, BorderLayout.LINE_END);
 
         // Add a click listener to the panel
