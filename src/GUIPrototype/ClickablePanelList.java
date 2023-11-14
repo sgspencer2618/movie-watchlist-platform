@@ -87,7 +87,8 @@ public class ClickablePanelList extends JPanel {
         controlsubpanel.setLayout(new BorderLayout(20,0));
         JButton add = new JButton("+");
         controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
-        add.setPreferredSize(new Dimension(40,40));
+        add.setPreferredSize(new Dimension(50,50));
+        add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
         JLabel rating = new JLabel("1");
 
         controlsubpanel.add(add, BorderLayout.CENTER);
@@ -102,6 +103,24 @@ public class ClickablePanelList extends JPanel {
                 JOptionPane.showMessageDialog(null, "Clicked on " + labelText);
             }
         });
+
+        // Defines normal and hover colors
+        Color normalColor = panel.getBackground();
+        Color hoverColor = new Color(220, 220, 220);
+
+        // Add MouseListener for hover effect
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                panel.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panel.setBackground(normalColor);
+            }
+        });
+
 
         return panel;
     }
