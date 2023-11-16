@@ -2,13 +2,23 @@ package use_case.update_rating;
 
 public class UpdateRatingInputData {
     final private int newRating;
-    final private int userId;
-    final private int movieId;
+    final private String username;
+    final private String movieId;
 
-    public UpdateRatingInputData(int newRating, int userId, int movieId) {
+    public UpdateRatingInputData(int newRating, String username, String movieId) {
         this.newRating = newRating;
-        this.userId = userId;
+        this.username = username;
         this.movieId = movieId;
     }
 
+    int getNewRating() {
+        return newRating;
+    }
+    String getUsername() {
+        return username;
+    }
+
+    String getMovieId() {
+        return movieId;
+    }
 }
