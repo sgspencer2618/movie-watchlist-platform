@@ -47,6 +47,7 @@ public class OMDBCaller implements ApiInterface{
 
         try {
             Response response = client.newCall(request).execute();
+            assert response.code() == 200;
             assert response.body() != null;
             return new JSONObject(response.body().string());
         } catch (IOException e) {
