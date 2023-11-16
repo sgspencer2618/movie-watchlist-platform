@@ -21,10 +21,12 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Create secret
-        shell: bash
-        run: |
-          echo ${{ secrets.API_KEY }}$ > .secret.txt
-          pwd
-          ls -a
+        uses: mobiledevops/secret-to-file-action@v1
+        with:
+          base64-encoded-secret: ${{ secrets.API_KEY }}
+          filename: ".secret.txt"
+          is-executable: false
+          working-directory: "./"
       - name: Run tests with Maven
-        run: mvn -B test --file pom.xml
+        run: |
+          mvn -B test --file pom.xml

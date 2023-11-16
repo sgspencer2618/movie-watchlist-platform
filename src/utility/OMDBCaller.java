@@ -20,7 +20,7 @@ public class OMDBCaller implements ApiInterface{
         try {
             String userDir = System.getProperty("user.dir");
             System.out.println(userDir);
-            File myFile = new File(userDir + "/test.txt");
+            File myFile = new File(userDir + "/.secret.txt");
             Scanner reader = new Scanner(myFile);
             this.API_TOKEN = reader.nextLine();
             reader.close();
@@ -47,6 +47,7 @@ public class OMDBCaller implements ApiInterface{
 
         try {
             Response response = client.newCall(request).execute();
+            assert response.code() == 200;
             assert response.body() != null;
             return new JSONObject(response.body().string());
         } catch (IOException e) {
