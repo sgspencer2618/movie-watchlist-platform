@@ -30,6 +30,7 @@ jobs:
         run: |
           mvn -B test --file pom.xml
       - name: Print report
+        shell: bash
         run: |
-          ls ./target/surefire-reports
+          ls -a ./target/surefire-reports
           cat ./target/surefire-reports/OMDBApiTest.txt
