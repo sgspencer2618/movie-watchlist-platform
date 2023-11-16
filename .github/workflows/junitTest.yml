@@ -27,4 +27,7 @@ jobs:
           pwd
           ls -a
       - name: Run tests with Maven
-        run: mvn -B test --file pom.xml
+        run: |
+          mvn -B test --file pom.xml
+      - name: Print report
+        run: cat ./target/surefire-reports/OMDBApiTest.txt
