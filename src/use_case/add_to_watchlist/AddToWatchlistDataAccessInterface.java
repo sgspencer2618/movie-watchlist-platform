@@ -1,10 +1,8 @@
 package use_case.add_to_watchlist;
 
-import entity.Movie;
 import entity.User;
-
-import java.util.List;
+import entity.Watchlist;
 
 public interface AddToWatchlistDataAccessInterface {
-    public List<Movie> getWatchlist(User user);
+    public Watchlist getWatchlist(String user);
 }
