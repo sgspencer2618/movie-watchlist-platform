@@ -18,7 +18,7 @@ public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
 
     @Override
     public void execute(AddToWatchlistInputData addToWatchlistInputData) {
-        List<Movie> watchlist = watchlistAccessObject.getWatchlist(new User("",""));
+        List<Movie> watchlist = watchlistAccessObject.getWatchlist("testUser");
         boolean added = false;
 
         try {

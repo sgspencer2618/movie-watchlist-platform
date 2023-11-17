@@ -6,5 +6,5 @@ import entity.User;
 import java.util.List;
 
 public interface AddToWatchlistDataAccessInterface {
-    public List<Movie> getWatchlist(User user);
+    public List<Movie> getWatchlist(String user);
 }
