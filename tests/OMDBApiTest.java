@@ -10,7 +10,7 @@ public class OMDBApiTest {
         String search = "Harry Potter";
         OMDBCaller caller = new OMDBCaller();
         JSONObject json = caller.getSearch(search, 1);
-        assert !json.isEmpty();
+        assert !json.isNull("Search");
     }
     @Test
     public void testMovie() {

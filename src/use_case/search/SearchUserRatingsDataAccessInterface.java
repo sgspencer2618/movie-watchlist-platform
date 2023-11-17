@@ -2,5 +2,5 @@
 package use_case.search;
 
 public interface SearchUserRatingsDataAccessInterface {
-    String getUserRating();
+    Integer getUserRating(String user, String movieID);
 }
