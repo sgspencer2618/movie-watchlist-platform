@@ -1,2 +1,5 @@
-package use_case.get_watchlist;public class GetWatchlistInputBoundary {
+package use_case.get_watchlist;
+
+public interface GetWatchlistInputBoundary {
+    void execute(GetWatchlistInputData getWatchlistInputData);
 }

@@ -1,2 +1,8 @@
-package use_case.get_watchlist;public interface GetWatchlistOutputBoundary {
+package use_case.get_watchlist;
+
+public interface GetWatchlistOutputBoundary {
+
+    void prepareSuccessView(GetWatchlistOutputData watchlist);
+
+    void prepareFailView(String error);
 }
