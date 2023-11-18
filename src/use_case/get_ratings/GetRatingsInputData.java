@@ -1,9 +1,9 @@
-package use_case.get_watchlist;
+package use_case.get_ratings;
 
-public class GetWatchlistInputData {
+public class GetRatingsInputData {
     private final String currUsername;
 
-    public GetWatchlistInputData(String currUsername) {
+    public GetRatingsInputData(String currUsername) {
         this.currUsername = currUsername;
     }
 

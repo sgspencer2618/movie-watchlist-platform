@@ -1,14 +1,14 @@
-package use_case.get_watchlist;
+package use_case.get_ratings;
 
 import entity.Movie;
 
 import java.util.List;
 
-public class GetWatchlistOutputData {
+public class GetRatingsOutputData {
     private final boolean useCaseFailed;
     private final List<Movie> watchlist;
 
-    public GetWatchlistOutputData(boolean useCaseFailed, List<Movie> watchlist) {
+    public GetRatingsOutputData(boolean useCaseFailed, List<Movie> watchlist) {
         this.useCaseFailed = useCaseFailed;
         this.watchlist = watchlist;
     }
