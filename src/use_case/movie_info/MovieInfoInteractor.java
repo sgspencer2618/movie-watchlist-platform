@@ -1,5 +1,6 @@
 package use_case.movie_info;
 
+import entity.Movie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +22,7 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
         String title = data.getString("Title");
         String summary = data.getString("Plot");
         String rating = data.getString("Rated");
+        String genres = data.getString("Genre");
 
         JSONArray ratings = data.getJSONArray("Ratings");
         String imdbScore = ratings.getJSONObject(0).getString("Value");
@@ -30,12 +32,15 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
         String director = data.getString("Director");
         String actors = data.getString("Actors");
 
+        String posterURL = data.getString("Poster");
+
         int year = data.getInt("Year");
         int runtime = data.getInt("Runtime");
 
-        MovieInfoOutputData outputData = new MovieInfoOutputData(title, summary, rating, imdbScore,
-                rottenTomatoesScore, metacriticScore, director, actors, year, runtime);
+        Movie movieInfo = new Movie(title, summary, rating, genres, imdbScore,
+                rottenTomatoesScore, metacriticScore, director, actors, posterURL, year, runtime);
 
+        MovieInfoOutputData outputData = new MovieInfoOutputData(movieInfo);
         movieInfoPresenter.prepareMovieInfoView(outputData);
     }
 }
