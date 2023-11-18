@@ -1,4 +1,4 @@
-package interface_adapter.login;
+package interface_adapters.login;
 
 import use_case.login.LoginInputData;
 import use_case.login.LoginInputBoundary;
