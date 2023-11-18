@@ -1,16 +1,14 @@
 package use_case.search;
 
 import entity.Movie;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import utility.ApiInterface2;
+import utility.ApiInterface;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class SearchInteractor implements SearchHandlerInputBoundary {
 
-    final ApiInterface2 APICaller;
+    final ApiInterface APICaller;
 
     final SearchUserDataAccessInterface userDataAccessObject;
 
@@ -20,7 +18,7 @@ public class SearchInteractor implements SearchHandlerInputBoundary {
 
     final  SearchHandlerOutputBoundary searchPresenter;
 
-public SearchInteractor(ApiInterface2 APICaller,
+public SearchInteractor(ApiInterface APICaller,
                         SearchUserDataAccessInterface userDataAccessInterface,
                         SearchUserRatingsDataAccessInterface userRatingsDataAccessObject,
                         SearchUserWatchlistDataAccessInterface userWatchlistDataAccessObject,
