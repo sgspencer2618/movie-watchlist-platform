@@ -1,6 +1,6 @@
 package entity;
 
-public class User {
+public class User{
     private String username;
     private String password;
 
@@ -12,5 +12,6 @@ public class User {
     public String getUsername(){return username;}
 
     public String getPassword(){return password;}
+
 
 }
