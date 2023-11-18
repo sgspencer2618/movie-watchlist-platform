@@ -4,15 +4,15 @@ public class MovieDetailed {
 
     private String title;
     private String summary;
-
     // PG - 13, G, etc... (not enjoyment rating)
     private String rating, genres;
     private String imdbScore, rottenTomatoesScore, metacriticScore;
     private String director, actors;
+    private String posterURL;
     private int year, runtime;
 
     public MovieDetailed(String title, String summary, String rating, String genres, String imdbScore, String rottenTomatoesScore,
-                         String metacriticScore, String director, String actors, int year, int runtime) {
+                         String metacriticScore, String director, String actors, String posterURL, int year, int runtime) {
         this.title = title;
         this.summary = summary;
         this.rating = rating;
@@ -22,6 +22,7 @@ public class MovieDetailed {
         this.metacriticScore = metacriticScore;
         this.director = director;
         this.actors = actors;
+        this.posterURL = posterURL;
         this.year = year;
         this.runtime = runtime;
     }
@@ -59,6 +60,8 @@ public class MovieDetailed {
     public String getActors() {
         return actors;
     }
+
+    public String getPosterURL() { return posterURL; }
 
     public int getYear() {
         return year;

@@ -32,11 +32,13 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
         String director = data.getString("Director");
         String actors = data.getString("Actors");
 
+        String posterURL = data.getString("Poster");
+
         int year = data.getInt("Year");
         int runtime = data.getInt("Runtime");
 
         MovieDetailed movieInfo = new MovieDetailed(title, summary, rating, genres, imdbScore,
-                rottenTomatoesScore, metacriticScore, director, actors, year, runtime);
+                rottenTomatoesScore, metacriticScore, director, actors, posterURL, year, runtime);
 
         MovieInfoOutputData outputData = new MovieInfoOutputData(movieInfo);
         movieInfoPresenter.prepareMovieInfoView(outputData);
