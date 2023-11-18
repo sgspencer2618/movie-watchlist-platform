@@ -59,9 +59,10 @@ public class OMDBCaller implements ApiInterface{
             for (int i = 0; i < jsonMovies.length(); i++) {
                 JSONObject json_movie = jsonMovies.getJSONObject(i);
                 Movie new_movie = new Movie(
-                        json_movie.getString("Title"),
                         json_movie.getString("imdbID"),
-                        json_movie.getString("Poster")
+                        json_movie.getString("Title"),
+                        json_movie.getString("Poster"),
+                        json_movie.getInt("Year")
                 );
                 movies.add(new_movie);
             }
@@ -88,11 +89,29 @@ public class OMDBCaller implements ApiInterface{
             assert response_json.has("Title");
             ArrayList<String> ratings = new ArrayList<>();
             JSONArray ratings_json = response_json.getJSONArray("Ratings");
+            // RATINGS COME IN ORDER:
+            // imdbRating
+            // rottenTomatoes
+            // Metacritic
             for (int i = 0; i < ratings_json.length(); i++) {
-                ratings.add(ratings_json.getJSONObject(i)
-                        .getString("Value"));
+                JSONObject obj = ratings_json.getJSONObject(i);
+                ratings.add(obj.getString("Value"));
             }
-            return new Movie("", "", ""); // TODO: Fix, but for now just to make the compiler happy.
+            assert ratings.size() == 3;
+            return new Movie(
+                    response_json.getString("imdbID"),
+                    response_json.getString("Title"),
+                    response_json.getString("Plot"),
+                    response_json.getString("Genres"),
+                    ratings.get(0),
+                    ratings.get(1),
+                    ratings.get(2),
+                    response_json.getString("Director"),
+                    response_json.getString("Actors"),
+                    response_json.getString("Poster"),
+                    response_json.getInt("Year"),
+                    response_json.getString("Runtime")
+            );
 
         } catch (IOException e) {
             throw new RuntimeException(e);

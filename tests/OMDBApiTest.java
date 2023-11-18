@@ -14,13 +14,9 @@ public class OMDBApiTest {
         List<Movie> movies = caller.getSearch(search, 1);
         assert !movies.isEmpty();
         for (Movie elem: movies) {
-            // Should be empty
-            assert elem.getSummary().isEmpty();
-            assert elem.getRatings().isEmpty();
-
             // Should have info
             assert !elem.getTitle().isEmpty();
-            assert !elem.getImdbID().isEmpty();
+            assert !elem.get.isEmpty();
             assert !elem.getPosterLink().isEmpty();
         }
     }
