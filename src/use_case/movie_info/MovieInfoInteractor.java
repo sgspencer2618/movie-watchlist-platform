@@ -22,6 +22,7 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
         String title = data.getString("Title");
         String summary = data.getString("Plot");
         String rating = data.getString("Rated");
+        String genres = data.getString("Genre");
 
         JSONArray ratings = data.getJSONArray("Ratings");
         String imdbScore = ratings.getJSONObject(0).getString("Value");
@@ -34,7 +35,7 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
         int year = data.getInt("Year");
         int runtime = data.getInt("Runtime");
 
-        MovieDetailed movieInfo = new MovieDetailed(title, summary, rating, imdbScore,
+        MovieDetailed movieInfo = new MovieDetailed(title, summary, rating, genres, imdbScore,
                 rottenTomatoesScore, metacriticScore, director, actors, year, runtime);
 
         MovieInfoOutputData outputData = new MovieInfoOutputData(movieInfo);
