@@ -1,9 +1,10 @@
 package utility;
 
-import org.json.JSONObject;
+import java.util.List;
+import entity.Movie;
 
 public interface ApiInterface {
-    public JSONObject getSearch(String search, int page);
+    public List<Movie> getSearch(String search, int page);
 
-    public JSONObject getMovie(String imdbID);
+    public Movie getMovie(String imdbID);
 }
