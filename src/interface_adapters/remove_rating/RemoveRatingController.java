@@ -10,8 +10,9 @@ public class RemoveRatingController {
         this.removeRatingUseCaseInteractor = removeRatingUseCaseInteractor;
     }
 
-    public void execute() {
-        removeRatingUseCaseInteractor.execute();
+    public void execute(String username, String movieId) {
+        RemoveRatingInputData removeRatingInputData = new RemoveRatingInputData(username, movieId);
+        removeRatingUseCaseInteractor.execute(removeRatingInputData);
     }
 
 }
