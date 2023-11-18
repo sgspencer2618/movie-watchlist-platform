@@ -1,5 +1,6 @@
 package use_case.movie_info;
 
+import entity.MovieDetailed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,9 +34,10 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
         int year = data.getInt("Year");
         int runtime = data.getInt("Runtime");
 
-        MovieInfoOutputData outputData = new MovieInfoOutputData(title, summary, rating, imdbScore,
+        MovieDetailed movieInfo = new MovieDetailed(title, summary, rating, imdbScore,
                 rottenTomatoesScore, metacriticScore, director, actors, year, runtime);
 
+        MovieInfoOutputData outputData = new MovieInfoOutputData(movieInfo);
         movieInfoPresenter.prepareMovieInfoView(outputData);
     }
 }
