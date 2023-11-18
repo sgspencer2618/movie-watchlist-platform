@@ -1,13 +1,17 @@
 package interface_adapters.movie_info;
 
+import interface_adapters.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class MovieInfoViewModel {
+public class MovieInfoViewModel extends ViewModel {
 
     private MovieInfoState state;
 
-    public MovieInfoViewModel() { }
+    public MovieInfoViewModel() {
+        super("movie info");
+    }
 
     public MovieInfoState getState() {
         return state;
