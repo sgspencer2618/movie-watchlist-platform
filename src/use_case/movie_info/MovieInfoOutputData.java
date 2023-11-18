@@ -1,16 +1,16 @@
 package use_case.movie_info;
 
-import entity.MovieDetailed;
+import entity.Movie;
 
 public class MovieInfoOutputData {
 
-    private MovieDetailed movieInfo;
+    private Movie movieInfo;
 
-    public MovieInfoOutputData(MovieDetailed movieInfo) {
+    public MovieInfoOutputData(Movie movieInfo) {
         this.movieInfo = movieInfo;
     }
 
-    public MovieDetailed getMovieInfo() {
+    public Movie getMovieInfo() {
         return movieInfo;
     }
 }

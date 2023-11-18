@@ -1,6 +1,6 @@
 package interface_adapters.movie_info;
 
-import entity.MovieDetailed;
+import entity.Movie;
 import use_case.movie_info.MovieInfoOutputBoundary;
 import use_case.movie_info.MovieInfoOutputData;
 
@@ -17,7 +17,7 @@ public class MovieInfoPresenter implements MovieInfoOutputBoundary {
     public void prepareMovieInfoView(MovieInfoOutputData movieInfoOutputData) {
         MovieInfoState state = new MovieInfoState();
 
-        MovieDetailed movie = movieInfoOutputData.getMovieInfo();
+        Movie movie = movieInfoOutputData.getMovieInfo();
         state.setTitleText(movie.getTitle());
 
         String infoText = Integer.toString(movie.getYear());
