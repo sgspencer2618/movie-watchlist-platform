@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Movie entity to return
 import entity.Movie;
@@ -55,7 +57,7 @@ public class OMDBCaller implements ApiInterface{
             assert response.code() == 200;
             JSONObject response_json = new JSONObject(response.body().string());
             assert response_json.has("Search");
-            JSONArray jsonMovies = new JSONArray(response_json.get("Search"));
+            JSONArray jsonMovies = response_json.getJSONArray("Search");
             for (int i = 0; i < jsonMovies.length(); i++) {
                 JSONObject json_movie = jsonMovies.getJSONObject(i);
                 Movie new_movie = new Movie(
@@ -98,11 +100,16 @@ public class OMDBCaller implements ApiInterface{
                 ratings.add(obj.getString("Value"));
             }
             assert ratings.size() == 3;
+            // Find runtime in minutes as int with regex
+            Matcher matcher = Pattern.compile("\\d+").matcher(response_json.getString("Runtime"));
+            matcher.find();
+            int runTime = Integer.parseInt(matcher.group());
+
             return new Movie(
                     response_json.getString("imdbID"),
                     response_json.getString("Title"),
                     response_json.getString("Plot"),
-                    response_json.getString("Genres"),
+                    response_json.getString("Genre"),
                     ratings.get(0),
                     ratings.get(1),
                     ratings.get(2),
@@ -110,7 +117,7 @@ public class OMDBCaller implements ApiInterface{
                     response_json.getString("Actors"),
                     response_json.getString("Poster"),
                     response_json.getInt("Year"),
-                    response_json.getString("Runtime")
+                    runTime
             );
 
         } catch (IOException e) {

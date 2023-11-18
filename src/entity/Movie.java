@@ -12,9 +12,7 @@ public class Movie {
     private final String imdbScore, rottenTomatoesScore, metacriticScore;
     private final String director, actors;
     private final String posterURL;
-    private final int year;
-
-    private final String runtime;
+    private final int year, runtime;
 
     public Movie(String imdbID, String title, String posterURL, int year) {
         this.title = title;
@@ -26,11 +24,11 @@ public class Movie {
         summary = genres = "";
         imdbScore = rottenTomatoesScore = metacriticScore = "";
         director = actors = "";
-        runtime = "";
+        runtime = 0;
     }
 
     public Movie(String imdbID, String title, String summary, String genres, String imdbScore, String rottenTomatoesScore,
-                         String metacriticScore, String director, String actors, String posterURL, int year, String runtime) {
+                         String metacriticScore, String director, String actors, String posterURL, int year, int runtime) {
         this.imdbID = imdbID;
         this.title = title;
         this.summary = summary;
@@ -82,7 +80,9 @@ public class Movie {
         return year;
     }
 
-    public String getRuntime() {
+    public int getRuntime() {
         return runtime;
     }
+
+    public String getRating() { return ""; } //TODO: this should never have been on this class. The rating has a "UserRating" entity.
 }
