@@ -21,7 +21,7 @@ public class MovieInfoPresenter implements MovieInfoOutputBoundary {
         state.setTitleText(movie.getTitle());
 
         String infoText = Integer.toString(movie.getYear());
-        infoText += "  •  " + movie.getRating();
+        infoText += "  •  " + movie.getContentRating();
         infoText += "  •  " + formatRuntime(movie.getRuntime());
         infoText += "  •  " + movie.getGenres();
         state.setInfoText(infoText);

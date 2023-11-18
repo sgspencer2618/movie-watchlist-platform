@@ -45,7 +45,8 @@ public class Movie {
         this.runtime = runtime;
     }
 
-    public String getImdbID() {return imdbID; }
+    public String getImdbID() { return imdbID; }
+
     public String getTitle() {
         return title;
     }
@@ -87,6 +88,4 @@ public class Movie {
     public int getRuntime() {
         return runtime;
     }
-
-    public String getRating() { return ""; } //TODO: this should never have been on this class. The rating has a "UserRating" entity.
 }
