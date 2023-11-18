@@ -1,13 +1,11 @@
 package use_case.movie_info;
 
 import entity.Movie;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class MovieInfoInteractor implements MovieInfoInputBoundary {
 
-    private MovieInfoDataAccessInterface movieInfoDataAccessObject;
-    private MovieInfoOutputBoundary movieInfoPresenter;
+    private final MovieInfoDataAccessInterface movieInfoDataAccessObject;
+    private final MovieInfoOutputBoundary movieInfoPresenter;
 
     public MovieInfoInteractor(MovieInfoDataAccessInterface movieInfoDataAccessObject,
                                MovieInfoOutputBoundary movieInfoOutputBoundary) {
@@ -17,30 +15,8 @@ public class MovieInfoInteractor implements MovieInfoInputBoundary {
 
     @Override
     public void execute(MovieInfoInputData movieInfoInputData) {
-        JSONObject data = movieInfoDataAccessObject.getMovie(movieInfoInputData.getImdbID());
-
-        String title = data.getString("Title");
-        String summary = data.getString("Plot");
-        String rating = data.getString("Rated");
-        String genres = data.getString("Genre");
-
-        JSONArray ratings = data.getJSONArray("Ratings");
-        String imdbScore = ratings.getJSONObject(0).getString("Value");
-        String rottenTomatoesScore = ratings.getJSONObject(1).getString("Value");
-        String metacriticScore = ratings.getJSONObject(2).getString("Value");
-
-        String director = data.getString("Director");
-        String actors = data.getString("Actors");
-
-        String posterURL = data.getString("Poster");
-
-        int year = data.getInt("Year");
-        int runtime = data.getInt("Runtime");
-
-        Movie movieInfo = new Movie(title, summary, rating, genres, imdbScore,
-                rottenTomatoesScore, metacriticScore, director, actors, posterURL, year, runtime);
-
-        MovieInfoOutputData outputData = new MovieInfoOutputData(movieInfo);
+        Movie movieDetailed = movieInfoDataAccessObject.getMovie(movieInfoInputData.getImdbID());
+        MovieInfoOutputData outputData = new MovieInfoOutputData(movieDetailed);
         movieInfoPresenter.prepareMovieInfoView(outputData);
     }
 }
