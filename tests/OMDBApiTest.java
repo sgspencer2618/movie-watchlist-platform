@@ -1,7 +1,9 @@
 import org.json.JSONObject;
 import org.junit.Test;
 import utility.OMDBCaller;
+import entity.Movie;
 
+import java.util.List;
 import java.util.Objects;
 
 public class OMDBApiTest {
@@ -9,8 +11,18 @@ public class OMDBApiTest {
     public void testSearch() {
         String search = "Harry Potter";
         OMDBCaller caller = new OMDBCaller();
-        JSONObject json = caller.getSearch(search, 1);
-        assert !json.isEmpty();
+        List<Movie> movies = caller.getSearch(search, 1);
+        assert !movies.isEmpty();
+        for (Movie elem: movies) {
+            // Should be empty
+            assert elem.getSummary().isEmpty();
+            assert elem.getRatings().isEmpty();
+
+            // Should have info
+            assert !elem.getTitle().isEmpty();
+            assert !elem.getImdbID().isEmpty();
+            assert !elem.getPosterLink().isEmpty();
+        }
     }
     @Test
     public void testMovie() {
