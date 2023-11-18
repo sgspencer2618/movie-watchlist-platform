@@ -2,22 +2,21 @@ package use_case.get_ratings;
 
 import entity.Movie;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsOutputData {
     private final boolean useCaseFailed;
-    private final List<Movie> watchlist;
+    private final HashMap<Movie, Integer> ratings;
 
-    public GetRatingsOutputData(boolean useCaseFailed, List<Movie> watchlist) {
+    public GetRatingsOutputData(boolean useCaseFailed, HashMap<Movie, Integer> ratings) {
         this.useCaseFailed = useCaseFailed;
-        this.watchlist = watchlist;
+        this.ratings = ratings;
     }
 
     public boolean isUseCaseFailed() {
         return useCaseFailed;
     }
 
-    public List<Movie> getWatchlist() {
-        return watchlist;
-    }
+    public HashMap<Movie, Integer> getRatings() {return ratings;}
 }

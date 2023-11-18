@@ -2,17 +2,18 @@ package use_case.get_ratings;
 
 import entity.Movie;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsInteractor implements GetRatingsInputBoundary {
 
-    private final GetRatingsDataAccessInterface watchlistAccessObject;
+    private final GetRatingsDataAccessInterface ratingsAccessObject;
 
     private final GetRatingsOutputBoundary getRatingsPresenter;
 
 
-    public GetRatingsInteractor(GetRatingsDataAccessInterface watchlistAccessObject, GetRatingsOutputBoundary getRatingsPresenter) {
-        this.watchlistAccessObject = watchlistAccessObject;
+    public GetRatingsInteractor(GetRatingsDataAccessInterface ratingsAccessObject, GetRatingsOutputBoundary getRatingsPresenter) {
+        this.ratingsAccessObject = ratingsAccessObject;
         this.getRatingsPresenter = getRatingsPresenter;
     }
 
@@ -20,10 +21,10 @@ public class GetRatingsInteractor implements GetRatingsInputBoundary {
     public void execute(GetRatingsInputData getRatingsInputData) {
         String currUser = getRatingsInputData.getCurrUsername();
 
-        List<Movie> watchlist = watchlistAccessObject.getWatchlist(currUser);
+        HashMap<Movie, Integer> ratings = ratingsAccessObject.getRatings(currUser);
         Boolean useCaseFailed = false;
 
-        GetRatingsOutputData outputData = new GetRatingsOutputData(useCaseFailed, watchlist);
+        GetRatingsOutputData outputData = new GetRatingsOutputData(useCaseFailed, ratings);
         getRatingsPresenter.prepareSuccessView(outputData);
     }
 

@@ -1,10 +1,13 @@
 package data_access;
+import entity.Movie;
 import org.json.JSONObject;
+import use_case.get_ratings.GetRatingsDataAccessInterface;
 import use_case.search.SearchUserRatingsDataAccessInterface;
 
 import java.util.HashMap;
+import java.util.List;
 
-public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterface{
+public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterface, GetRatingsDataAccessInterface {
 
     public UserRatingAccessObject() {
 
@@ -14,7 +17,11 @@ public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterf
         return 1;
     }
 
-    public HashMap<Integer, Integer> getUserRatingsHashmap(String user, JSONObject movies){
-        return new HashMap<Integer, Integer>();
+    public HashMap<String, Integer> getUserRatingsHashmap(String user, List<Movie> movies){
+        return new HashMap<String, Integer>();
+    }
+
+    public HashMap<Movie, Integer> getRatings(String user){
+        return new HashMap<>();
     }
 }
