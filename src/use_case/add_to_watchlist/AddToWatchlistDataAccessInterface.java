@@ -5,5 +5,7 @@ import entity.User;
 import entity.Watchlist;
 
 public interface AddToWatchlistDataAccessInterface {
+
     public Watchlist getWatchlist(String user);
+  
 }
