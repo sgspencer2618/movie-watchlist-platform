@@ -1,25 +1,36 @@
 package utility;
+import com.sun.jdi.Value;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.HttpUrl;
 import okhttp3.Response;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-
+// Movie entity to return
+import entity.Movie;
 public class OMDBCaller implements ApiInterface{
     private String API_TOKEN;
     private final OkHttpClient client;
     private final String url;
 
+    public OMDBCaller() {
+        this.url = "https://www.omdbapi.com/";
+        this.client = new OkHttpClient().newBuilder().build();
+        this.set_API_TOKEN();
+    }
     private void set_API_TOKEN () {
         try {
             String userDir = System.getProperty("user.dir");
-            System.out.println(userDir);
             File myFile = new File(userDir + "/.secret.txt");
             Scanner reader = new Scanner(myFile);
             this.API_TOKEN = reader.nextLine();
@@ -29,12 +40,7 @@ public class OMDBCaller implements ApiInterface{
             e.printStackTrace();
         }
     }
-    public OMDBCaller() {
-        this.url = "https://www.omdbapi.com/";
-        this.client = new OkHttpClient().newBuilder().build();
-        this.set_API_TOKEN();
-    }
-    public JSONObject getSearch(String search, int page) {
+    public List<Movie> getSearch(String search, int page) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
                 .addQueryParameter("apiKey", this.API_TOKEN)
                 .addQueryParameter("s", search)
@@ -44,17 +50,30 @@ public class OMDBCaller implements ApiInterface{
                 .url(httpUrl.build())
                 .addHeader("Content-Type", "application/json")
                 .build();
-
+        ArrayList<Movie> movies = new ArrayList<>();
         try {
             Response response = client.newCall(request).execute();
-            assert response.code() == 200;
             assert response.body() != null;
-            return new JSONObject(response.body().string());
+            assert response.code() == 200;
+            JSONObject response_json = new JSONObject(response.body().string());
+            assert response_json.has("Search");
+            JSONArray jsonMovies = response_json.getJSONArray("Search");
+            for (int i = 0; i < jsonMovies.length(); i++) {
+                JSONObject json_movie = jsonMovies.getJSONObject(i);
+                Movie new_movie = new Movie(
+                        json_movie.getString("imdbID"),
+                        json_movie.getString("Title"),
+                        json_movie.getString("Poster"),
+                        json_movie.getInt("Year")
+                );
+                movies.add(new_movie);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+       return movies;
     }
-    public JSONObject getMovie(String imdbID) {
+    public Movie getMovie(String imdbID) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
                 .addQueryParameter("apiKey", this.API_TOKEN)
                 .addQueryParameter("i", imdbID)
@@ -66,9 +85,42 @@ public class OMDBCaller implements ApiInterface{
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            assert response.code() == 200;
             assert response.body() != null;
-            return new JSONObject(response.body().string());
+            assert response.code() == 200;
+            JSONObject response_json = new JSONObject(response.body().string());
+            assert response_json.has("Title");
+            ArrayList<String> ratings = new ArrayList<>();
+            JSONArray ratings_json = response_json.getJSONArray("Ratings");
+            // RATINGS COME IN ORDER:
+            // imdbRating
+            // rottenTomatoes
+            // Metacritic
+            for (int i = 0; i < ratings_json.length(); i++) {
+                JSONObject obj = ratings_json.getJSONObject(i);
+                ratings.add(obj.getString("Value"));
+            }
+            assert ratings.size() == 3;
+            // Find runtime in minutes as int with regex
+            Matcher matcher = Pattern.compile("\\d+").matcher(response_json.getString("Runtime"));
+            matcher.find();
+            int runTime = Integer.parseInt(matcher.group());
+
+            return new Movie(
+                    response_json.getString("imdbID"),
+                    response_json.getString("Title"),
+                    response_json.getString("Plot"),
+                    response_json.getString("Rated"),
+                    response_json.getString("Genre"),
+                    ratings.get(0),
+                    ratings.get(1),
+                    ratings.get(2),
+                    response_json.getString("Director"),
+                    response_json.getString("Actors"),
+                    response_json.getString("Poster"),
+                    response_json.getInt("Year"),
+                    runTime
+            );
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

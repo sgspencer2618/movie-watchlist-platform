@@ -1,5 +1,6 @@
 package use_case.add_to_watchlist;
 
+import entity.Movie;
 import entity.User;
 import entity.Watchlist;
 

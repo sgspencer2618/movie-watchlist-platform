@@ -23,7 +23,7 @@ public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
         boolean added = false;
 
         try {
-            added = watchlist.getWatchlist().add(addToWatchlistInputData.getMovie());
+            //added = watchlist.add(addToWatchlistInputData.getMovie());
         } catch (NullPointerException e1) {
             addToWatchListPresenter.prepareFailView("Watchlist or Movie does not exist");
         } catch (IllegalArgumentException e2) {
