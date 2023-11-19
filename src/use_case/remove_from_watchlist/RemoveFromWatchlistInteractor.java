@@ -21,7 +21,10 @@ public class RemoveFromWatchlistInteractor implements RemoveFromWatchlistInputBo
             return;
         }
         List<String> movieIDs = watchlist.getMovieIDs();
-        movieIDs.add(RemoveFromWatchlistInputData.getMovie().getImdbID());
+        if (!movieIDs.remove(RemoveFromWatchlistInputData.getMovie().getImdbID())) {
+            RemoveFromWatchlistPresenter.prepareFailView("Movie not found in Watchlist");
+            return;
+        }
         watchlist.setMovieIDs(movieIDs);
         RemoveFromWatchlistOutputData addToWatchlistOutputData = new RemoveFromWatchlistOutputData(
             RemoveFromWatchlistInputData.getMovie());
