@@ -2,6 +2,7 @@ package use_case.add_to_watchlist;
 
 import entity.Movie;
 import entity.User;
+import entity.Watchlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,11 @@ public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
 
     @Override
     public void execute(AddToWatchlistInputData addToWatchlistInputData) {
-        List<Movie> watchlist = watchlistAccessObject.getWatchlist("testUser");
+        Watchlist watchlist = watchlistAccessObject.getWatchlist(addToWatchlistInputData.getUser());
         boolean added = false;
 
         try {
-            added = watchlist.add(addToWatchlistInputData.getMovie());
+            //added = watchlist.add(addToWatchlistInputData.getMovie());
         } catch (NullPointerException e1) {
             addToWatchListPresenter.prepareFailView("Watchlist or Movie does not exist");
         } catch (IllegalArgumentException e2) {

@@ -1,14 +1,14 @@
 package data_access;
 
-import entity.Movie;
+import entity.User;
+import entity.Watchlist;
 import use_case.add_to_watchlist.AddToWatchlistDataAccessInterface;
-
-import java.util.List;
+import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 
 public class WatchlistAccessObject implements AddToWatchlistDataAccessInterface {
 
     @Override
-    public List<Movie> getWatchlist(String user) {
+    public Watchlist getWatchlist(String user) {
         return null;
     }
 }

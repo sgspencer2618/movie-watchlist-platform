@@ -12,8 +12,8 @@ public class AddToWatchlistController {
         this.addToWatchListUseCaseInteractor = addToWatchListUseCaseInteractor;
     }
 
-    public void execute(Movie movie) {
-        AddToWatchlistInputData addToWatchlistInputData = new AddToWatchlistInputData(movie);
+    public void execute(Movie movie, String user) {
+        AddToWatchlistInputData addToWatchlistInputData = new AddToWatchlistInputData(movie, user);
 
         addToWatchListUseCaseInteractor.execute(addToWatchlistInputData);
     }
