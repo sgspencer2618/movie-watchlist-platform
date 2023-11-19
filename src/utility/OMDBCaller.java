@@ -109,6 +109,7 @@ public class OMDBCaller implements ApiInterface{
                     response_json.getString("imdbID"),
                     response_json.getString("Title"),
                     response_json.getString("Plot"),
+                    response_json.getString("Rated"),
                     response_json.getString("Genre"),
                     ratings.get(0),
                     ratings.get(1),

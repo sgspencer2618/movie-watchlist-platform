@@ -8,7 +8,7 @@ public class Movie {
     private final String title;
     private final String summary;
     // PG - 13, G, etc... (not enjoyment rating)
-    private final String genres;
+    private final String contentRating, genres;
     private final String imdbScore, rottenTomatoesScore, metacriticScore;
     private final String director, actors;
     private final String posterURL;
@@ -21,17 +21,19 @@ public class Movie {
         this.imdbID = imdbID;
 
         // empty fields
-        summary = genres = "";
+        summary = contentRating = genres = "";
         imdbScore = rottenTomatoesScore = metacriticScore = "";
         director = actors = "";
         runtime = 0;
     }
 
-    public Movie(String imdbID, String title, String summary, String genres, String imdbScore, String rottenTomatoesScore,
-                         String metacriticScore, String director, String actors, String posterURL, int year, int runtime) {
+    public Movie(String imdbID, String title, String summary, String contentRating, String genres,
+                 String imdbScore, String rottenTomatoesScore, String metacriticScore, String director,
+                 String actors, String posterURL, int year, int runtime) {
         this.imdbID = imdbID;
         this.title = title;
         this.summary = summary;
+        this.contentRating = contentRating;
         this.genres = genres;
         this.imdbScore = imdbScore;
         this.rottenTomatoesScore = rottenTomatoesScore;
@@ -43,7 +45,8 @@ public class Movie {
         this.runtime = runtime;
     }
 
-    public String getImdbID() {return imdbID; }
+    public String getImdbID() { return imdbID; }
+
     public String getTitle() {
         return title;
     }
@@ -51,6 +54,8 @@ public class Movie {
     public String getSummary() {
         return summary;
     }
+
+    public String getContentRating() { return contentRating; }
 
     public String getGenres() { return genres; }
 
@@ -83,6 +88,4 @@ public class Movie {
     public int getRuntime() {
         return runtime;
     }
-
-    public String getRating() { return ""; } //TODO: this should never have been on this class. The rating has a "UserRating" entity.
 }
