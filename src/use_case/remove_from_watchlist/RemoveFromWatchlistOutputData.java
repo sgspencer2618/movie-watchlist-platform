@@ -1,11 +1,10 @@
-package use_case.add_to_watchlist;
-
+package use_case.remove_from_watchlist;
 import entity.Movie;
 
-public class AddToWatchlistOutputData {
+public class RemoveFromWatchlistOutputData {
     private final Movie movie;
 
-    public AddToWatchlistOutputData(Movie movie) {
+    public RemoveFromWatchlistOutputData(Movie movie) {
         this.movie = movie;
     }
 
