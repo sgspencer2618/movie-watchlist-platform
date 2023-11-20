@@ -18,11 +18,13 @@ public class RemoveRatingPresenter implements RemoveRatingOutputBoundary {
 
     }
     @Override
-    public void prepareSuccessView(RemoveRatingOutputData deletedRating) {
-
+    public void prepareSuccessView(RemoveRatingOutputData response) {
+        RemoveRatingState removeRatingState = removeRatingViewModel.getState();
+        removeRatingState.setRemovedRating(response.getDeletedRating());
+        this.removeRatingViewModel.setState(removeRatingState);
+        removeRatingViewModel.firePropertyChanged();
 
     }
-
     @Override
     public void prepareFailView(String error) {
         RemoveRatingState removeRatingState = removeRatingViewModel.getState();
