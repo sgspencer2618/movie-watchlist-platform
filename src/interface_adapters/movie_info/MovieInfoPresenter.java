@@ -42,7 +42,8 @@ public class MovieInfoPresenter implements MovieInfoOutputBoundary {
         movieInfoViewModel.firePropertyChanged();
     }
 
-    private String formatRuntime(int runtime) {
+    private String formatRuntime(Integer runtime) {
+        if(runtime == null) return "?h??m";
         int hours = runtime / 60;
         if(hours > 0) {
             return Integer.toString(hours) + "h" + Integer.toString(runtime % 60) + "m";
