@@ -1,14 +1,14 @@
 package data_access;
 
-import entity.User;
+// Entities
 import entity.Watchlist;
 import use_case.add_to_watchlist.AddToWatchlistDataAccessInterface;
-import use_case.get_watchlist.GetWatchlistDataAccessInterface;
+import use_case.remove_from_watchlist.RemoveFromWatchlistDataAccessInterface;
 
-public class WatchlistAccessObject implements AddToWatchlistDataAccessInterface {
-
+public class WatchlistAccessObject implements AddToWatchlistDataAccessInterface, RemoveFromWatchlistDataAccessInterface {
     @Override
     public Watchlist getWatchlist(String user) {
-        return null;
+        // TODO: we have to implement the database first, for now just returns a new empty watchlist.
+        return  new Watchlist(0, user);
     }
 }
