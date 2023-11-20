@@ -4,7 +4,7 @@ import entity.Movie;
 
 public class MovieInfoOutputData {
 
-    private Movie movieInfo;
+    private final Movie movieInfo;
 
     public MovieInfoOutputData(Movie movieInfo) {
         this.movieInfo = movieInfo;
