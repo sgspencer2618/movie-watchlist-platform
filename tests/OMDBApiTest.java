@@ -1,4 +1,3 @@
-import org.json.JSONObject;
 import org.junit.Test;
 import utility.OMDBCaller;
 import entity.Movie;
