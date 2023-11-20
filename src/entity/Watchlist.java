@@ -2,13 +2,13 @@ package entity;
 
 import java.util.List;
 
-public class Watchlist {
+public class WatchList {
     private final String userName;
     private final List<String> movieIDs;
 
     private final int id;
 
-    public Watchlist(int id, String userName, List<String> movieIDs) {
+    public WatchList(int id, String userName, List<String> movieIDs) {
         this.id = id;
         this.userName = userName;
         this.movieIDs = movieIDs;
