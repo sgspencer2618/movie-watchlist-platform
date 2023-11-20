@@ -22,10 +22,7 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary{
         GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist);
 
         if (watchlist != null) {
-            getWatchlistPresenter.prepareSuccessView(getWatchlistOutputData);
-        }
-        else {
-            getWatchlistPresenter.prepareFailView("Watchlist could not be retrieved.");
+            getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
         }
     }
 }
