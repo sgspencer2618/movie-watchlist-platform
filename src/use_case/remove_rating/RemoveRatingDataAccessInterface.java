@@ -8,5 +8,4 @@ public interface RemoveRatingDataAccessInterface {
 
     public boolean userRatingExists(String username, String move_id);
 
-    public int getUserRating(String user, String movieID);
 }
