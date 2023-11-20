@@ -1,21 +1,22 @@
 package use_case.movie_info;
 
 import entity.Movie;
+import utility.ApiInterface;
 
 public class MovieInfoInteractor implements MovieInfoInputBoundary {
 
-    private final MovieInfoDataAccessInterface movieInfoDataAccessObject;
+    private final ApiInterface apiInterface;
     private final MovieInfoOutputBoundary movieInfoPresenter;
 
-    public MovieInfoInteractor(MovieInfoDataAccessInterface movieInfoDataAccessObject,
+    public MovieInfoInteractor(ApiInterface apiInterface,
                                MovieInfoOutputBoundary movieInfoOutputBoundary) {
-        this.movieInfoDataAccessObject = movieInfoDataAccessObject;
+        this.apiInterface = apiInterface;
         this.movieInfoPresenter = movieInfoOutputBoundary;
     }
 
     @Override
     public void execute(MovieInfoInputData movieInfoInputData) {
-        Movie movieDetailed = movieInfoDataAccessObject.getMovie(movieInfoInputData.getImdbID());
+        Movie movieDetailed = apiInterface.getMovie(movieInfoInputData.getImdbID());
         MovieInfoOutputData outputData = new MovieInfoOutputData(movieDetailed);
         movieInfoPresenter.prepareMovieInfoView(outputData);
     }

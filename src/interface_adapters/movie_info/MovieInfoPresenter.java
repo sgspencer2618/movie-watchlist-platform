@@ -32,9 +32,9 @@ public class MovieInfoPresenter implements MovieInfoOutputBoundary {
         talentText += "  •  " + movie.getActors();
         state.setTalentText(talentText);
 
-        state.setImdbScore(movie.getImdbScore() + "/10");
-        state.setRottenTomatoesScore(movie.getRottenTomatoesScore() + "%");
-        state.setMetacriticScore(movie.getMetacriticScore() + "/100");
+        state.setImdbScore(movie.getImdbScore());
+        state.setRottenTomatoesScore(movie.getRottenTomatoesScore());
+        state.setMetacriticScore(movie.getMetacriticScore());
 
         state.setPosterURL(movie.getPosterURL());
 
