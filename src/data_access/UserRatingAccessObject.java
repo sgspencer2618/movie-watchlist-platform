@@ -12,9 +12,11 @@ public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterf
     public UserRatingAccessObject() {
 
     }
-
-    public Integer getUserRating(String user, String movieID){
+    public int getUserRating(String user, String movieID){
         return 1;
+    }
+    public boolean userRatingExists(String user, String movieID){
+        return false;
     }
 
     public HashMap<String, Integer> getUserRatingsHashmap(String user, List<Movie> movies){
