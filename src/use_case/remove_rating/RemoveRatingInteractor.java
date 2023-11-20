@@ -15,8 +15,13 @@ public class RemoveRatingInteractor implements RemoveRatingInputBoundary{
     public void execute(RemoveRatingInputData removeRatingInputData) {
         String username = removeRatingInputData.getUsername();
         String movieId = removeRatingInputData.getMovieId();
-        removeRatingDataAccessObject.removeRating(username, movieId);
-        RemoveRatingOutputData removeRatingOutputData = new RemoveRatingOutputData(null);
-        removeRatingPresenter.prepareSuccessView(removeRatingOutputData);
+
+        if(removeRatingDataAccessObject.userRatingExists(username, movieId)){
+            RemoveRatingOutputData removeRatingOutputData = new RemoveRatingOutputData(removeRatingDataAccessObject.getUserRating(username, movieId));
+            removeRatingDataAccessObject.removeRating(username, movieId);
+            removeRatingPresenter.prepareSuccessView(removeRatingOutputData);
+        } else {
+            removeRatingPresenter.prepareFailView("Username or Movie Id not associated with any rating");
+        }
     }
 }
