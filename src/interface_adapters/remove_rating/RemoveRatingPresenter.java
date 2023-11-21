@@ -9,14 +9,10 @@ import interface_adapters.ViewManagerModel;
 public class RemoveRatingPresenter implements RemoveRatingOutputBoundary {
     private final RemoveRatingViewModel removeRatingViewModel;
 
-    private ViewManagerModel viewManagerModel;
-
-    public RemoveRatingPresenter (ViewManagerModel viewManagerModel,
-                           RemoveRatingViewModel removeRatingViewModel) {
-        this.viewManagerModel = viewManagerModel;
+    public RemoveRatingPresenter (RemoveRatingViewModel removeRatingViewModel) {
         this.removeRatingViewModel = removeRatingViewModel;
-
     }
+
     @Override
     public void prepareSuccessView(RemoveRatingOutputData response) {
         RemoveRatingState removeRatingState = removeRatingViewModel.getState();
