@@ -7,6 +7,7 @@ import use_case.get_watchlist.GetWatchlistOutputBoundary;
 import use_case.get_watchlist.GetWatchlistOutputData;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
 
@@ -24,9 +25,11 @@ public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
 
         Watchlist watchlist = getWatchlistOutputData.getWatchlist();
         HashMap<Movie, Integer> ratings = getWatchlistOutputData.getRatings();
+        List<Movie> movieList = getWatchlistOutputData.getMovieList();
 
         state.setWatchlist(watchlist);
         state.setRatings(ratings);
+        state.setMovieList(movieList);
 
         this.getWatchlistViewModel.setState(state);
         viewManagerModel.firePropertyChanged();
