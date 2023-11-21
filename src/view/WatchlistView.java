@@ -1,0 +1,153 @@
+package view;
+
+import entity.Movie;
+import interface_adapters.get_watchlist.GetWatchlistController;
+import interface_adapters.get_watchlist.GetWatchlistState;
+import interface_adapters.get_watchlist.GetWatchlistViewModel;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class WatchlistView extends JPanel implements PropertyChangeListener {
+    private final GetWatchlistController getWatchlistController;
+    private final GetWatchlistViewModel getWatchlistViewModel;
+    private final Dimension DIMENSIONS = new Dimension(350,275);
+    private final String[] panelLabels = new String[]{""};
+    private JPanel panelList;
+
+    public WatchlistView(GetWatchlistController getWatchlistController, GetWatchlistViewModel getWatchlistViewModel) {
+        this.getWatchlistController = getWatchlistController;
+        this.getWatchlistViewModel = getWatchlistViewModel;
+        getWatchlistViewModel.addPropertyChangeListener(this);
+
+        setLayout(new BorderLayout());
+
+        // Create a scroll pane to hold the panel list
+        List<Movie> movieList = getWatchlistViewModel.getState().getMovieList();
+        JScrollPane scrollPane = new JScrollPane(createPanelList(movieList)); //TODO
+        add(scrollPane, BorderLayout.CENTER);
+
+        scrollPane.setPreferredSize(DIMENSIONS);
+    }
+
+    public JPanel createPanelList(List<Movie> movieList) {
+        panelList = new JPanel(); // Initialize the panelList field
+        panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
+
+        // Add some sample data
+
+        for (Movie movie: movieList) {
+            panelList.add(createClickablePanel(movie));
+        }
+
+        return panelList;
+    }
+
+
+    public JPanel createClickablePanel(Movie movie) {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panel.setBorder(new EmptyBorder(0, 10, 0, 10));
+        panel.setPreferredSize(new Dimension(200, 100));
+        panel.setLayout(new BorderLayout(20,0));
+
+        HashMap<Movie, Integer> ratings = getWatchlistViewModel.getState().getRatings();
+
+        //placeholder url to test image path
+        String path = movie.getPosterURL();
+        URL url;
+        try {
+            url = new URL(path);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            BufferedImage image = ImageIO.read(url);
+            if (image != null) {
+
+                Image scaledimage = image.getScaledInstance(30, 45,
+                        Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(scaledimage);
+                JLabel imagelabel = new JLabel(imageIcon);
+
+                panel.add(imagelabel, BorderLayout.LINE_START);
+
+            } else {
+                // Handle the case where the image couldn't be loaded
+                JLabel errorLabel = new JLabel("Error loading image");
+                panel.add(errorLabel, BorderLayout.LINE_START);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        JLabel label = new JLabel(movie.getTitle());
+        panel.add(label, BorderLayout.CENTER);
+
+        // Create the dropdown (combobox) for ratings
+        String[] ratingOptions = {"1", "2", "3", "4", "5", "-"};
+        JComboBox<String> ratingsDropdown = new JComboBox<>(ratingOptions);
+        ratingsDropdown.setSelectedItem(ratings.get(movie));
+
+        JPanel controlsubpanel = new JPanel();
+        controlsubpanel.setLayout(new BorderLayout(20,0));
+        JButton add = new JButton("+");
+        controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
+        add.setPreferredSize(new Dimension(50,50));
+        add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
+
+        controlsubpanel.add(add, BorderLayout.CENTER);
+        controlsubpanel.add(ratingsDropdown, BorderLayout.LINE_END);
+        panel.add(controlsubpanel, BorderLayout.LINE_END);
+
+        // Add a click listener to the panel
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //PLACEHOLDER - to be replaced with showing the information pane of the movie
+                JOptionPane.showMessageDialog(null, "Clicked on " + movie.getTitle());
+            }
+        });
+
+        // Defines normal and hover colors
+        Color normalColor = panel.getBackground();
+        Color hoverColor = new Color(220, 220, 220);
+
+        // Add MouseListener for hover effect
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                panel.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panel.setBackground(normalColor);
+            }
+        });
+
+
+        return panel;
+    }
+
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        GetWatchlistState state = (GetWatchlistState) evt.getNewValue();
+        //UpdateView(state);
+    }
+}
