@@ -1,6 +1,9 @@
 package entity;
 
-public class Movie {
+import java.io.Serializable;
+import java.util.List;
+
+public class Movie implements Serializable {
 
     private final String imdbID;
     private final String title;
@@ -11,8 +14,12 @@ public class Movie {
     private final String director, actors;
     private final String posterURL;
     private final Integer year, runtime;
+  
+    private int userRating;
 
-    public Movie(String imdbID, String title, String posterURL, Integer year) {
+    private boolean inWatchlist;
+
+    public Movie(String imdbID, String title, String posterURL, int year)
         this.title = title;
         this.posterURL = posterURL;
         this.year = year;
@@ -85,5 +92,20 @@ public class Movie {
 
     public Integer getRuntime() {
         return runtime;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
+    }
+
+    public boolean isInWatchlist() {
+        return inWatchlist;
+    }
+
+    public void setInWatchlist(boolean inWatchlist) {
+        this.inWatchlist = inWatchlist;
     }
 }
