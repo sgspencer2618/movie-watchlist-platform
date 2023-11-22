@@ -1,17 +1,19 @@
 package use_case.signup;
 
 import entity.User;
-import java.time.LocalDateTime;
+import entity.UserFactory;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
+    final UserFactory userFactory;
 
 
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
-                            SignupOutputBoundary signupOutputBoundary) {
+                            SignupOutputBoundary signupOutputBoundary, UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;
         this.userPresenter = signupOutputBoundary;
+        this.userFactory = userFactory;
     }
 
     @Override
@@ -22,7 +24,7 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("Passwords don't match.");
         } else {
 
-            User user = new User(signupInputData.getUsername(), signupInputData.getPassword());
+            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
