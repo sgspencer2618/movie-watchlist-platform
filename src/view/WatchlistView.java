@@ -28,7 +28,7 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
     private final Dimension DIMENSIONS = new Dimension(350,275);
     private List<Movie> movieList;
     private HashMap<Movie, Integer> ratings;
-
+    private JScrollPane scrollPane;
     private JPanel panelList;
 
     public WatchlistView(GetWatchlistController getWatchlistController, MovieInfoController movieInfoController, GetWatchlistViewModel getWatchlistViewModel) {
@@ -37,15 +37,20 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         this.getWatchlistViewModel = getWatchlistViewModel;
         getWatchlistViewModel.addPropertyChangeListener(this);
 
+        this.createWatchlistPanel();
+    }
+
+    public void createWatchlistPanel() {;
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
-        movieList = getWatchlistViewModel.getState().getMovieList();
-        ratings = getWatchlistViewModel.getState().getRatings();
-        JScrollPane scrollPane = new JScrollPane(createPanelList(movieList)); //TODO
+        this.movieList = getWatchlistViewModel.getState().getMovieList();
+        this.ratings = getWatchlistViewModel.getState().getRatings();
+        scrollPane = new JScrollPane(createPanelList(movieList));
+        this.scrollPane.setPreferredSize(DIMENSIONS);
+
         add(scrollPane, BorderLayout.CENTER);
 
-        scrollPane.setPreferredSize(DIMENSIONS);
     }
 
     public JPanel createPanelList(List<Movie> movieList) {
