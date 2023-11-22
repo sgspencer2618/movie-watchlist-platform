@@ -4,6 +4,7 @@ import entity.Movie;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistState;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
+import interface_adapters.movie_info.MovieInfoController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,24 +20,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WatchlistView extends JPanel implements PropertyChangeListener {
     private final GetWatchlistController getWatchlistController;
+    private final MovieInfoController movieInfoController;
     private final GetWatchlistViewModel getWatchlistViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
-    private final String[] panelLabels = new String[]{""};
+    private List<Movie> movieList;
+    private HashMap<Movie, Integer> ratings;
+
     private JPanel panelList;
 
-    public WatchlistView(GetWatchlistController getWatchlistController, GetWatchlistViewModel getWatchlistViewModel) {
+    public WatchlistView(GetWatchlistController getWatchlistController, MovieInfoController movieInfoController, GetWatchlistViewModel getWatchlistViewModel) {
         this.getWatchlistController = getWatchlistController;
+        this.movieInfoController = movieInfoController;
         this.getWatchlistViewModel = getWatchlistViewModel;
         getWatchlistViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
-        List<Movie> movieList = getWatchlistViewModel.getState().getMovieList();
+        movieList = getWatchlistViewModel.getState().getMovieList();
+        ratings = getWatchlistViewModel.getState().getRatings();
         JScrollPane scrollPane = new JScrollPane(createPanelList(movieList)); //TODO
         add(scrollPane, BorderLayout.CENTER);
 
@@ -63,8 +68,6 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         panel.setBorder(new EmptyBorder(0, 10, 0, 10));
         panel.setPreferredSize(new Dimension(200, 100));
         panel.setLayout(new BorderLayout(20,0));
-
-        HashMap<Movie, Integer> ratings = getWatchlistViewModel.getState().getRatings();
 
         //placeholder url to test image path
         String path = movie.getPosterURL();
@@ -119,7 +122,8 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //PLACEHOLDER - to be replaced with showing the information pane of the movie
-                JOptionPane.showMessageDialog(null, "Clicked on " + movie.getTitle());
+                movieInfoController.execute(movie.getImdbID());
+                //JOptionPane.showMessageDialog(null, "Clicked on " + movie.getTitle());
             }
         });
 
@@ -142,6 +146,17 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
 
 
         return panel;
+    }
+
+    private void UpdateView(GetWatchlistState state) {
+        this.movieList = state.getMovieList();
+        this.ratings = state.getRatings();
+
+
+    }
+
+    public void showWatchlist(String user) {
+        getWatchlistController.execute(user);
     }
 
 
