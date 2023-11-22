@@ -19,7 +19,7 @@ public class Movie implements Serializable {
 
     private boolean inWatchlist;
 
-    public Movie(String imdbID, String title, String posterURL, int year)
+    public Movie(String imdbID, String title, String posterURL, int year) {
         this.title = title;
         this.posterURL = posterURL;
         this.year = year;
