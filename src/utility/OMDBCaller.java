@@ -1,5 +1,5 @@
 package utility;
-import com.sun.jdi.Value;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.HttpUrl;
@@ -18,7 +18,8 @@ import java.util.regex.Pattern;
 
 // Movie entity to return
 import entity.Movie;
-public class OMDBCaller implements ApiInterface{
+
+public class OMDBCaller implements ApiInterface {
     private String API_TOKEN;
     private final OkHttpClient client;
     private final String url;
@@ -28,6 +29,7 @@ public class OMDBCaller implements ApiInterface{
         this.client = new OkHttpClient().newBuilder().build();
         this.set_API_TOKEN();
     }
+    
     private void set_API_TOKEN () {
         try {
             String userDir = System.getProperty("user.dir");
@@ -40,6 +42,7 @@ public class OMDBCaller implements ApiInterface{
             e.printStackTrace();
         }
     }
+    
     public List<Movie> getSearch(String search, int page) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
                 .addQueryParameter("apiKey", this.API_TOKEN)
@@ -73,6 +76,7 @@ public class OMDBCaller implements ApiInterface{
         }
        return movies;
     }
+    
     public Movie getMovie(String imdbID) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
                 .addQueryParameter("apiKey", this.API_TOKEN)
@@ -95,15 +99,28 @@ public class OMDBCaller implements ApiInterface{
             // imdbRating
             // rottenTomatoes
             // Metacritic
-            for (int i = 0; i < ratings_json.length(); i++) {
-                JSONObject obj = ratings_json.getJSONObject(i);
-                ratings.add(obj.getString("Value"));
+            String imdbRating = "N/A";
+            String rottenTomatoesRating = "N/A";
+            String metacriticRating = "N/A";
+
+            if(ratings_json.length() >= 1) {
+                imdbRating = ratings_json.getJSONObject(0).getString("Value");
             }
-            assert ratings.size() == 3;
+            if(ratings_json.length() >= 2) {
+                rottenTomatoesRating = ratings_json.getJSONObject(1).getString("Value");
+            }
+            if(ratings_json.length() >= 3) {
+                metacriticRating = ratings_json.getJSONObject(2).getString("Value");
+            }
+
             // Find runtime in minutes as int with regex
-            Matcher matcher = Pattern.compile("\\d+").matcher(response_json.getString("Runtime"));
-            matcher.find();
-            int runTime = Integer.parseInt(matcher.group());
+            Integer runtime = null;
+            String rt = response_json.getString("Runtime");
+            if(!rt.equals("N/A")) {
+                Matcher matcher = Pattern.compile("\\d+").matcher(rt);
+                matcher.find();
+                runtime = Integer.parseInt(matcher.group());
+            }
 
             return new Movie(
                     response_json.getString("imdbID"),
@@ -111,16 +128,15 @@ public class OMDBCaller implements ApiInterface{
                     response_json.getString("Plot"),
                     response_json.getString("Rated"),
                     response_json.getString("Genre"),
-                    ratings.get(0),
-                    ratings.get(1),
-                    ratings.get(2),
+                    imdbRating,
+                    rottenTomatoesRating,
+                    metacriticRating,
                     response_json.getString("Director"),
                     response_json.getString("Actors"),
                     response_json.getString("Poster"),
                     response_json.getInt("Year"),
-                    runTime
+                    runtime
             );
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

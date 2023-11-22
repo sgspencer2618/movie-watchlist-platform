@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Movie {
+public class Movie implements Serializable {
 
     private final String imdbID;
     private final String title;
@@ -12,9 +13,13 @@ public class Movie {
     private final String imdbScore, rottenTomatoesScore, metacriticScore;
     private final String director, actors;
     private final String posterURL;
-    private final int year, runtime;
+    private final Integer year, runtime;
+  
+    private int userRating;
 
-    public Movie(String imdbID, String title, String posterURL, int year) {
+    private boolean inWatchlist;
+
+    public Movie(String imdbID, String title, String posterURL, int year)
         this.title = title;
         this.posterURL = posterURL;
         this.year = year;
@@ -29,7 +34,7 @@ public class Movie {
 
     public Movie(String imdbID, String title, String summary, String contentRating, String genres,
                  String imdbScore, String rottenTomatoesScore, String metacriticScore, String director,
-                 String actors, String posterURL, int year, int runtime) {
+                 String actors, String posterURL, Integer year, Integer runtime) {
         this.imdbID = imdbID;
         this.title = title;
         this.summary = summary;
@@ -81,11 +86,26 @@ public class Movie {
 
     public String getPosterURL() { return posterURL; }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public int getRuntime() {
+    public Integer getRuntime() {
         return runtime;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
+    }
+
+    public boolean isInWatchlist() {
+        return inWatchlist;
+    }
+
+    public void setInWatchlist(boolean inWatchlist) {
+        this.inWatchlist = inWatchlist;
     }
 }
