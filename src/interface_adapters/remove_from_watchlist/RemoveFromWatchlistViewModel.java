@@ -1,24 +1,24 @@
-package interface_adapters.add_to_watchlist;
+package interface_adapters.remove_from_watchlist;
 
 import interface_adapters.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class AddToWatchlistViewModel extends ViewModel{
+public class RemoveFromWatchlistViewModel extends ViewModel{
 
-    private AddToWatchlistState state;
+    private RemoveFromWatchlistState state;
     private PropertyChangeSupport support;
 
-    public AddToWatchlistViewModel() {
-        super("Add to Watchlist");
+    public RemoveFromWatchlistViewModel() {
+        super("Remove from Watchlist");
     }
 
-    public AddToWatchlistState getState() {
+    public RemoveFromWatchlistState getState() {
         return state;
     }
 
-    public void setState(AddToWatchlistState state) {
+    public void setState(RemoveFromWatchlistState state) {
         this.state = state;
     }
 

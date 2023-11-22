@@ -4,14 +4,13 @@ import java.util.List;
 
 public class Watchlist {
     private final String userName;
-    private final List<String> movieIDs;
+    private List<String> movieIDs;
 
     private final int id;
 
-    public Watchlist(int id, String userName, List<String> movieIDs) {
+    public Watchlist(int id, String userName) {
         this.id = id;
         this.userName = userName;
-        this.movieIDs = movieIDs;
     }
 
     public int getId () {
@@ -23,5 +22,7 @@ public class Watchlist {
     public List<String> getMovieIDs () {
         return movieIDs;
     }
-
+    public void setMovieIDs (List<String> movieIDs) {
+        this.movieIDs = movieIDs;
+    }
 }

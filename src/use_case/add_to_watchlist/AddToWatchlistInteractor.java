@@ -1,12 +1,6 @@
 package use_case.add_to_watchlist;
-
-import entity.Movie;
-import entity.User;
 import entity.Watchlist;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
     private final AddToWatchlistDataAccessInterface watchlistAccessObject;
@@ -19,25 +13,18 @@ public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
 
     @Override
     public void execute(AddToWatchlistInputData addToWatchlistInputData) {
-        Watchlist watchlist = watchlistAccessObject.getWatchlist(addToWatchlistInputData.getUser());
-        boolean added = false;
-
+        Watchlist watchlist;
         try {
-            //added = watchlist.add(addToWatchlistInputData.getMovie());
+            watchlist = watchlistAccessObject.getWatchlist(addToWatchlistInputData.getUser());
         } catch (NullPointerException e1) {
             addToWatchListPresenter.prepareFailView("Watchlist or Movie does not exist");
-        } catch (IllegalArgumentException e2) {
-            addToWatchListPresenter.prepareFailView("Invalid Movie");
+            return;
         }
-
+        List<String> movieIDs = watchlist.getMovieIDs();
+        movieIDs.add(addToWatchlistInputData.getMovie().getImdbID());
+        watchlist.setMovieIDs(movieIDs);
         AddToWatchlistOutputData addToWatchlistOutputData = new AddToWatchlistOutputData(
-                false, addToWatchlistInputData.getMovie());
-
-        if (added == true) {
-            addToWatchListPresenter.prepareSuccessView(addToWatchlistOutputData);
-        }
-        else {
-            addToWatchListPresenter.prepareFailView("Failed to add movie to watchlist.");
-        }
+            addToWatchlistInputData.getMovie());
+        addToWatchListPresenter.prepareSuccessView(addToWatchlistOutputData);
     }
 }

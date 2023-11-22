@@ -13,13 +13,13 @@ public class Movie implements Serializable {
     private final String imdbScore, rottenTomatoesScore, metacriticScore;
     private final String director, actors;
     private final String posterURL;
-    private final int year, runtime;
-
+    private final Integer year, runtime;
+  
     private int userRating;
 
     private boolean inWatchlist;
 
-    public Movie(String imdbID, String title, String posterURL, int year) {
+    public Movie(String imdbID, String title, String posterURL, int year)
         this.title = title;
         this.posterURL = posterURL;
         this.year = year;
@@ -34,7 +34,7 @@ public class Movie implements Serializable {
 
     public Movie(String imdbID, String title, String summary, String contentRating, String genres,
                  String imdbScore, String rottenTomatoesScore, String metacriticScore, String director,
-                 String actors, String posterURL, int year, int runtime) {
+                 String actors, String posterURL, Integer year, Integer runtime) {
         this.imdbID = imdbID;
         this.title = title;
         this.summary = summary;
@@ -86,11 +86,11 @@ public class Movie implements Serializable {
 
     public String getPosterURL() { return posterURL; }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public int getRuntime() {
+    public Integer getRuntime() {
         return runtime;
     }
 

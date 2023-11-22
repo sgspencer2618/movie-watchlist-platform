@@ -23,7 +23,7 @@ public class MovieInfoView implements PropertyChangeListener {
     private final MovieInfoController controller;
     private final MovieInfoViewModel viewmodel;
 
-    private  JFrame frame;
+    private JFrame frame;
     private JLabel title, poster, info, talent, imdbRating, rottenTomatoesRating, metacriticRating;
     private JTextArea description;
 
@@ -33,10 +33,10 @@ public class MovieInfoView implements PropertyChangeListener {
         viewmodel.addPropertyChangeListener(this);
 
         // create window
-        CreateWindow();
+        createWindow();
     }
 
-    private void CreateWindow() {
+    private void createWindow() {
         frame = new JFrame("Detailed Movie Info");
 
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -51,6 +51,7 @@ public class MovieInfoView implements PropertyChangeListener {
         frame.add(title);
 
         poster = new JLabel();
+        poster.setHorizontalAlignment(JLabel.CENTER);
         poster.setSize(150, 221);
         poster.setLocation(10, 10);
         frame.add(poster);
@@ -177,7 +178,7 @@ public class MovieInfoView implements PropertyChangeListener {
         frame.add(ratingPanel);
     }
 
-    private void UpdateView(MovieInfoState state) {
+    private void updateView(MovieInfoState state) {
         title.setText(state.getTitleText());
         description.setText(state.getSummaryText());
         info.setText(state.getInfoText());
@@ -186,27 +187,33 @@ public class MovieInfoView implements PropertyChangeListener {
         rottenTomatoesRating.setText(state.getRottenTomatoesScore());
         metacriticRating.setText(state.getMetacriticScore());
 
+        poster.setIcon(null);
+        frame.repaint();
+        frame.setVisible(true);
+
         // update poster
         try {
             URL url = new URL(state.getPosterURL());
             BufferedImage pImg = ImageIO.read(url);
             Image scaled = pImg.getScaledInstance(150, 221, Image.SCALE_SMOOTH);
             poster.setIcon(new ImageIcon(scaled));
-        } catch (IOException e) {
+        } catch (Exception e) {
+            poster.setOpaque(true);
+            poster.setBackground(Color.LIGHT_GRAY);
+            poster.setText("No Poster");
             e.printStackTrace();
         }
 
         frame.repaint();
-        frame.setVisible(true);
     }
 
-    public void ShowMovie(String imdbID) {
+    public void showMovie(String imdbID) {
         controller.execute(imdbID);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         MovieInfoState state = (MovieInfoState) evt.getNewValue();
-        UpdateView(state);
+        updateView(state);
     }
 }
