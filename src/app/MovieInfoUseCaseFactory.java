@@ -19,7 +19,7 @@ public class MovieInfoUseCaseFactory {
         return new MovieInfoView(controller, viewmodel);
     }
 
-    private static MovieInfoController createMovieInfoUseCase(ApiInterface api, MovieInfoViewModel viewmodel) {
+    public static MovieInfoController createMovieInfoUseCase(ApiInterface api, MovieInfoViewModel viewmodel) {
         MovieInfoOutputBoundary movieInfoPresenter = new MovieInfoPresenter(viewmodel);
         MovieInfoInputBoundary movieInfoInteractor = new MovieInfoInteractor(api, movieInfoPresenter);
         return new MovieInfoController(movieInfoInteractor);
