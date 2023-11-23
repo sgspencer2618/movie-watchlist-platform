@@ -8,10 +8,10 @@ import java.beans.PropertyChangeSupport;
 
 public class GetWatchlistViewModel extends ViewModel {
 
-    private GetWatchlistState state;
+    private GetWatchlistState state = new GetWatchlistState();
 
-    public GetWatchlistViewModel(String viewName) {
-        super(viewName);
+    public GetWatchlistViewModel() {
+        super("watchlist");
     }
 
     public GetWatchlistState getState() {

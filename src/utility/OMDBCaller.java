@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 // Movie entity to return
 import entity.Movie;
 
+@SuppressWarnings("KotlinInternalInJava")
 public class OMDBCaller implements ApiInterface {
     private String API_TOKEN;
     private final OkHttpClient client;

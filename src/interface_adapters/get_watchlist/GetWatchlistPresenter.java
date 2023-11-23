@@ -31,13 +31,12 @@ public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
         state.setRatings(ratings);
         state.setMovieList(movieList);
 
-        this.getWatchlistViewModel.setState(state);
+        getWatchlistViewModel.setState(state);
         viewManagerModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(getWatchlistViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
-
-        //TODO: add ViewManagerModel fire property change calls
+        viewManagerModel.firePropertyChanged();
     }
 }
