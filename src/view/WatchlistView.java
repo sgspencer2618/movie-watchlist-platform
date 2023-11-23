@@ -36,18 +36,16 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         this.movieInfoController = movieInfoController;
         this.getWatchlistViewModel = getWatchlistViewModel;
         getWatchlistViewModel.addPropertyChangeListener(this);
-
-        this.createWatchlistPanel();
     }
 
     public void createWatchlistPanel() {;
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
-        this.movieList = getWatchlistViewModel.getState().getMovieList();
-        this.ratings = getWatchlistViewModel.getState().getRatings();
+        movieList = getWatchlistViewModel.getState().getMovieList();
+        ratings = getWatchlistViewModel.getState().getRatings();
         scrollPane = new JScrollPane(createPanelList(movieList));
-        this.scrollPane.setPreferredSize(DIMENSIONS);
+        scrollPane.setPreferredSize(DIMENSIONS);
 
         add(scrollPane, BorderLayout.CENTER);
 
@@ -58,9 +56,10 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
         // Add some sample data
-
-        for (Movie movie: movieList) {
-            panelList.add(createClickablePanel(movie));
+        if (movieList != null) {
+            for (Movie movie : movieList) {
+                panelList.add(createClickablePanel(movie));
+            }
         }
 
         return panelList;
@@ -87,7 +86,7 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
             BufferedImage image = ImageIO.read(url);
             if (image != null) {
 
-                Image scaledimage = image.getScaledInstance(30, 45,
+                Image scaledimage = image.getScaledInstance(60, 90,
                         Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(scaledimage);
                 JLabel imagelabel = new JLabel(imageIcon);
@@ -128,7 +127,6 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
             public void mouseClicked(MouseEvent e) {
                 //PLACEHOLDER - to be replaced with showing the information pane of the movie
                 movieInfoController.execute(movie.getImdbID());
-                //JOptionPane.showMessageDialog(null, "Clicked on " + movie.getTitle());
             }
         });
 
