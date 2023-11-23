@@ -1,7 +1,8 @@
 package use_case.remove_rating;
 
 public interface RemoveRatingOutputBoundary {
-    void prepareSuccessView(RemoveRatingOutputData rating);
+    void prepareSuccessView(RemoveRatingOutputData deletedRating);
 
+    void prepareFailView(String error);
 }
 

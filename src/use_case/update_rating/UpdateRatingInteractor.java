@@ -22,7 +22,7 @@ public class UpdateRatingInteractor implements  UpdateRatingInputBoundary{
         String movieId = updateRatingInputData.getMovieId();
         int newRating = updateRatingInputData.getNewRating();
         updateRatingDataAccessObject.updateRating(username, movieId, newRating);
-        UpdateRatingOutputData updateRatingOutputData = new UpdateRatingOutputData(newRating);
+        UpdateRatingOutputData updateRatingOutputData = new UpdateRatingOutputData(newRating, false);
         updateRatingPresenter.prepareSuccessView(updateRatingOutputData);
     }
 }

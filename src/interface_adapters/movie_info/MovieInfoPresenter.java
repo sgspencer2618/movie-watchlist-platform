@@ -10,6 +10,7 @@ public class MovieInfoPresenter implements MovieInfoOutputBoundary {
     private final MovieInfoViewModel movieInfoViewModel;
 
     public MovieInfoPresenter(MovieInfoViewModel movieInfoViewModel) {
+
         this.movieInfoViewModel = movieInfoViewModel;
     }
 
