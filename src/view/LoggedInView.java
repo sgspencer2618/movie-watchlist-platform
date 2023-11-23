@@ -4,6 +4,8 @@ import interface_adapters.logged_in.LoggedInState;
 import interface_adapters.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +18,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final LoggedInViewModel loggedInViewModel;
 
     JLabel username;
+    JTabbedPane tabbedPane;
+    //create new watchlist tab
+    JPanel mywatchlist;
 
-    final JButton logOut;
+    //create new ratings tab
+    JPanel myratings;
+
+    //create new search tab
+    JPanel moviesearch;
+
+    //final JButton logOut;
 
     /**
      * A window with a title and a JButton.
@@ -29,21 +40,41 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel();
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setSize(400,400);
+        //create new watchlist tab
+        mywatchlist = new JPanel();
+        mywatchlist.setLayout(new BorderLayout());
 
-        JPanel buttons = new JPanel();
-        logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
-        buttons.add(logOut);
+        JPanel searchpanel = new JPanel(new BorderLayout());
+        JButton search = new JButton("Search");
 
-        logOut.addActionListener(this);
+        searchpanel.add(new TextField("", 30));
+        searchpanel.add(search, BorderLayout.AFTER_LINE_ENDS);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        mywatchlist.add(searchpanel, BorderLayout.PAGE_START);
 
-        this.add(title);
-        this.add(usernameInfo);
-        this.add(username);
-        this.add(buttons);
+        //create new ratings tab
+        myratings = new JPanel();
+
+        //create new search tab
+        moviesearch = new JPanel();
+
+        tabbedPane.addTab("My Watch List", mywatchlist);
+        tabbedPane.addTab("My Ratings", myratings);
+        tabbedPane.addTab("Movie Search", moviesearch);
+
+        tabbedPane.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                System.out.println("Tab: " + tabbedPane.getSelectedIndex());
+                // Prints the string 3 times if there are 3 tabs etc
+            }
+        });
+
+        add(tabbedPane);
+        setSize(400, 400);
+        setVisible(true);
+
     }
 
     /**
@@ -55,7 +86,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoggedInState state = (LoggedInState) evt.getNewValue();
-        username.setText(state.getUsername());
+        //LoggedInState state = (LoggedInState) evt.getNewValue();
+        //username.setText(state.getUsername());
     }
 }
