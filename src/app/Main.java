@@ -1,15 +1,19 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.UserRatingAccessObject;
+import data_access.WatchlistAccessObject;
 import entity.CommonUserFactory;
 import interface_adapters.ViewManagerModel;
+import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginViewModel;
+import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.signup.SignupViewModel;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import use_case.get_watchlist.GetWatchlistDataAccessInterface;
+import utility.ApiInterface;
+import utility.OMDBCaller;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +45,11 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
+        MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
+
+        //API initializer
+        ApiInterface api = new OMDBCaller();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -49,13 +58,18 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject();
+        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject();
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoViewModel);
+
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

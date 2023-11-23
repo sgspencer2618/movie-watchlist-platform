@@ -16,6 +16,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
+    private final WatchlistView watchlistView;
 
     JLabel username;
     JTabbedPane tabbedPane;
@@ -33,9 +34,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView) {
         this.loggedInViewModel = loggedInViewModel;
+        this.watchlistView = watchlistView;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -53,6 +56,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         searchpanel.add(search, BorderLayout.AFTER_LINE_ENDS);
 
         mywatchlist.add(searchpanel, BorderLayout.PAGE_START);
+
+        LoggedInState state = loggedInViewModel.getState();
+        String user = state.getUsername();
+
+        mywatchlist.add(watchlistView);
 
         //create new ratings tab
         myratings = new JPanel();
@@ -72,9 +80,15 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         });
 
         add(tabbedPane);
-        setSize(400, 400);
+        setPreferredSize(new Dimension(400,400));
         setVisible(true);
 
+    }
+
+    private void fetchWatchlist(String user) {
+        watchlistView.showWatchlist(user);
+        watchlistView.createWatchlistPanel();
+        mywatchlist.add(watchlistView);
     }
 
     /**
@@ -86,7 +100,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //LoggedInState state = (LoggedInState) evt.getNewValue();
-        //username.setText(state.getUsername());
+        LoggedInState state = (LoggedInState) evt.getNewValue();
+        String user = state.getUsername();
+        System.out.println("logged in: " + user);
+        fetchWatchlist(user);
     }
 }
