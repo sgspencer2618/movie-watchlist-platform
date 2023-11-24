@@ -5,6 +5,7 @@ public class LoginState {
     private String usernameError = null;
     private String password = "";
     private String passwordError = null;
+    private boolean returning = false;
 
     public LoginState(LoginState copy) {
         username = copy.username;
@@ -46,5 +47,13 @@ public class LoginState {
 
     public void setPasswordError(String passwordError) {
         this.passwordError = passwordError;
+    }
+
+    public boolean isReturning() {
+        return returning;
+    }
+
+    public void setReturning(boolean returning) {
+        this.returning = returning;
     }
 }

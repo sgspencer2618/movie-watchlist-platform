@@ -6,9 +6,6 @@ import interface_adapters.ViewManagerModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class SignupPresenter implements SignupOutputBoundary {
 
     private final SignupViewModel signupViewModel;
@@ -29,6 +26,15 @@ public class SignupPresenter implements SignupOutputBoundary {
 
         LoginState loginState = loginViewModel.getState();
         loginState.setUsername(response.getUsername());
+        this.loginViewModel.setState(loginState);
+        loginViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+    @Override
+    public void prepareReturningView() {
+        LoginState loginState = loginViewModel.getState();
         this.loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
 
