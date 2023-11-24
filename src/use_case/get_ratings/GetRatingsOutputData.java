@@ -6,17 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsOutputData {
-    private final boolean useCaseFailed;
     private final HashMap<Movie, Integer> ratings;
 
-    public GetRatingsOutputData(boolean useCaseFailed, HashMap<Movie, Integer> ratings) {
-        this.useCaseFailed = useCaseFailed;
+    private final List<Movie> movieList;
+
+    public GetRatingsOutputData(HashMap<Movie, Integer> ratings, List<Movie> movieList) {
         this.ratings = ratings;
+        this.movieList = movieList;
     }
 
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
-    }
+    public List<Movie> getMovieList() {return movieList;}
 
     public HashMap<Movie, Integer> getRatings() {return ratings;}
 }
