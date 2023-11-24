@@ -10,14 +10,10 @@ public class SignupController {
         this.userSignupUseCaseInteractor = userSignupUseCaseInteractor;
     }
 
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password1, String password2, boolean isReturning) {
         SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2);
+                username, password1, password2, isReturning);
 
         userSignupUseCaseInteractor.execute(signupInputData);
-    }
-
-    public void executeReturning() {
-        userSignupUseCaseInteractor.executeReturning();
     }
 }
