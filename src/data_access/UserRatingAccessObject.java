@@ -5,6 +5,8 @@ import use_case.get_ratings.GetRatingsDataAccessInterface;
 import use_case.remove_rating.RemoveRatingDataAccessInterface;
 import use_case.search.SearchUserRatingsDataAccessInterface;
 import use_case.update_rating.UpdateRatingDataAccessInterface;
+import utility.ApiInterface;
+import utility.OMDBCaller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,11 @@ public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterf
     }
 
     public HashMap<Movie, Integer> getRatings(String user){
-        return new HashMap<>();
+        ApiInterface APIcaller = new OMDBCaller();
+        HashMap<Movie, Integer> ratings = new HashMap<Movie, Integer>();
+        ratings.put(APIcaller.getMovie("tt1375666"), 5); // Inception
+        ratings.put(APIcaller.getMovie("tt10648342"), 2); // Thor: Love and Thunder
+        ratings.put(APIcaller.getMovie("tt2935510"), 3); // Ad Astra
+        return ratings;
     }
 }

@@ -5,6 +5,7 @@ import data_access.UserRatingAccessObject;
 import data_access.WatchlistAccessObject;
 import entity.CommonUserFactory;
 import interface_adapters.ViewManagerModel;
+import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginViewModel;
@@ -46,6 +47,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
+        GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
 
         //API initializer
@@ -68,8 +70,9 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoViewModel);
+        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoViewModel);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

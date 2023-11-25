@@ -1,13 +1,11 @@
 package app;
 
 import data_access.UserRatingAccessObject;
-import data_access.WatchlistAccessObject;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistPresenter;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.movie_info.MovieInfoViewModel;
-import use_case.get_ratings.GetRatingsDataAccessInterface;
 import use_case.get_watchlist.*;
 import utility.ApiInterface;
 import view.WatchlistView;
