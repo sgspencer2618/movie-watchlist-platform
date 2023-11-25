@@ -11,13 +11,14 @@ import java.util.List;
 
 public class UserDBMap implements UserDBInterface {
 
-    private HashMap<String, UserStore> users;
+    private final HashMap<String, UserStore> users;
     private MovieDBInterface movieDB;
 
     private UserFactory userFactory;
 
-    public UserDBMap(HashMap<String, UserStore> users) {
-        this.users = users;
+    public UserDBMap(UserFactory userFactory) {
+        this.userFactory = userFactory;
+        this.users = new HashMap<>();
     }
 
     @Override
