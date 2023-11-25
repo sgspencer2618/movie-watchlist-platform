@@ -18,6 +18,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final LoggedInViewModel loggedInViewModel;
     private final WatchlistView watchlistView;
 
+    private final RatingsView ratingsView;
+
     JLabel username;
     JTabbedPane tabbedPane;
     //create new watchlist tab
@@ -34,9 +36,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView) {
         this.loggedInViewModel = loggedInViewModel;
         this.watchlistView = watchlistView;
+        this.ratingsView = ratingsView;
         this.loggedInViewModel.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
 
@@ -44,7 +47,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.setSize(400,400);
+        tabbedPane.setSize(800,800);
         //create new watchlist tab
         mywatchlist = new JPanel();
         mywatchlist.setLayout(new BorderLayout());
@@ -64,6 +67,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         //create new ratings tab
         myratings = new JPanel();
+        myratings.setLayout(new BorderLayout());
 
         //create new search tab
         moviesearch = new JPanel();
@@ -80,7 +84,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         });
 
         add(tabbedPane);
-        setPreferredSize(new Dimension(400,400));
+        setPreferredSize(new Dimension(800,800));
         setVisible(true);
 
     }
@@ -89,6 +93,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         watchlistView.showWatchlist(user);
         watchlistView.createWatchlistPanel();
         mywatchlist.add(watchlistView);
+    }
+
+    private void fetchRatings(String user) {
+        ratingsView.showRatings(user);
+        ratingsView.createRatingsPanel();
+        myratings.add(ratingsView);
     }
 
     /**
@@ -104,5 +114,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         String user = state.getUsername();
         System.out.println("logged in: " + user);
         fetchWatchlist(user);
+        fetchRatings(user);
     }
 }
