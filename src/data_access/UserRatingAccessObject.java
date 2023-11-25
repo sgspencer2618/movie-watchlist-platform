@@ -8,8 +8,10 @@ import use_case.update_rating.UpdateRatingDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
 
+import javax.print.attribute.HashAttributeSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterface, GetRatingsDataAccessInterface,
         RemoveRatingDataAccessInterface, UpdateRatingDataAccessInterface {

@@ -46,7 +46,8 @@ public class OMDBCaller implements ApiInterface {
     
     public List<Movie> getSearch(String search, int page) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
-                .addQueryParameter("apiKey", this.API_TOKEN)
+                .addQueryParameter("apiKey",
+                        this.API_TOKEN)
                 .addQueryParameter("s", search)
                 .addQueryParameter("p", Integer.toString(page))
                 .addQueryParameter("type", "movie");
@@ -57,10 +58,10 @@ public class OMDBCaller implements ApiInterface {
         ArrayList<Movie> movies = new ArrayList<>();
         try {
             Response response = client.newCall(request).execute();
-            assert response.body() != null;
-            assert response.code() == 200;
+//            assert response.body() != null;
+//            assert response.code() == 200;
             JSONObject response_json = new JSONObject(response.body().string());
-            assert response_json.has("Search");
+//            assert response_json.has("Search");
             JSONArray jsonMovies = response_json.getJSONArray("Search");
             for (int i = 0; i < jsonMovies.length(); i++) {
                 JSONObject json_movie = jsonMovies.getJSONObject(i);
@@ -86,14 +87,14 @@ public class OMDBCaller implements ApiInterface {
                 .addQueryParameter("type", "movie");
         Request request = new Request.Builder()
                 .url(httpUrl.build())
-                .addHeader("Content-Type", "application/json")
+                .addHeader("content-type", "application/json")
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            assert response.body() != null;
-            assert response.code() == 200;
+//            assert response.body() != null;
+//            assert response.code() == 200;
             JSONObject response_json = new JSONObject(response.body().string());
-            assert response_json.has("Title");
+//            assert response_json.has("Title");
             ArrayList<String> ratings = new ArrayList<>();
             JSONArray ratings_json = response_json.getJSONArray("Ratings");
             // RATINGS COME IN ORDER:
