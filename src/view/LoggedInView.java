@@ -67,6 +67,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         //create new ratings tab
         myratings = new JPanel();
+        myratings.setLayout(new BorderLayout());
 
         //create new search tab
         moviesearch = new JPanel();
