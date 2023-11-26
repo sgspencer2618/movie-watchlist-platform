@@ -6,6 +6,6 @@ import entity.Watchlist;
 
 public interface AddToWatchlistDataAccessInterface {
 
-    public Watchlist getWatchlist(String user);
-  
+    public boolean addToWatchlist(String username, String imdbID);
+
 }

@@ -22,4 +22,16 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
         testWatchlist.setMovieIDs(Idlist);
         return testWatchlist;
     }
+
+    @Override
+    public boolean addToWatchlist(String username, String imdbID) {
+        // TODO: implement the database such that we can add an element
+        return true;
+    }
+
+    @Override
+    public boolean removeFromWatchlist(String username, String imdbID) {
+        // TODO: implement the database such that we can remove an element
+        return true;
+    }
 }
