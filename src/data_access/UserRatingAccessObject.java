@@ -39,6 +39,12 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
     public List<UserRating> getRatings(String user){
         ApiInterface APIcaller = new OMDBCaller();
         List<UserRating> ratings = new ArrayList<UserRating>();
+        Movie movie1 = APIcaller.getMovie("tt1229238");
+        Movie movie2 = APIcaller.getMovie("tt2911666");
+        UserRating rating1 = new UserRating(1,movie1.getImdbID(), user, 5);
+        UserRating rating2 = new UserRating(2,movie2.getImdbID(), user, 3);
+        ratings.add(rating1);
+        ratings.add(rating2);
 //        ratings.put(APIcaller.getMovie("tt1375666"), 5); // Inception
 //        ratings.put(APIcaller.getMovie("tt10648342"), 2); // Thor: Love and Thunder
 //        ratings.put(APIcaller.getMovie("tt2935510"), 3); // Ad Astra
