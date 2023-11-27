@@ -2,12 +2,12 @@ package entity;
 
 public class UserRating {
     private final int id;
-    private final int movieId;
+    private final String movieId;
     private final String username;
-    private final int rating;
+    private int rating;
 
 
-    public UserRating(int id, int movieId, String username, int rating) {
+    public UserRating(int id, String movieId, String username, int rating) {
         this.id = id;
         this.movieId = movieId;
         this.username = username;
@@ -18,7 +18,7 @@ public class UserRating {
         return id;
     }
 
-    public int getMovieId() {
+    public String getMovieId() {
         return movieId;
     }
 
@@ -28,5 +28,9 @@ public class UserRating {
 
     public int getRating() {
         return rating;
+    }
+
+    public void setRating(Integer rat) {
+        this.rating = rat;
     }
 }
