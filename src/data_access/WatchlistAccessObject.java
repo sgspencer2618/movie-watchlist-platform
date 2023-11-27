@@ -6,32 +6,122 @@ import use_case.add_to_watchlist.AddToWatchlistDataAccessInterface;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import use_case.remove_from_watchlist.RemoveFromWatchlistDataAccessInterface;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, AddToWatchlistDataAccessInterface, RemoveFromWatchlistDataAccessInterface {
+
+    private final File csvFile;
+
+    private final Map<String, Integer> headers = new LinkedHashMap<>();
+
+    private final HashMap<String, Watchlist> watchlistMap = new HashMap<>();
+
+    public WatchlistAccessObject(String csvPath) {
+        csvFile = new File(csvPath);
+        headers.put("username", 0);
+        headers.put("movieID", 1);
+
+        if (csvFile.length() == 0) {
+            save();
+        } else {
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String header = reader.readLine();
+
+                assert header.equals("username, movieID");
+                String row;
+                while ((row = reader.readLine()) != null) {
+                    String[] col = row.split(",");
+                    String username = String.valueOf(col[headers.get("username")]);
+                    String movieID = String.valueOf(col[headers.get("movieID")]);
+                    Watchlist entry = watchlistMap.get(username);
+                    if (entry != null) {
+                        List<String> movieIDs = entry.getMovieIDs();
+                        movieIDs.add(movieID);
+                    } else {
+                        entry = new Watchlist(username);
+                        List<String> movieIDS = new ArrayList<>();
+                        movieIDS.add(movieID);
+                        entry.setMovieIDs(movieIDS);
+                        watchlistMap.put(username, entry);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @Override
     public Watchlist getWatchlist(String user) {
-        // TODO: we have to implement the database first, for now just returns a new test watchlist.
-        Watchlist testWatchlist = new Watchlist(0, user);
-        List<String> Idlist = new ArrayList<>();
-        Idlist.add("tt1229238");
-        Idlist.add("tt2935510");
-        Idlist.add("tt2911666");
-        Idlist.add("tt0468569");
-        testWatchlist.setMovieIDs(Idlist);
-        return testWatchlist;
+        return watchlistMap.get(user);
     }
 
     @Override
     public boolean addToWatchlist(String username, String imdbID) {
-        // TODO: implement the database such that we can add an element
+        if (watchlistMap.containsKey(username)) {
+            Watchlist entry = watchlistMap.get(username);
+            List<String> movieIDs = entry.getMovieIDs();
+            movieIDs.add(imdbID);
+        } else {
+            Watchlist entry = new Watchlist(username);
+            List<String> movieIDs = new ArrayList<>();
+            movieIDs.add(imdbID);
+            entry.setMovieIDs(movieIDs);
+            watchlistMap.put(username, entry);
+        }
+        this.save();
         return true;
     }
 
     @Override
     public boolean removeFromWatchlist(String username, String imdbID) {
-        // TODO: implement the database such that we can remove an element
-        return true;
+        if (watchlistMap.containsKey(username)) {
+            Watchlist entry = watchlistMap.get(username);
+            List<String> movieIDs = entry.getMovieIDs();
+            ListIterator<String> itr = movieIDs.listIterator();
+            while (itr.hasNext()) {
+                String id = itr.next();
+                if (id.equals(imdbID)) {
+                    movieIDs.remove(itr.nextIndex());
+                }
+            }
+            this.save();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void save() {
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.write(String.join(",", headers.keySet()));
+            writer.newLine();
+
+            for (Watchlist watchList : watchlistMap.values()) {
+                for (String movieID : watchList.getMovieIDs()) {
+                String line = String.format("%s,%s",
+                        watchList.getUserName(), movieID);
+                writer.write(line);
+                writer.newLine();
+                }
+            }
+            writer.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
