@@ -33,19 +33,19 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
             movieList.add(apiInterface.getMovie(movieId));
         }
 
-        HashMap<Movie, Integer> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
+        // HashMap<Movie, Integer> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
 
-        //Hashmap trimmer
-        HashMap<Movie, Integer> filteredRatings = new HashMap<>();
-        for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
+        // //Hashmap trimmer
+        // HashMap<Movie, Integer> filteredRatings = new HashMap<>();
+        // for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
 
-            if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-                filteredRatings.put(curr.getKey(), curr.getValue());
-            }
-        }
+        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
+        //         filteredRatings.put(curr.getKey(), curr.getValue());
+        //     }
+        // }
 
-        GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
+        // GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
 
-        getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
+        // getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
     }
 }

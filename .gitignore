@@ -41,3 +41,7 @@ build/
 ### Our API TOKEN! ###
 username.txt
 .secret.txt
+
+### Testing files ###
+testUserRating.csv
+testWatchlist.csv
