@@ -1,23 +1,23 @@
-package interface_adapters.get_watchlist;
+package interface_adapters.search;
 
 import interface_adapters.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class GetWatchlistViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
-    private GetWatchlistState state = new GetWatchlistState();
+    private SearchState state = new SearchState();
 
-    public GetWatchlistViewModel() {
-        super("watchlist");
+    public SearchViewModel() {
+        super("Search");
     }
 
-    public GetWatchlistState getState() {
+    public SearchState getState() {
         return state;
     }
 
-    public void setState(GetWatchlistState state) {
+    public void setState(SearchState state) {
         this.state = state;
     }
 

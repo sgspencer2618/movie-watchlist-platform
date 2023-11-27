@@ -4,6 +4,6 @@ import entity.Watchlist;
 
 public interface RemoveFromWatchlistDataAccessInterface {
 
-    public Watchlist getWatchlist(String user);
+    public boolean removeFromWatchlist(String username, String imdbID);
 
 }

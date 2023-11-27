@@ -1,12 +1,11 @@
 //Data_Access
 package data_access;
-import use_case.search.SearchUserDataAccessInterface;
 import entity.User;
 
 import java.util.*;
 
 
-public class UserAccessObject implements SearchUserDataAccessInterface {
+public class UserAccessObject {
 
     public UserAccessObject(){
 
