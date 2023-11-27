@@ -4,7 +4,8 @@ import entity.Movie;
 import entity.UserRating;
 import view.RatingsView;
 
-import java.util.HashMap;
+import entity.UserRating;
+
 import java.util.List;
 
 public interface GetRatingsDataAccessInterface {

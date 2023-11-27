@@ -52,10 +52,16 @@ public class GetRatingsInteractor implements GetRatingsInputBoundary {
                 filteredMovieList.add(apiInterface.getMovie(curr.getMovieId()));
             }
         }
+        // List<Movie> filteredMovieList = new ArrayList<>();
+        // for (Map.Entry<Movie, Integer> curr : ratings.) {
+        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
+        //         filteredMovieList.add(curr.getKey());
+        //     }
+        // }
 
-        GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, filteredMovieList);
+        // GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, filteredMovieList);
 
-        getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
+        // getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
     }
 
 }

@@ -4,7 +4,7 @@ public class UserRating {
     private final int id;
     private final String movieId;
     private final String username;
-    private final int rating;
+    private int rating;
 
 
     public UserRating(int id, String movieId, String username, int rating) {
@@ -28,5 +28,9 @@ public class UserRating {
 
     public int getRating() {
         return rating;
+    }
+
+    public void setRating(Integer rat) {
+        this.rating = rat;
     }
 }

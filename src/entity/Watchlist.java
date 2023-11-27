@@ -6,16 +6,10 @@ public class Watchlist {
     private final String userName;
     private List<String> movieIDs;
 
-    private final int id;
-
-    public Watchlist(int id, String userName) {
-        this.id = id;
+    public Watchlist( String userName) {
         this.userName = userName;
     }
 
-    public int getId () {
-        return id;
-    }
     public String getUserName () {
         return userName;
     }

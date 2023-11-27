@@ -56,6 +56,8 @@ public class Main {
 
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject();
         GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject();
+        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
+        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);

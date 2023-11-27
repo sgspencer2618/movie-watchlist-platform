@@ -45,9 +45,19 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
                 filteredRatings.add(rating);
             }
         }
+        // HashMap<Movie, Integer> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
 
-        GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
+        // //Hashmap trimmer
+        // HashMap<Movie, Integer> filteredRatings = new HashMap<>();
+        // for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
 
-        getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
+        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
+        //         filteredRatings.put(curr.getKey(), curr.getValue());
+        //     }
+        // }
+
+        // GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
+
+        // getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
     }
 }
