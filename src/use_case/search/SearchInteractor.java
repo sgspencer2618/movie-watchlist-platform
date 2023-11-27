@@ -5,21 +5,19 @@ import utility.ApiInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import data_access.UserRatingAccessObject;
 import entity.UserRating;
 
 public class SearchInteractor implements SearchHandlerInputBoundary {
 
     final ApiInterface APICaller;
-    final UserRatingAccessObject userRatingAccess;
+    final SearchHandlerDataAccessInterface searchDataAcess;
     final SearchHandlerOutputBoundary searchPresenter;
 
 public SearchInteractor(ApiInterface APICaller,
-                        UserRatingAccessObject userRatingAccess,
+                        SearchHandlerDataAccessInterface searchDataAcess,
                         SearchHandlerOutputBoundary searchOutputBoundary){
     this.APICaller = APICaller;
-    this.userRatingAccess = userRatingAccess;
+    this.searchDataAcess = searchDataAcess;
     this.searchPresenter = searchOutputBoundary;
 }
 
@@ -28,8 +26,8 @@ public void execute(SearchHandlerInputData searchInputData){
     List<Movie> searchResult = APICaller.getSearch(searchInputData.getSearchQuery(), 1);
     List<UserRating> userRatings = new ArrayList<>();
     for (Movie mov : searchResult) {
-        if (userRatingAccess.userRatingExists(currUserName, mov.getImdbID())) {
-            userRatings.add(userRatingAccess.getUserRating(currUserName, mov.getImdbID()));
+        if (searchDataAcess.userRatingExists(currUserName, mov.getImdbID())) {
+            userRatings.add(searchDataAcess.getUserRating(currUserName, mov.getImdbID()));
         }
     }
     SearchHandlerOutputData outputData = new SearchHandlerOutputData(searchResult, userRatings);

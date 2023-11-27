@@ -4,6 +4,7 @@ import entity.UserRating;
 import org.json.JSONObject;
 import use_case.get_ratings.GetRatingsDataAccessInterface;
 import use_case.remove_rating.RemoveRatingDataAccessInterface;
+import use_case.search.SearchHandlerDataAccessInterface;
 import use_case.update_rating.UpdateRatingDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
-        RemoveRatingDataAccessInterface, UpdateRatingDataAccessInterface {
+        RemoveRatingDataAccessInterface, UpdateRatingDataAccessInterface, SearchHandlerDataAccessInterface {
 
     public UserRatingAccessObject() {
 
