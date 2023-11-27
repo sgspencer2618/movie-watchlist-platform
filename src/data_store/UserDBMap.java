@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserDBMap implements UserDBInterface {
+public class UserDBMap implements UserDBInterface, WatchlistDBInterface {
 
     private final HashMap<String, UserStore> users;
     private MovieDBInterface movieDB;
