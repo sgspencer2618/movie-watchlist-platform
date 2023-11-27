@@ -48,7 +48,6 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         scrollPane.setPreferredSize(DIMENSIONS);
 
         add(scrollPane, BorderLayout.CENTER);
-
     }
 
     public JPanel createPanelList(List<Movie> movieList) {
@@ -68,9 +67,9 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
 
     public JPanel createClickablePanel(Movie movie) {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        //panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setBorder(new EmptyBorder(0, 10, 0, 10));
-        panel.setPreferredSize(new Dimension(200, 100));
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         panel.setLayout(new BorderLayout(20,0));
 
         //placeholder url to test image path
@@ -113,6 +112,7 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
         JButton add = new JButton("+");
+        add.setPreferredSize(new Dimension(40,40));
         controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
         add.setPreferredSize(new Dimension(50,50));
         add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
@@ -146,7 +146,6 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
                 panel.setBackground(normalColor);
             }
         });
-
 
         return panel;
     }
