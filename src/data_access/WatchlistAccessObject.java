@@ -38,7 +38,7 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                assert header.equals("username, movieID");
+                assert header.equals("username,movieID");
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
@@ -86,6 +86,7 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
 
     @Override
     public boolean removeFromWatchlist(String username, String imdbID) {
+        boolean found = false;
         if (watchlistMap.containsKey(username)) {
             Watchlist entry = watchlistMap.get(username);
             List<String> movieIDs = entry.getMovieIDs();
@@ -93,14 +94,13 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
             while (itr.hasNext()) {
                 String id = itr.next();
                 if (id.equals(imdbID)) {
-                    movieIDs.remove(itr.nextIndex());
+                    itr.remove();
+                    found = true;
                 }
             }
-            this.save();
-            return true;
-        } else {
-            return false;
         }
+        this.save();
+        return found;
     }
 
     private void save() {
