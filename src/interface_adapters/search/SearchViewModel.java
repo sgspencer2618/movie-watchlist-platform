@@ -1,33 +1,33 @@
-package interface_adapters;
+package interface_adapters.search;
+
+import interface_adapters.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public abstract class ViewModel {
+public class SearchViewModel extends ViewModel {
 
-    private String viewName;
-    private defaultState state;
+    private SearchState state = new SearchState();
 
-    public ViewModel(String viewName) {
-        this.viewName = viewName;
+    public SearchViewModel() {
+        super("Search");
     }
 
-    public String getViewName() {
-        return this.viewName;
+    public SearchState getState() {
+        return state;
     }
 
-    public void setState(defaultState state) {
+    public void setState(SearchState state) {
         this.state = state;
     }
 
-    public defaultState getState() {return state;}
-
-
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }

@@ -14,7 +14,6 @@ public class AddToWatchlistController {
 
     public void execute(Movie movie, String user) {
         AddToWatchlistInputData addToWatchlistInputData = new AddToWatchlistInputData(movie, user);
-
         addToWatchListUseCaseInteractor.execute(addToWatchlistInputData);
     }
 }

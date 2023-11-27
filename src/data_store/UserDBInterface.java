@@ -11,18 +11,11 @@ public interface UserDBInterface {
 
     public boolean userExists(String username);
 
-    public List<Movie> getWatchlist (String username);
-
-    public void addToWatchlist (String username, String movieID);
-
-    public void removeFromWatchlist (String username, String movieID);
-
     public List<Movie> getRatings (String username);
 
     public void addRating (String username, String movie, int rating);
 
     public void removeRating (String username, String movie);
-
 
 
 }

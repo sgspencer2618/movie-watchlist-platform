@@ -4,30 +4,21 @@ import java.util.List;
 
 public class RemoveFromWatchlistInteractor implements RemoveFromWatchlistInputBoundary {
     private final RemoveFromWatchlistDataAccessInterface watchlistAccessObject;
-    private final RemoveFromWatchlistOutputBoundary RemoveFromWatchlistPresenter;
+    private final RemoveFromWatchlistOutputBoundary removeFromWatchlistPresenter;
 
-    public RemoveFromWatchlistInteractor(RemoveFromWatchlistDataAccessInterface watchlistAccessObject, RemoveFromWatchlistOutputBoundary RemoveFromWatchlistPresenter) {
+    public RemoveFromWatchlistInteractor(RemoveFromWatchlistDataAccessInterface watchlistAccessObject, RemoveFromWatchlistOutputBoundary removeFromWatchlistPresenter) {
         this.watchlistAccessObject = watchlistAccessObject;
-        this.RemoveFromWatchlistPresenter = RemoveFromWatchlistPresenter;
+        this.removeFromWatchlistPresenter = removeFromWatchlistPresenter;
     }
 
     @Override
-    public void execute(RemoveFromWatchlistInputData RemoveFromWatchlistInputData) {
-        Watchlist watchlist;
-        try {
-            watchlist = watchlistAccessObject.getWatchlist(RemoveFromWatchlistInputData.getUser());
-        } catch (NullPointerException e1) {
-            RemoveFromWatchlistPresenter.prepareFailView("Watchlist or Movie does not exist");
-            return;
+    public void execute(RemoveFromWatchlistInputData removeFromWatchlistInputData) {
+        RemoveFromWatchlistOutputData removeFromWatchlistOutputData = new RemoveFromWatchlistOutputData(
+            removeFromWatchlistInputData.getMovie());
+        if (watchlistAccessObject.removeFromWatchlist(removeFromWatchlistInputData.getUser(), removeFromWatchlistOutputData.getMovie().getImdbID())) {
+            removeFromWatchlistPresenter.prepareSuccessView(removeFromWatchlistOutputData);
+        }  else {
+            removeFromWatchlistPresenter.prepareFailView(String.format("Unable to remove %s from watchlist", removeFromWatchlistInputData.getMovie().getTitle()));
         }
-        List<String> movieIDs = watchlist.getMovieIDs();
-        if (!movieIDs.remove(RemoveFromWatchlistInputData.getMovie().getImdbID())) {
-            RemoveFromWatchlistPresenter.prepareFailView("Movie not found in Watchlist");
-            return;
-        }
-        watchlist.setMovieIDs(movieIDs);
-        RemoveFromWatchlistOutputData addToWatchlistOutputData = new RemoveFromWatchlistOutputData(
-            RemoveFromWatchlistInputData.getMovie());
-            RemoveFromWatchlistPresenter.prepareSuccessView(addToWatchlistOutputData);
     }
 }
