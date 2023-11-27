@@ -1,9 +1,9 @@
 package data_access;
 import entity.Movie;
+import entity.UserRating;
 import org.json.JSONObject;
 import use_case.get_ratings.GetRatingsDataAccessInterface;
 import use_case.remove_rating.RemoveRatingDataAccessInterface;
-import use_case.search.SearchUserRatingsDataAccessInterface;
 import use_case.update_rating.UpdateRatingDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterface, GetRatingsDataAccessInterface,
+public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
         RemoveRatingDataAccessInterface, UpdateRatingDataAccessInterface {
 
     public UserRatingAccessObject() {
@@ -21,8 +21,9 @@ public class UserRatingAccessObject implements SearchUserRatingsDataAccessInterf
     }
     public void removeRating(String username, String move_id){}
     public void updateRating(String username, String move_id, int newRating){}
-    public int getUserRating(String user, String movieID){
-        return 1;
+    public UserRating getUserRating(String user, String movieID){
+        // TODO: Fix when database is done. All these methods should return a UserRating object, not some arbitrary integer.
+        return new UserRating(0, 0, user, 0);
     }
     public boolean userRatingExists(String user, String movieID){
         return false;
