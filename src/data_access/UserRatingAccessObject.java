@@ -39,7 +39,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                assert header.equals("id,movieID,username,rating");
+                assert header.equals("movieID,username,rating");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -60,23 +60,25 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
         while(itr.hasNext()) { //Iterator as we are changing the arraylist
             UserRating rat = itr.next();
             if (rat.getMovieId().equals(movieID) && rat.getUsername().equals(username)) {
-                ratings.remove(rat);
+                itr.remove();
             }
         }
         this.save();
     }
     public void updateRating(String username, String movieID, int newRating){
-        Collection<UserRating> loopRat = ratings;
+        ArrayList<UserRating> loopRat = ratings;
+        boolean found = false;
         for (UserRating rat : loopRat) {
             if ((rat.getMovieId() == movieID) && (rat.getUsername() == username)) {
                 rat.setRating(newRating);
-                this.save();
-                return;
+                found = true;
             }
         }
         // If we get here, no rating currently exists, so make one.
-        UserRating newRat = new UserRating(movieID, username, newRating);
-        ratings.add(newRat);
+        if (!found) {
+            UserRating newRat = new UserRating(movieID, username, newRating);
+            ratings.add(newRat);
+        }
         this.save();
     }
 
@@ -101,7 +103,8 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
     public List<UserRating> getRatings(String user){
         List<UserRating> userRats = new ArrayList<>();
         for (UserRating rat : ratings) {
-            if (rat.getUsername() == user) {
+            String username = rat.getUsername();
+            if (username.equals(user)) {
                 userRats.add(rat);
             }
         }

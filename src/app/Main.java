@@ -70,9 +70,8 @@ public class Main {
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
-
-        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject();
-        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject();
+        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
+        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, signupUserDAO);
         views.add(signupView, signupView.viewName);

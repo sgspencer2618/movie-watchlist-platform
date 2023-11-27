@@ -45,6 +45,7 @@ public class watchListTest {
         String username = String.format("test%d", user_count-1);
         assert (watchlistAccess.removeFromWatchlist(username, "CLEARLY NOT A MOVIE") == false);
         assert watchlistAccess.removeFromWatchlist(username, "NEW ITEM");
+        assert watchlistAccess.removeFromWatchlist(username, "Don't look");
         Watchlist watchlist = watchlistAccess.getWatchlist(username);
         List<String> movieIDS = watchlist.getMovieIDs();
         assert (movieIDS.contains("NEW ITEM") == false);
