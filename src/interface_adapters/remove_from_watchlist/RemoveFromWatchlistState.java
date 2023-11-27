@@ -1,4 +1,6 @@
 package interface_adapters.remove_from_watchlist;
 
-public class RemoveFromWatchlistState {
+import interface_adapters.defaultState;
+
+public class RemoveFromWatchlistState extends defaultState {
 }

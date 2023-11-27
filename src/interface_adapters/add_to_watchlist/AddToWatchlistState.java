@@ -1,4 +1,6 @@
 package interface_adapters.add_to_watchlist;
 
-public class AddToWatchlistState {
+import interface_adapters.defaultState;
+
+public class AddToWatchlistState extends defaultState {
 }

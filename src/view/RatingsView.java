@@ -1,6 +1,7 @@
 package view;
 
 import entity.Movie;
+import entity.UserRating;
 import interface_adapters.get_ratings.GetRatingsController;
 import interface_adapters.get_ratings.GetRatingsState;
 import interface_adapters.get_ratings.GetRatingsViewModel;
@@ -27,7 +28,7 @@ public class RatingsView extends JPanel implements PropertyChangeListener {
     private final GetRatingsViewModel getRatingsViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
     private List<Movie> movieList;
-    private HashMap<Movie, Integer> ratings;
+    private List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
 
@@ -51,12 +52,12 @@ public class RatingsView extends JPanel implements PropertyChangeListener {
 
     }
 
-    public JPanel createPanelList(HashMap<Movie, Integer> ratings) {
+    public JPanel createPanelList(List<UserRating> ratings) {
         panelList = new JPanel(); // Initialize the panelList field
         panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
         if (ratings != null) {
-            for (Movie movie : ratings.keySet()) {
+            for (Movie movie : movieList) {
                 panelList.add(createClickablePanel(movie));
             }
         }
@@ -107,7 +108,11 @@ public class RatingsView extends JPanel implements PropertyChangeListener {
         // Create the dropdown (combobox) for ratings
         String[] ratingOptions = {"1", "2", "3", "4", "5", "-"};
         JComboBox<String> ratingsDropdown = new JComboBox<>(ratingOptions);
-        ratingsDropdown.setSelectedItem(ratings.get(movie));
+        for (UserRating rating: ratings) {
+            if (rating.getMovieId() == movie.getImdbID()) {
+                ratingsDropdown.setSelectedItem(rating.getRating());
+            }
+        }
 
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));

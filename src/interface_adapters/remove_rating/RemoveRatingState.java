@@ -1,6 +1,8 @@
 package interface_adapters.remove_rating;
 
-public class RemoveRatingState {
+import interface_adapters.defaultState;
+
+public class RemoveRatingState extends defaultState {
     private String removeRatingError = null;
     private boolean removedRating;
     public RemoveRatingState(RemoveRatingState copy) {

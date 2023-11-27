@@ -1,6 +1,8 @@
 package interface_adapters.logged_in;
 
-public class LoggedInState {
+import interface_adapters.defaultState;
+
+public class LoggedInState extends defaultState {
     private String username = "";
 
     public LoggedInState(LoggedInState copy) {

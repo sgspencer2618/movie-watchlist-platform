@@ -1,10 +1,12 @@
 package use_case.get_ratings;
 
 import entity.Movie;
+import entity.UserRating;
 import entity.Watchlist;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import use_case.get_watchlist.GetWatchlistInteractor;
 import utility.ApiInterface;
+import utility.OMDBCaller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +43,13 @@ public class GetRatingsInteractor implements GetRatingsInputBoundary {
         for (String movieId: watchlist.getMovieIDs()) {
             movieList.add(apiInterface.getMovie(movieId));
         }
-        HashMap<Movie, Integer> ratings = ratingsDataAccessObject.getRatings(getRatingsInputData.getCurrUsername());
+        List<UserRating> ratings = ratingsDataAccessObject.getRatings(getRatingsInputData.getCurrUsername());
 
         ///Hashmap trimmer
         List<Movie> filteredMovieList = new ArrayList<>();
-        for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
-            if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-                filteredMovieList.add(curr.getKey());
+        for (UserRating curr : ratings) {
+            if (watchlist.getMovieIDs().contains(curr.getMovieId())) {
+                filteredMovieList.add(apiInterface.getMovie(curr.getMovieId()));
             }
         }
 

@@ -11,11 +11,11 @@ public abstract class defaultState {
     private List<UserRating> ratings;
     private Watchlist watchlist;
 
-    public List<UserRating> getUserRatings() {
+    public List<UserRating> getRatings() {
         return ratings;
     }
 
-    public void setUserRatings(List<UserRating> ratings) {
+    public void setRatings(List<UserRating> ratings) {
         this.ratings = ratings;
     }
 

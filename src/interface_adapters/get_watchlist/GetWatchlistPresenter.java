@@ -1,6 +1,7 @@
 package interface_adapters.get_watchlist;
 
 import entity.Movie;
+import entity.UserRating;
 import entity.Watchlist;
 import interface_adapters.ViewManagerModel;
 import use_case.get_watchlist.GetWatchlistOutputBoundary;
@@ -8,6 +9,7 @@ import use_case.get_watchlist.GetWatchlistOutputData;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
 
@@ -24,7 +26,7 @@ public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
         GetWatchlistState state = new GetWatchlistState();
 
         Watchlist watchlist = getWatchlistOutputData.getWatchlist();
-        HashMap<Movie, Integer> ratings = getWatchlistOutputData.getRatings();
+        List<UserRating> ratings = getWatchlistOutputData.getRatings();
         List<Movie> movieList = getWatchlistOutputData.getMovieList();
 
         state.setWatchlist(watchlist);

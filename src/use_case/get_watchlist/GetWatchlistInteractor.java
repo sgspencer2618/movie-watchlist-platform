@@ -2,6 +2,7 @@ package use_case.get_watchlist;
 
 import data_access.UserRatingAccessObject;
 import entity.Movie;
+import entity.UserRating;
 import entity.Watchlist;
 import utility.ApiInterface;
 
@@ -33,14 +34,15 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
             movieList.add(apiInterface.getMovie(movieId));
         }
 
-        HashMap<Movie, Integer> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
+        List<UserRating> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
 
         //Hashmap trimmer
-        HashMap<Movie, Integer> filteredRatings = new HashMap<>();
-        for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
+        List<UserRating> filteredRatings = new ArrayList<UserRating>() {
+        };
+        for (UserRating rating: ratings) {
 
-            if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-                filteredRatings.put(curr.getKey(), curr.getValue());
+            if (watchlist.getMovieIDs().contains(rating.getMovieId())) {
+                filteredRatings.add(rating);
             }
         }
 

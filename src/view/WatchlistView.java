@@ -1,6 +1,7 @@
 package view;
 
 import entity.Movie;
+import entity.UserRating;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistState;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
@@ -27,7 +28,7 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
     private final GetWatchlistViewModel getWatchlistViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
     private List<Movie> movieList;
-    private HashMap<Movie, Integer> ratings;
+    private List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
 
@@ -107,7 +108,11 @@ public class WatchlistView extends JPanel implements PropertyChangeListener {
         // Create the dropdown (combobox) for ratings
         String[] ratingOptions = {"1", "2", "3", "4", "5", "-"};
         JComboBox<String> ratingsDropdown = new JComboBox<>(ratingOptions);
-        ratingsDropdown.setSelectedItem(ratings.get(movie));
+        for (UserRating rating: ratings) {
+            if (rating.getMovieId() == movie.getImdbID()) {
+                ratingsDropdown.setSelectedItem(rating.getRating());
+            }
+        }
 
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
