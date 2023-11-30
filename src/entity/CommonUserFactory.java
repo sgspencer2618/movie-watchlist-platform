@@ -1,7 +1,4 @@
 package entity;
-
-import java.time.LocalDateTime;
-
 public class CommonUserFactory implements UserFactory {
     /**
      * Requires: password is valid.

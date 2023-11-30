@@ -3,7 +3,6 @@ package use_case.get_ratings;
 import entity.Movie;
 import entity.UserRating;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsOutputData {

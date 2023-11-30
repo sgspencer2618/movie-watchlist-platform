@@ -3,7 +3,6 @@ package use_case.search;
 import entity.Movie;
 import entity.UserRating;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchHandlerOutputData {

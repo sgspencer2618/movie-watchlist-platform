@@ -1,7 +1,5 @@
 package interface_adapters.update_rating;
 
-import interface_adapters.remove_rating.RemoveRatingState;
-
 import interface_adapters.ViewModel;
 
 import java.beans.PropertyChangeListener;

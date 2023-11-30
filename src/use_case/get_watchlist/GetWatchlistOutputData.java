@@ -4,9 +4,7 @@ import entity.Movie;
 import entity.UserRating;
 import entity.Watchlist;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class GetWatchlistOutputData {
     private final Watchlist watchlist;

@@ -4,7 +4,6 @@ import entity.Movie;
 import entity.UserRating;
 import interface_adapters.defaultState;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsState extends defaultState {

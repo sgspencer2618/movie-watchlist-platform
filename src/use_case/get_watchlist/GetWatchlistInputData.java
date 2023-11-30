@@ -1,7 +1,5 @@
 package use_case.get_watchlist;
 
-import entity.User;
-
 public class GetWatchlistInputData {
 
     private final String user;

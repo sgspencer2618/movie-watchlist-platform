@@ -5,13 +5,8 @@ import use_case.remove_rating.RemoveRatingDataAccessInterface;
 import use_case.search.SearchHandlerDataAccessInterface;
 import use_case.update_rating.UpdateRatingDataAccessInterface;
 
-import utility.ApiInterface;
-import utility.OMDBCaller;
-import view.RatingsView;
 
-import javax.print.attribute.HashAttributeSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,8 +14,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -64,7 +57,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
             }
         }
     }
-      
+
     public void removeRating(String username, String movieID){
         Iterator<UserRating> itr = ratings.iterator();
         while(itr.hasNext()) { //Iterator as we are changing the arraylist

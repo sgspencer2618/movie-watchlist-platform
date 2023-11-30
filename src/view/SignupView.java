@@ -1,7 +1,6 @@
 package view;
 
 
-import interface_adapters.ViewManagerModel;
 import interface_adapters.signup.SignupController;
 import interface_adapters.signup.SignupState;
 import interface_adapters.signup.SignupViewModel;

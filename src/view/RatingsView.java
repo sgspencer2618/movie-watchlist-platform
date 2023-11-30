@@ -6,23 +6,11 @@ import interface_adapters.get_ratings.GetRatingsController;
 import interface_adapters.get_ratings.GetRatingsState;
 import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.movie_info.MovieInfoController;
-import utility.ApiInterface;
-import utility.OMDBCaller;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RatingsView extends DefaultView implements PropertyChangeListener {

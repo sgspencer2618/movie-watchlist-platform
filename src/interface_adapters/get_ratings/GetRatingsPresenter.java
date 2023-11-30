@@ -6,7 +6,6 @@ import interface_adapters.ViewManagerModel;
 import use_case.get_ratings.GetRatingsOutputBoundary;
 import use_case.get_ratings.GetRatingsOutputData;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsPresenter implements GetRatingsOutputBoundary {

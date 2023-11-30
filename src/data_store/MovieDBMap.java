@@ -1,6 +1,4 @@
 package data_store;
-import data_store.MovieDBInterface;
-
 import java.util.HashMap;
 
 // Class which accesses the movie hashmap

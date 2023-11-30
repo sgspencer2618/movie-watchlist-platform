@@ -3,8 +3,6 @@ package view;
 import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.movie_info.MovieInfoState;
 import interface_adapters.movie_info.MovieInfoViewModel;
-import org.json.JSONObject;
-import utility.ApiInterface;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

@@ -7,9 +7,7 @@ import entity.Watchlist;
 import utility.ApiInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
     private final GetWatchlistDataAccessInterface getWatchlistDataAccessObject;

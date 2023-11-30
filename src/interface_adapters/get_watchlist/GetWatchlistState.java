@@ -5,7 +5,6 @@ import entity.UserRating;
 import entity.Watchlist;
 import interface_adapters.defaultState;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class GetWatchlistState extends defaultState {

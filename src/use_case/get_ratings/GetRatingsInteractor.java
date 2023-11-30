@@ -4,14 +4,10 @@ import entity.Movie;
 import entity.UserRating;
 import entity.Watchlist;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
-import use_case.get_watchlist.GetWatchlistInteractor;
 import utility.ApiInterface;
-import utility.OMDBCaller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GetRatingsInteractor implements GetRatingsInputBoundary {
 

@@ -7,9 +7,7 @@ import interface_adapters.ViewManagerModel;
 import use_case.get_watchlist.GetWatchlistOutputBoundary;
 import use_case.get_watchlist.GetWatchlistOutputData;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
 

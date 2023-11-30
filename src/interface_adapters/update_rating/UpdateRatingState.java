@@ -1,7 +1,6 @@
 package interface_adapters.update_rating;
 
 import interface_adapters.defaultState;
-import interface_adapters.remove_rating.RemoveRatingState;
 
 public class UpdateRatingState extends defaultState {
     private int newRating;
@@ -20,4 +19,3 @@ public class UpdateRatingState extends defaultState {
         }
 
 }
-
