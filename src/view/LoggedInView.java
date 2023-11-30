@@ -55,6 +55,7 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
         this.watchlistView = watchlistView;
         this.ratingsView = ratingsView;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.movieInfoController = movieInfoController;
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Logged In Screen");

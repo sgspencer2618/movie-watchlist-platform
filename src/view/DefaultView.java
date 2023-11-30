@@ -5,6 +5,7 @@ import entity.UserRating;
 import interface_adapters.ViewModel;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
+import interface_adapters.movie_info.MovieInfoController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +29,7 @@ public abstract class DefaultView extends JPanel {
     public List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
-    public String user;
+    private String user;
 
     public void createWatchlistPanel() {;
         setLayout(new BorderLayout());
