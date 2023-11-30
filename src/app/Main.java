@@ -11,6 +11,7 @@ import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginViewModel;
 import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.movie_info.MovieInfoViewModel;
+import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import utility.ApiInterface;
@@ -43,6 +44,7 @@ public class Main {
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel();
 
         //API initializer
         ApiInterface api = new OMDBCaller();
@@ -55,7 +57,7 @@ public class Main {
         }
 
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
-        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
+        WatchlistAccessObject  watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
@@ -67,7 +69,9 @@ public class Main {
         RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoViewModel);
         MovieInfoController movieInfoController = MovieInfoUseCaseFactory.createMovieInfoUseCase(api, movieInfoViewModel);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, movieInfoController);
+        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoViewModel);
+
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, searchView, movieInfoController);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

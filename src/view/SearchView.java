@@ -36,6 +36,7 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
         this.searchController = controller;
         this.movieInfoController = movieInfoController;
         this.searchViewModel = searchViewModel;
+        this.viewModel = searchViewModel;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Search Screen");

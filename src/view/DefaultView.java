@@ -2,6 +2,7 @@ package view;
 
 import entity.Movie;
 import entity.UserRating;
+import interface_adapters.ViewModel;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.movie_info.MovieInfoController;
@@ -20,22 +21,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DefaultView extends JPanel {
-    private GetWatchlistController getWatchlistController;
     private MovieInfoController movieInfoController;
-    private GetWatchlistViewModel getWatchlistViewModel;
+    public ViewModel viewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
     public java.util.List<Movie> movieList;
     public List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
-    private String user;
+    public String user;
 
     public void createWatchlistPanel() {;
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
-        movieList = getWatchlistViewModel.getState().getMovieList();
-        ratings = getWatchlistViewModel.getState().getRatings();
+        movieList = viewModel.getState().getMovieList();
+        ratings = viewModel.getState().getRatings();
         scrollPane = new JScrollPane(createPanelList(movieList, ratings));
         scrollPane.setPreferredSize(DIMENSIONS);
 
