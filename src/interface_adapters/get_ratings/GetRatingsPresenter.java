@@ -1,11 +1,11 @@
 package interface_adapters.get_ratings;
 
 import entity.Movie;
+import entity.UserRating;
 import interface_adapters.ViewManagerModel;
 import use_case.get_ratings.GetRatingsOutputBoundary;
 import use_case.get_ratings.GetRatingsOutputData;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsPresenter implements GetRatingsOutputBoundary {
@@ -23,7 +23,7 @@ public class GetRatingsPresenter implements GetRatingsOutputBoundary {
     public void prepareGetRatingsView(GetRatingsOutputData getRatingsOutputData) {
         GetRatingsState state = new GetRatingsState();
 
-        HashMap<Movie, Integer> ratings = getRatingsOutputData.getRatings();
+        List<UserRating> ratings = getRatingsOutputData.getRatings();
         List<Movie> movieList = getRatingsOutputData.getMovieList();
 
         state.setRatings(ratings);

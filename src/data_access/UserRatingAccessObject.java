@@ -5,16 +5,18 @@ import use_case.remove_rating.RemoveRatingDataAccessInterface;
 import use_case.search.SearchHandlerDataAccessInterface;
 import use_case.update_rating.UpdateRatingDataAccessInterface;
 
+
+import java.util.ArrayList;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +57,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
             }
         }
     }
+
     public void removeRating(String username, String movieID){
         Iterator<UserRating> itr = ratings.iterator();
         while(itr.hasNext()) { //Iterator as we are changing the arraylist
@@ -80,6 +83,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
             ratings.add(newRat);
         }
         this.save();
+
     }
 
     public boolean userRatingExists(String user, String movieID){
@@ -130,5 +134,6 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

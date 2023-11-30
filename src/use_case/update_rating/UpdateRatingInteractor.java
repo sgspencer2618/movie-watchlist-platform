@@ -1,9 +1,5 @@
 package use_case.update_rating;
 
-import use_case.update_rating.UpdateRatingDataAccessInterface;
-import use_case.update_rating.UpdateRatingInputData;
-import use_case.update_rating.UpdateRatingOutputBoundary;
-import use_case.update_rating.UpdateRatingOutputData;
 
 public class UpdateRatingInteractor implements  UpdateRatingInputBoundary{
     final UpdateRatingDataAccessInterface updateRatingDataAccessObject;

@@ -1,6 +1,8 @@
 package interface_adapters.movie_info;
 
-public class MovieInfoState {
+import interface_adapters.defaultState;
+
+public class MovieInfoState extends defaultState {
 
     private String titleText;
     private String infoText;

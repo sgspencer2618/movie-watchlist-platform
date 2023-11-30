@@ -1,8 +1,8 @@
 package interface_adapters.update_rating;
 
-import interface_adapters.remove_rating.RemoveRatingState;
+import interface_adapters.defaultState;
 
-public class UpdateRatingState {
+public class UpdateRatingState extends defaultState {
     private int newRating;
     public UpdateRatingState(UpdateRatingState copy) {
         newRating = copy.newRating;
@@ -19,4 +19,3 @@ public class UpdateRatingState {
         }
 
 }
-

@@ -1,6 +1,8 @@
 package interface_adapters.login;
 
-public class LoginState {
+import interface_adapters.defaultState;
+
+public class LoginState extends defaultState {
     private String username = "";
     private String usernameError = null;
     private String password = "";

@@ -1,13 +1,14 @@
 package interface_adapters.get_ratings;
 
 import entity.Movie;
+import entity.UserRating;
+import interface_adapters.defaultState;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class GetRatingsState {
-
-    private HashMap<Movie, Integer> ratings;
+public class GetRatingsState extends defaultState {
+    private List<UserRating> ratings;
+    private String user;
 
     private List<Movie> movieList;
 
@@ -18,11 +19,14 @@ public class GetRatingsState {
 
     GetRatingsState() {}
 
-    public HashMap<Movie, Integer> getRatings() {
+    public List<UserRating> getRatings() {
         return ratings;
     }
+    public String getUser() {
+        return user;
+    }
 
-    public void setRatings(HashMap<Movie, Integer> ratings) {
+    public void setRatings(List<UserRating> ratings) {
         this.ratings = ratings;
     }
 

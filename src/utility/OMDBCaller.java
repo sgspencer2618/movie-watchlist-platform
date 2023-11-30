@@ -30,7 +30,7 @@ public class OMDBCaller implements ApiInterface {
         this.client = new OkHttpClient().newBuilder().build();
         this.set_API_TOKEN();
     }
-    
+
     private void set_API_TOKEN () {
         try {
             String userDir = System.getProperty("user.dir");
@@ -43,7 +43,7 @@ public class OMDBCaller implements ApiInterface {
             e.printStackTrace();
         }
     }
-    
+
     public List<Movie> getSearch(String search, int page) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
                 .addQueryParameter("apiKey",
@@ -78,7 +78,7 @@ public class OMDBCaller implements ApiInterface {
         }
        return movies;
     }
-    
+
     public Movie getMovie(String imdbID) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.url).newBuilder()
                 .addQueryParameter("apiKey", this.API_TOKEN)
@@ -95,7 +95,6 @@ public class OMDBCaller implements ApiInterface {
 //            assert response.code() == 200;
             JSONObject response_json = new JSONObject(response.body().string());
 //            assert response_json.has("Title");
-            ArrayList<String> ratings = new ArrayList<>();
             JSONArray ratings_json = response_json.getJSONArray("Ratings");
             // RATINGS COME IN ORDER:
             // imdbRating

@@ -1,4 +1,10 @@
-package GUIPrototype;
+package view;
+
+import entity.Movie;
+import entity.UserRating;
+import interface_adapters.get_watchlist.GetWatchlistController;
+import interface_adapters.get_watchlist.GetWatchlistViewModel;
+import interface_adapters.movie_info.MovieInfoController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,48 +16,59 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClickablePanelList extends JPanel {
-
+public abstract class DefaultView extends JPanel {
+    private GetWatchlistController getWatchlistController;
+    private MovieInfoController movieInfoController;
+    private GetWatchlistViewModel getWatchlistViewModel;
+    private final Dimension DIMENSIONS = new Dimension(350,275);
+    private java.util.List<Movie> movieList;
+    private List<UserRating> ratings;
+    private JScrollPane scrollPane;
     private JPanel panelList;
+    private String user;
 
-    public ClickablePanelList(Dimension dimension, String[] panelLabels) {
+    public void createWatchlistPanel() {;
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
-        JScrollPane scrollPane = new JScrollPane(createPanelList(panelLabels));
-        add(scrollPane, BorderLayout.CENTER);
+        movieList = getWatchlistViewModel.getState().getMovieList();
+        ratings = getWatchlistViewModel.getState().getRatings();
+        scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        scrollPane.setPreferredSize(DIMENSIONS);
 
-        scrollPane.setPreferredSize(dimension);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
-    public JPanel createPanelList(String[] panelLabels) {
+    public JPanel createPanelList(List<Movie> movieList, List<UserRating> ratings) {
         panelList = new JPanel(); // Initialize the panelList field
         panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
-        // Add some sample data
+        this.ratings = ratings;
 
-        for (int i = 0; i < panelLabels.length; i++) {
-            panelList.add(createClickablePanel(panelLabels[i]));
+        // Add some sample data
+        if (movieList != null) {
+            for (Movie movie : movieList) {
+                panelList.add(createClickablePanel(movie));
+            }
         }
 
         return panelList;
     }
 
-    public void addToPanelList(JPanel jPanel) {
-        this.panelList.add(jPanel);
-    }
 
-    public JPanel createClickablePanel(String labelText) {
+    public JPanel createClickablePanel(Movie movie) {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        //panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setBorder(new EmptyBorder(0, 10, 0, 10));
-        panel.setPreferredSize(new Dimension(200, 100));
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         panel.setLayout(new BorderLayout(20,0));
 
         //placeholder url to test image path
-        String path = "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg";
-        URL url = null;
+        String path = movie.getPosterURL();
+        URL url;
         try {
             url = new URL(path);
         } catch (MalformedURLException e) {
@@ -62,7 +79,7 @@ public class ClickablePanelList extends JPanel {
             BufferedImage image = ImageIO.read(url);
             if (image != null) {
 
-                Image scaledimage = image.getScaledInstance(30, 45,
+                Image scaledimage = image.getScaledInstance(60, 90,
                         Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(scaledimage);
                 JLabel imagelabel = new JLabel(imageIcon);
@@ -78,16 +95,30 @@ public class ClickablePanelList extends JPanel {
             throw new RuntimeException(e);
         }
 
-        JLabel label = new JLabel(labelText);
+        JLabel label = new JLabel(movie.getTitle());
         panel.add(label, BorderLayout.CENTER);
 
         // Create the dropdown (combobox) for ratings
-        String[] ratingOptions = {"1", "2", "3", "4", "5", "-"};
+        ArrayList<String> OPTIONS = new ArrayList<>();
+        OPTIONS.add("-");
+        OPTIONS.add("1");
+        OPTIONS.add("2");
+        OPTIONS.add("3");
+        OPTIONS.add("4");
+        OPTIONS.add("5");
+        String[] ratingOptions = {"-","1", "2", "3", "4", "5"};
         JComboBox<String> ratingsDropdown = new JComboBox<>(ratingOptions);
+        for (UserRating rating: ratings) {
+            if (rating.getMovieId().equals(movie.getImdbID())) {
+                int index = OPTIONS.indexOf(String.valueOf(rating.getRating()));
+                ratingsDropdown.setSelectedIndex(index);
+            }
+        }
 
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
         JButton add = new JButton("+");
+        add.setPreferredSize(new Dimension(40,40));
         controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
         add.setPreferredSize(new Dimension(50,50));
         add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
@@ -101,7 +132,7 @@ public class ClickablePanelList extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //PLACEHOLDER - to be replaced with showing the information pane of the movie
-                JOptionPane.showMessageDialog(null, "Clicked on " + labelText);
+                movieInfoController.execute(movie.getImdbID());
             }
         });
 
@@ -121,7 +152,6 @@ public class ClickablePanelList extends JPanel {
                 panel.setBackground(normalColor);
             }
         });
-
 
         return panel;
     }

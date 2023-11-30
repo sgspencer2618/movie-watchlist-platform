@@ -1,7 +1,6 @@
 package interface_adapters.remove_rating;
 
 import interface_adapters.ViewModel;
-import interface_adapters.movie_info.MovieInfoState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -1,6 +1,5 @@
 package use_case.remove_from_watchlist;
-import entity.Watchlist;
-import java.util.List;
+
 
 public class RemoveFromWatchlistInteractor implements RemoveFromWatchlistInputBoundary {
     private final RemoveFromWatchlistDataAccessInterface watchlistAccessObject;

@@ -1,10 +1,7 @@
 package interface_adapters.remove_rating;
 
-import interface_adapters.movie_info.MovieInfoState;
 import use_case.remove_rating.RemoveRatingOutputData;
-import use_case.remove_rating.RemoveRatingDataAccessInterface;
 import use_case.remove_rating.RemoveRatingOutputBoundary;
-import interface_adapters.ViewManagerModel;
 
 public class RemoveRatingPresenter implements RemoveRatingOutputBoundary {
     private final RemoveRatingViewModel removeRatingViewModel;

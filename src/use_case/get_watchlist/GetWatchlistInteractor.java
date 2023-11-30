@@ -2,13 +2,12 @@ package use_case.get_watchlist;
 
 import data_access.UserRatingAccessObject;
 import entity.Movie;
+import entity.UserRating;
 import entity.Watchlist;
 import utility.ApiInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
     private final GetWatchlistDataAccessInterface getWatchlistDataAccessObject;
@@ -33,19 +32,20 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
             movieList.add(apiInterface.getMovie(movieId));
         }
 
-        // HashMap<Movie, Integer> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
+        List<UserRating> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
 
-        // //Hashmap trimmer
-        // HashMap<Movie, Integer> filteredRatings = new HashMap<>();
-        // for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
+        //Movie List Trimmer - filters out movies in the watchlist that haven't been rated by the user
+        List<UserRating> filteredRatings = new ArrayList<>() {
+        };
+        for (UserRating rating: ratings) {
 
-        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-        //         filteredRatings.put(curr.getKey(), curr.getValue());
-        //     }
-        // }
+            if (watchlist.getMovieIDs().contains(rating.getMovieId())) {
+                filteredRatings.add(rating);
+            }
+        }
 
-        // GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
+        GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
 
-        // getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
+        getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
     }
 }

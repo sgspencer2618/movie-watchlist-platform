@@ -1,6 +1,5 @@
 package interface_adapters.get_watchlist;
 
-import entity.User;
 import use_case.get_watchlist.GetWatchlistInputBoundary;
 import use_case.get_watchlist.GetWatchlistInputData;
 

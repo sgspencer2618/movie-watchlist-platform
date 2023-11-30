@@ -1,7 +1,10 @@
 package view;
 
+import entity.Movie;
+import entity.UserRating;
 import interface_adapters.logged_in.LoggedInState;
 import interface_adapters.logged_in.LoggedInViewModel;
+import interface_adapters.movie_info.MovieInfoController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -11,14 +14,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
-public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoggedInView extends DefaultView implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     private final WatchlistView watchlistView;
-
     private final RatingsView ratingsView;
+
+    private final MovieInfoController movieInfoController;
+    private List<Movie> movieList;
+    private List<UserRating> ratings;
+    private JScrollPane scrollPane;
+    private JPanel panelList;
+    private final Dimension DIMENSIONS = new Dimension(350,275);
+    private String user;
+
 
     JLabel username;
     JTabbedPane tabbedPane;
@@ -36,10 +48,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView, MovieInfoController movieInfoController) {
         this.loggedInViewModel = loggedInViewModel;
         this.watchlistView = watchlistView;
         this.ratingsView = ratingsView;
+        this.movieInfoController = movieInfoController;
         this.loggedInViewModel.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
 
@@ -52,18 +65,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         mywatchlist = new JPanel();
         mywatchlist.setLayout(new BorderLayout());
 
-        JPanel searchpanel = new JPanel(new BorderLayout());
-        JButton search = new JButton("Search");
-
-        searchpanel.add(new TextField("", 30));
-        searchpanel.add(search, BorderLayout.AFTER_LINE_ENDS);
-
-        mywatchlist.add(searchpanel, BorderLayout.PAGE_START);
 
         LoggedInState state = loggedInViewModel.getState();
-        String user = state.getUsername();
+        user = state.getUsername();
 
-        mywatchlist.add(watchlistView);
 
         //create new ratings tab
         myratings = new JPanel();
@@ -79,6 +84,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 System.out.println("Tab: " + tabbedPane.getSelectedIndex());
+                if (tabbedPane.getSelectedIndex() == 0) {
+                    fetchWatchlist(user);
+                }
+                else if (tabbedPane.getSelectedIndex() == 1) {
+                    fetchRatings(user);
+                }
                 // Prints the string 3 times if there are 3 tabs etc
             }
         });
@@ -114,6 +125,5 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         String user = state.getUsername();
         System.out.println("logged in: " + user);
         fetchWatchlist(user);
-        fetchRatings(user);
     }
 }

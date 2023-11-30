@@ -1,7 +1,6 @@
 package view;
 
 
-import interface_adapters.ViewManagerModel;
 import interface_adapters.signup.SignupController;
 import interface_adapters.signup.SignupState;
 import interface_adapters.signup.SignupViewModel;
@@ -50,11 +49,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
-
-        // TODO Note: the following line instantiates the "clear" button; it uses
-        //      a CLEAR_BUTTON_LABEL constant which is defined in the SignupViewModel class.
-        //      You need to add this "clear" button to the "buttons" panel.
         logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
         buttons.add(logIn);
 
@@ -97,10 +91,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         cancel.addActionListener(this);
 
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override

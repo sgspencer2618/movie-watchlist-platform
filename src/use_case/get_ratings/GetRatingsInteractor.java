@@ -4,13 +4,10 @@ import entity.Movie;
 import entity.UserRating;
 import entity.Watchlist;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
-import use_case.get_watchlist.GetWatchlistInteractor;
 import utility.ApiInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GetRatingsInteractor implements GetRatingsInputBoundary {
 
@@ -44,17 +41,15 @@ public class GetRatingsInteractor implements GetRatingsInputBoundary {
         }
         List<UserRating> ratings = ratingsDataAccessObject.getRatings(getRatingsInputData.getCurrUsername());
 
-        ///Hashmap trimmer
-        // List<Movie> filteredMovieList = new ArrayList<>();
-        // for (Map.Entry<Movie, Integer> curr : ratings.) {
-        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-        //         filteredMovieList.add(curr.getKey());
-        //     }
-        // }
+        //Movie List creator: makes a list of movie objects based on the user's rated movies
+        List<Movie> MovieList = new ArrayList<>();
+        for (UserRating curr : ratings) {
+            MovieList.add(apiInterface.getMovie(curr.getMovieId()));
+            }
 
-        // GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, filteredMovieList);
+        GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, MovieList);
 
-        // getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
+        getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
     }
 
 }

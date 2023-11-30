@@ -1,7 +1,5 @@
 package data_store;
 
-import data_store.MovieStore;
-
 public interface MovieDBInterface {
 
     public void addMovie(MovieStore movie);

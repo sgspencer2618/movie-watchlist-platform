@@ -1,15 +1,16 @@
 package interface_adapters.get_watchlist;
 
 import entity.Movie;
+import entity.UserRating;
 import entity.Watchlist;
+import interface_adapters.defaultState;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class GetWatchlistState {
+public class GetWatchlistState extends defaultState {
 
     private Watchlist watchlist;
-    private HashMap<Movie, Integer> ratings;
+    private List<UserRating> ratings;
     private List<Movie> movieList;
 
     public GetWatchlistState(GetWatchlistState copy) {
@@ -28,11 +29,11 @@ public class GetWatchlistState {
         this.watchlist = watchlist;
     }
 
-    public HashMap<Movie, Integer> getRatings() {
+    public List<UserRating> getRatings() {
         return ratings;
     }
 
-    public void setRatings(HashMap<Movie, Integer> ratings) {
+    public void setRatings(List<UserRating> ratings) {
         this.ratings = ratings;
     }
 

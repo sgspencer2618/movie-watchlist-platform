@@ -1,6 +1,8 @@
 package interface_adapters.signup;
 
-public class SignupState {
+import interface_adapters.defaultState;
+
+public class SignupState extends defaultState {
     private String username = "";
     private String usernameError = null;
     private String password = "";
