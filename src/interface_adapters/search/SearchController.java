@@ -12,8 +12,8 @@ public class SearchController {
         this.searchInteractor = searchInteractor;
     }
 
-    public void execute(User user, String searchQuery){
-        SearchHandlerInputData inputData = new SearchHandlerInputData(searchQuery, user);
+    public void execute(String username, String searchQuery){
+        SearchHandlerInputData inputData = new SearchHandlerInputData(searchQuery, username);
 
         searchInteractor.execute(inputData);
     }

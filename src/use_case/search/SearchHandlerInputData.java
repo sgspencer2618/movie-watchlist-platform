@@ -5,13 +5,13 @@ import entity.User;
 public class SearchHandlerInputData {
 
     final private String searchQuery;
-    final private User user;
-    public SearchHandlerInputData(String searchQuery, User user) {
+    final private String username;
+    public SearchHandlerInputData(String searchQuery, String username) {
         this.searchQuery = searchQuery;
-        this.user = user;
+        this.username = username;
     }
 
     String getSearchQuery(){return searchQuery;}
-    User getUser() {return user;}
+    String getUser() {return username;}
 
 }

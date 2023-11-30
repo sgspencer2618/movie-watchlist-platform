@@ -58,10 +58,9 @@ public class OMDBCaller implements ApiInterface {
         ArrayList<Movie> movies = new ArrayList<>();
         try {
             Response response = client.newCall(request).execute();
-//            assert response.body() != null;
-//            assert response.code() == 200;
+            assert response.body() != null;
             JSONObject response_json = new JSONObject(response.body().string());
-//            assert response_json.has("Search");
+            assert response_json.has("Search");
             JSONArray jsonMovies = response_json.getJSONArray("Search");
             for (int i = 0; i < jsonMovies.length(); i++) {
                 JSONObject json_movie = jsonMovies.getJSONObject(i);
@@ -75,6 +74,13 @@ public class OMDBCaller implements ApiInterface {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (AssertionError e) {
+            if (e.getCause().getMessage().contains("body")) {
+                System.out.println("There was no body for the given Search Query");
+            } else if (e.getCause().getMessage().contains("Search")) {
+                System.out.println("There was no search in the response body");
+            }
+            return new ArrayList<>();
         }
        return movies;
     }

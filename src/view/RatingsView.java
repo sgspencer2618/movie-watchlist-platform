@@ -62,5 +62,6 @@ public class RatingsView extends DefaultView implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         GetRatingsState state = (GetRatingsState) evt.getNewValue();
+        UpdateView(state);
     }
 }

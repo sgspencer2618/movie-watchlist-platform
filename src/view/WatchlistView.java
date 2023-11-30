@@ -30,7 +30,7 @@ public class WatchlistView extends DefaultView implements PropertyChangeListener
         getWatchlistViewModel.addPropertyChangeListener(this);
     }
 
-    public void createWatchlistPanel() {;
+    public void createWatchlistPanel() {
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
@@ -71,6 +71,6 @@ public class WatchlistView extends DefaultView implements PropertyChangeListener
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         GetWatchlistState state = (GetWatchlistState) evt.getNewValue();
-        //UpdateView(state);
+        UpdateView(state);
     }
 }

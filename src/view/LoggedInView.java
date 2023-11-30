@@ -22,6 +22,7 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
     private final LoggedInViewModel loggedInViewModel;
     private final WatchlistView watchlistView;
     private final RatingsView ratingsView;
+    private final SearchView searchView;
 
     private final MovieInfoController movieInfoController;
     private List<Movie> movieList;
@@ -48,8 +49,9 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView, MovieInfoController movieInfoController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView, SearchView searchView, MovieInfoController movieInfoController) {
         this.loggedInViewModel = loggedInViewModel;
+        this.searchView = searchView;
         this.watchlistView = watchlistView;
         this.ratingsView = ratingsView;
         this.movieInfoController = movieInfoController;
@@ -89,6 +91,8 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
                 }
                 else if (tabbedPane.getSelectedIndex() == 1) {
                     fetchRatings(user);
+                } else if (tabbedPane.getSelectedIndex() == 2) {
+                    fetchSearch(user);
                 }
                 // Prints the string 3 times if there are 3 tabs etc
             }
@@ -110,6 +114,12 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
         ratingsView.showRatings(user);
         ratingsView.createRatingsPanel();
         myratings.add(ratingsView);
+    }
+
+    private void fetchSearch(String user) {
+        searchView.showSearchView(user);
+        searchView.createWatchlistPanel();
+        moviesearch.add(searchView);
     }
 
     /**

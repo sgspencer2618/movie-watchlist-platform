@@ -24,8 +24,8 @@ public abstract class DefaultView extends JPanel {
     private MovieInfoController movieInfoController;
     private GetWatchlistViewModel getWatchlistViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
-    private java.util.List<Movie> movieList;
-    private List<UserRating> ratings;
+    public java.util.List<Movie> movieList;
+    public List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
     private String user;
