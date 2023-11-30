@@ -66,9 +66,9 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
     public Watchlist getWatchlist(String user) {
         Watchlist watch = watchlistMap.get(user);
         if (watch == null) {
-            Watchlist entry = new Watchlist(username);
+            watch = new Watchlist(username);
             List<String> movieIDs = new ArrayList<>();
-            entry.setMovieIDs(movieIDs);
+            watch.setMovieIDs(movieIDs);
             watchlistMap.put(username, entry);
         }
         return watch;
