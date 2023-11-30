@@ -54,7 +54,6 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
         this.searchView = searchView;
         this.watchlistView = watchlistView;
         this.ratingsView = ratingsView;
-        this.movieInfoController = movieInfoController;
         this.loggedInViewModel.addPropertyChangeListener(this);
         setLayout(new BorderLayout());
 

@@ -5,7 +5,6 @@ import entity.UserRating;
 import interface_adapters.ViewModel;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
-import interface_adapters.movie_info.MovieInfoController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DefaultView extends JPanel {
+    protected MovieInfoView movieInfoView;
     private MovieInfoController movieInfoController;
     public ViewModel viewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
@@ -132,7 +132,7 @@ public abstract class DefaultView extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //PLACEHOLDER - to be replaced with showing the information pane of the movie
-                movieInfoController.execute(movie.getImdbID());
+                movieInfoView.showMovie(movie.getImdbID());
             }
         });
 
