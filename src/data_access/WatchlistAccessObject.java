@@ -64,7 +64,14 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
 
     @Override
     public Watchlist getWatchlist(String user) {
-        return watchlistMap.get(user);
+        Watchlist watch = watchlistMap.get(user);
+        if (watch == null) {
+            Watchlist entry = new Watchlist(username);
+            List<String> movieIDs = new ArrayList<>();
+            entry.setMovieIDs(movieIDs);
+            watchlistMap.put(username, entry);
+        }
+        return watch;
     }
 
     @Override
