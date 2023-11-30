@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GetRatingsState extends defaultState {
-
     private List<UserRating> ratings;
     private String user;
 

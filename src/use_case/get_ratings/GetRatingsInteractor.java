@@ -45,23 +45,15 @@ public class GetRatingsInteractor implements GetRatingsInputBoundary {
         }
         List<UserRating> ratings = ratingsDataAccessObject.getRatings(getRatingsInputData.getCurrUsername());
 
-        ///Hashmap trimmer
-        List<Movie> filteredMovieList = new ArrayList<>();
+        //Movie List creator: makes a list of movie objects based on the user's rated movies
+        List<Movie> MovieList = new ArrayList<>();
         for (UserRating curr : ratings) {
-            if (watchlist.getMovieIDs().contains(curr.getMovieId())) {
-                filteredMovieList.add(apiInterface.getMovie(curr.getMovieId()));
+            MovieList.add(apiInterface.getMovie(curr.getMovieId()));
             }
-        }
-        // List<Movie> filteredMovieList = new ArrayList<>();
-        // for (Map.Entry<Movie, Integer> curr : ratings.) {
-        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-        //         filteredMovieList.add(curr.getKey());
-        //     }
-        // }
 
-        // GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, filteredMovieList);
+        GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, MovieList);
 
-        // getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
+        getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
     }
 
 }

@@ -73,18 +73,10 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
         mywatchlist = new JPanel();
         mywatchlist.setLayout(new BorderLayout());
 
-////        JPanel searchpanel = new JPanel(new BorderLayout());
-////        JButton search = new JButton("Search");
-//
-//        searchpanel.add(new TextField("", 30));
-//        searchpanel.add(search, BorderLayout.AFTER_LINE_ENDS);
-//
-//        mywatchlist.add(searchpanel, BorderLayout.PAGE_START);
 
         LoggedInState state = loggedInViewModel.getState();
         user = state.getUsername();
 
-//        mywatchlist.add(watchlistView);
 
         //create new ratings tab
         myratings = new JPanel();
@@ -141,6 +133,5 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
         String user = state.getUsername();
         System.out.println("logged in: " + user);
         fetchWatchlist(user);
-        //fetchRatings(user);
     }
 }

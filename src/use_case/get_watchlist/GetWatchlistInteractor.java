@@ -36,8 +36,8 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
 
         List<UserRating> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
 
-        //Hashmap trimmer
-        List<UserRating> filteredRatings = new ArrayList<UserRating>() {
+        //Movie List Trimmer - filters out movies in the watchlist that haven't been rated by the user
+        List<UserRating> filteredRatings = new ArrayList<>() {
         };
         for (UserRating rating: ratings) {
 
@@ -45,19 +45,9 @@ public class GetWatchlistInteractor implements GetWatchlistInputBoundary {
                 filteredRatings.add(rating);
             }
         }
-        // HashMap<Movie, Integer> ratings = ratingAccessObject.getRatings(getWatchlistInputData.getUser());
 
-        // //Hashmap trimmer
-        // HashMap<Movie, Integer> filteredRatings = new HashMap<>();
-        // for (Map.Entry<Movie, Integer> curr : ratings.entrySet()) {
+        GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
 
-        //     if (watchlist.getMovieIDs().contains(curr.getKey().getImdbID())) {
-        //         filteredRatings.put(curr.getKey(), curr.getValue());
-        //     }
-        // }
-
-        // GetWatchlistOutputData getWatchlistOutputData = new GetWatchlistOutputData(watchlist, filteredRatings, movieList);
-
-        // getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
+        getWatchlistPresenter.prepareGetWatchlistView(getWatchlistOutputData);
     }
 }

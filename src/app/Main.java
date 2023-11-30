@@ -54,8 +54,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject();
-        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject();
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
         GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
 

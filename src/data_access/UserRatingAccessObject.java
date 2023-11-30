@@ -64,12 +64,6 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
             }
         }
     }
-          
-    public void removeRating(String username, String move_id){}
-    public void updateRating(String username, String move_id, int newRating){}
-    public UserRating getUserRating(String user, String movieID){
-        // TODO: Fix when database is done. All these methods should return a UserRating object, not some arbitrary integer.
-        return new UserRating(0, "", user, 0);
       
     public void removeRating(String username, String movieID){
         Iterator<UserRating> itr = ratings.iterator();
@@ -127,21 +121,6 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
         }
         return userRats;
     }
-
-
-    public List<UserRating> getRatings(String user){
-        ApiInterface APIcaller = new OMDBCaller();
-        List<UserRating> ratings = new ArrayList<UserRating>();
-        Movie movie1 = APIcaller.getMovie("tt1229238");
-        Movie movie2 = APIcaller.getMovie("tt2911666");
-        UserRating rating1 = new UserRating(1,movie1.getImdbID(), user, 5);
-        UserRating rating2 = new UserRating(2,movie2.getImdbID(), user, 3);
-        ratings.add(rating1);
-        ratings.add(rating2);
-//        ratings.put(APIcaller.getMovie("tt1375666"), 5); // Inception
-//        ratings.put(APIcaller.getMovie("tt10648342"), 2); // Thor: Love and Thunder
-//        ratings.put(APIcaller.getMovie("tt2935510"), 3); // Ad Astra
-        return ratings;
 
     private void save() {
         BufferedWriter writer;
