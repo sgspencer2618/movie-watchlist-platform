@@ -15,7 +15,6 @@ import java.util.List;
 
 public class RatingsView extends DefaultView implements PropertyChangeListener {
     private final GetRatingsController getRatingsController;
-    private final MovieInfoController movieInfoController;
     private final GetRatingsViewModel getRatingsViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
     private List<Movie> movieList;
@@ -24,10 +23,10 @@ public class RatingsView extends DefaultView implements PropertyChangeListener {
     private JPanel panelList;
 
 
-    public RatingsView(GetRatingsController getRatingsController, MovieInfoController movieInfoController, GetRatingsViewModel getRatingsViewModel) {
+    public RatingsView(GetRatingsController getRatingsController, GetRatingsViewModel getRatingsViewModel, MovieInfoView movieInfoView) {
         this.getRatingsController = getRatingsController;
-        this.movieInfoController = movieInfoController;
         this.getRatingsViewModel = getRatingsViewModel;
+        this.movieInfoView = movieInfoView;
         getRatingsViewModel.addPropertyChangeListener(this);
     }
 
