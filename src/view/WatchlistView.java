@@ -5,7 +5,6 @@ import entity.UserRating;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistState;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
-import interface_adapters.movie_info.MovieInfoController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +13,17 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class WatchlistView extends DefaultView implements PropertyChangeListener {
-    private final GetWatchlistController getWatchlistController;
-    private final MovieInfoController movieInfoController;
-    private final GetWatchlistViewModel getWatchlistViewModel;
+    private GetWatchlistController getWatchlistController;
+    private GetWatchlistViewModel getWatchlistViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
     private List<Movie> movieList;
     private List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
 
-    public WatchlistView(GetWatchlistController getWatchlistController, MovieInfoController movieInfoController, GetWatchlistViewModel getWatchlistViewModel) {
+    public WatchlistView(GetWatchlistController getWatchlistController, GetWatchlistViewModel getWatchlistViewModel, MovieInfoView movieInfoView) {
         this.getWatchlistController = getWatchlistController;
-        this.movieInfoController = movieInfoController;
+        this.movieInfoView = movieInfoView;
         this.getWatchlistViewModel = getWatchlistViewModel;
         getWatchlistViewModel.addPropertyChangeListener(this);
     }
@@ -59,14 +57,11 @@ public class WatchlistView extends DefaultView implements PropertyChangeListener
     private void UpdateView(GetWatchlistState state) {
         this.movieList = state.getMovieList();
         this.ratings = state.getRatings();
-
-
     }
 
     public void showWatchlist(String user) {
         getWatchlistController.execute(user);
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
