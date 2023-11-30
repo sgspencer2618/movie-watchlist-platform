@@ -63,11 +63,11 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoViewModel);
-        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoViewModel);
-        MovieInfoController movieInfoController = MovieInfoUseCaseFactory.createMovieInfoUseCase(api, movieInfoViewModel);
+        MovieInfoView movieInfoView = MovieInfoUseCaseFactory.create(api, movieInfoViewModel);
+        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoView);
+        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, movieInfoController);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
