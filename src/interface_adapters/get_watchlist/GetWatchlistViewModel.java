@@ -13,6 +13,7 @@ public class GetWatchlistViewModel extends ViewModel {
         super("watchlist");
     }
 
+
     public GetWatchlistState getState() {
         return state;
     }
