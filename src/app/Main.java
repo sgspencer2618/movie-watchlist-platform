@@ -12,6 +12,8 @@ import interface_adapters.login.LoginViewModel;
 import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.signup.SignupViewModel;
+import interface_adapters.remove_rating.RemoveRatingViewModel;
+import interface_adapters.update_rating.UpdateRatingViewModel;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
@@ -43,6 +45,9 @@ public class Main {
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
+        RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
+        UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
+
 
         //API initializer
         ApiInterface api = new OMDBCaller();
