@@ -8,6 +8,7 @@ import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import use_case.get_watchlist.*;
 import utility.ApiInterface;
+import view.MovieInfoView;
 import view.WatchlistView;
 
 public class GetWatchlistUseCaseFactory {
@@ -18,9 +19,9 @@ public class GetWatchlistUseCaseFactory {
 
     public static WatchlistView create(ApiInterface api, GetWatchlistViewModel getWatchlistViewModel, ViewManagerModel viewManagerModel,
                                        GetWatchlistDataAccessInterface watchlistDataAccessObject, UserRatingAccessObject ratingAccessObject,
-                                       MovieInfoViewModel movieInfoViewModel) {
+                                       MovieInfoView movieInfoView) {
         GetWatchlistController getWatchlistController = createGetWatchlistUseCase(getWatchlistViewModel, viewManagerModel, watchlistDataAccessObject, ratingAccessObject, api);
-        return new WatchlistView(getWatchlistController, MovieInfoUseCaseFactory.createMovieInfoUseCase(api, movieInfoViewModel), getWatchlistViewModel);
+        return new WatchlistView(getWatchlistController, getWatchlistViewModel, movieInfoView);
     }
 
     public static GetWatchlistController createGetWatchlistUseCase(GetWatchlistViewModel getWatchlistViewModel, ViewManagerModel viewManagerModel, GetWatchlistDataAccessInterface getWatchlistAccessObject,
