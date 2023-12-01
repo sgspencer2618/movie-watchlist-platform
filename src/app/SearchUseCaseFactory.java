@@ -22,7 +22,7 @@ public class SearchUseCaseFactory {
     }
 
     public static SearchController createSearchController (SearchViewModel searchViewModel, ViewManagerModel viewManagerModel, WatchlistAccessObject watchlistAccessObject, UserRatingAccessObject userRatingAccessObject, ApiInterface api) {
-        SearchHandlerOutputBoundary searchPresenter = new SearchPresenter(searchViewModel, viewManagerModel);
+        SearchHandlerOutputBoundary searchPresenter = new SearchPresenter(searchViewModel);
         SearchHandlerInputBoundary searchInteractor = new SearchInteractor(api, userRatingAccessObject, watchlistAccessObject, searchPresenter);
 
         return new SearchController(searchInteractor);

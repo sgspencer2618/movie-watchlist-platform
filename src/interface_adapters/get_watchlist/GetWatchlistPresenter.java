@@ -6,17 +6,16 @@ import entity.Watchlist;
 import interface_adapters.ViewManagerModel;
 import use_case.get_watchlist.GetWatchlistOutputBoundary;
 import use_case.get_watchlist.GetWatchlistOutputData;
+import view.WatchlistView;
 
 import java.util.List;
 
 public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
 
     private final GetWatchlistViewModel getWatchlistViewModel;
-    private final ViewManagerModel viewManagerModel;
 
-    public GetWatchlistPresenter(GetWatchlistViewModel getWatchlistViewModel, ViewManagerModel viewManagerModel) {
+    public GetWatchlistPresenter(GetWatchlistViewModel getWatchlistViewModel) {
         this.getWatchlistViewModel = getWatchlistViewModel;
-        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
@@ -32,11 +31,6 @@ public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
         state.setMovieList(movieList);
 
         getWatchlistViewModel.setState(state);
-        viewManagerModel.firePropertyChanged();
-
-        viewManagerModel.setActiveView(getWatchlistViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-
-        viewManagerModel.firePropertyChanged();
+        getWatchlistViewModel.firePropertyChanged();
     }
 }

@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,35 +26,34 @@ import entity.User;
 public class SearchView extends DefaultView implements PropertyChangeListener, ActionListener{
 
     SearchController searchController;
-    SearchViewModel searchViewModel;
     public final String viewName = "Search";
-    private String username;
+    private String username = "";
 
     final JTextField searchInputField = new JTextField(15);
     final JButton searchButton;
 
     public SearchView(SearchController controller, SearchViewModel searchViewModel, MovieInfoView movieInfoView) {
+        super();
+        setBackground(new Color(0, 0, 0));
         this.searchController = controller;
         this.movieInfoView = movieInfoView;
-        this.searchViewModel = searchViewModel;
         this.viewModel = searchViewModel;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Search Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        LabelTextPanel searchInfo = new LabelTextPanel(new JLabel("Search"), searchInputField);
+        JPanel searchInfo = new LabelTextPanel(new JLabel("Search"), searchInputField);
 
         JPanel buttons = new JPanel();
         searchButton = new JButton("SEARCH");
-        buttons.add(searchButton);
+        buttons.add(searchButton, BorderLayout.NORTH);
 
         searchButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed (ActionEvent evt) {
                     if (evt.getSource().equals(searchButton)) {
                         SearchState currState = searchViewModel.getState();
-
                         searchController.execute(username, currState.getSearchQuery());
                     }
                 }
@@ -64,7 +65,7 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
             public void keyTyped(KeyEvent e) {
                 SearchState currState = searchViewModel.getState();
                 currState.setSearchQuery(searchInputField.getText() + e.getKeyChar());
-                searchViewModel.setState(currState);
+                System.out.println(searchViewModel.getState().getSearchQuery());
             }
 
             @Override
@@ -74,10 +75,9 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
             public void keyReleased(KeyEvent e) {}
         });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        searchInfo.add(buttons, BorderLayout.NORTH);
         this.add(title);
         this.add(searchInfo);
-        this.add(buttons);
     }
 
     public void showSearchView(String user) {
@@ -87,9 +87,8 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SearchState state = (SearchState) evt.getNewValue();
-        this.movieList = state.getMovieList();
-        this.ratings = state.getRatings();
+        System.out.println("WOOOOHOOOOO");
+        this.UpdateView();
     }
 
     public void actionPerformed(ActionEvent evt) {

@@ -16,8 +16,8 @@ public class WatchlistView extends DefaultView implements PropertyChangeListener
     private GetWatchlistController getWatchlistController;
     private GetWatchlistViewModel getWatchlistViewModel;
     private final Dimension DIMENSIONS = new Dimension(350,275);
-    private List<Movie> movieList;
-    private List<UserRating> ratings;
+    public List<Movie> movieList;
+    public List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
 
@@ -37,7 +37,7 @@ public class WatchlistView extends DefaultView implements PropertyChangeListener
         scrollPane = new JScrollPane(createPanelList(movieList, ratings));
         scrollPane.setPreferredSize(DIMENSIONS);
 
-        add(scrollPane, BorderLayout.CENTER);
+        this.add(scrollPane, BorderLayout.CENTER);
     }
 
     public JPanel createPanelList(List<Movie> movieList) {

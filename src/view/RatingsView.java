@@ -15,42 +15,16 @@ import java.util.List;
 
 public class RatingsView extends DefaultView implements PropertyChangeListener {
     private final GetRatingsController getRatingsController;
-    private final GetRatingsViewModel getRatingsViewModel;
-    private final Dimension DIMENSIONS = new Dimension(350,275);
-    private List<Movie> movieList;
-    private List<UserRating> ratings;
-    private JScrollPane scrollPane;
-    private JPanel panelList;
-
-
     public RatingsView(GetRatingsController getRatingsController, GetRatingsViewModel getRatingsViewModel, MovieInfoView movieInfoView) {
         this.getRatingsController = getRatingsController;
-        this.getRatingsViewModel = getRatingsViewModel;
+        this.viewModel = getRatingsViewModel;
         this.movieInfoView = movieInfoView;
         getRatingsViewModel.addPropertyChangeListener(this);
-    }
-
-    public void createRatingsPanel() {;
-        setLayout(new BorderLayout());
-
-        // Create a scroll pane to hold the panel list
-        movieList = getRatingsViewModel.getState().getMovieList();
-        if (movieList.isEmpty()) {
-            System.out.println("Movie List is empty");
-        }
-        ratings = getRatingsViewModel.getState().getRatings();
-        scrollPane = new JScrollPane(createPanelList(movieList, ratings));
-        scrollPane.setPreferredSize(DIMENSIONS);
-
-        add(scrollPane, BorderLayout.CENTER);
-
     }
 
     private void UpdateView(GetRatingsState state) {
         this.movieList = state.getMovieList();
         this.ratings = state.getRatings();
-
-
     }
 
     public void showRatings(String user) {

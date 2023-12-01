@@ -33,21 +33,16 @@ public class GetRatingsInteractor implements GetRatingsInputBoundary {
     @Override
     public void execute(GetRatingsInputData getRatingsInputData) {
         Watchlist watchlist = getwatchlistDataAccessObject.getWatchlist(getRatingsInputData.getCurrUsername());
-
-        List<Movie> movieList = new ArrayList<>();
-
-        for (String movieId: watchlist.getMovieIDs()) {
-            movieList.add(apiInterface.getMovie(movieId));
-        }
         List<UserRating> ratings = ratingsDataAccessObject.getRatings(getRatingsInputData.getCurrUsername());
-
+        System.out.println(getRatingsInputData.getCurrUsername());
+        System.out.println(ratings);
         //Movie List creator: makes a list of movie objects based on the user's rated movies
         List<Movie> MovieList = new ArrayList<>();
         for (UserRating curr : ratings) {
             MovieList.add(apiInterface.getMovie(curr.getMovieId()));
             }
 
-        GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, MovieList);
+        GetRatingsOutputData getRatingsOutputData = new GetRatingsOutputData(ratings, MovieList, watchlist);
 
         getRatingsPresenter.prepareGetRatingsView(getRatingsOutputData);
     }
