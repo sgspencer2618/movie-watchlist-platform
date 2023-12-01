@@ -5,6 +5,7 @@ import okhttp3.Request;
 import okhttp3.HttpUrl;
 import okhttp3.Response;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -58,10 +59,8 @@ public class OMDBCaller implements ApiInterface {
         ArrayList<Movie> movies = new ArrayList<>();
         try {
             Response response = client.newCall(request).execute();
-//            assert response.body() != null;
-//            assert response.code() == 200;
             JSONObject response_json = new JSONObject(response.body().string());
-//            assert response_json.has("Search");
+            System.out.println(response_json.has("Search"));
             JSONArray jsonMovies = response_json.getJSONArray("Search");
             for (int i = 0; i < jsonMovies.length(); i++) {
                 JSONObject json_movie = jsonMovies.getJSONObject(i);
@@ -75,6 +74,9 @@ public class OMDBCaller implements ApiInterface {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (JSONException e) {
+            System.out.println("No search, returning empty list");
+            return new ArrayList<>();
         }
        return movies;
     }

@@ -2,8 +2,10 @@ package view;
 
 import entity.Movie;
 import entity.UserRating;
+import interface_adapters.ViewModel;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
+import interface_adapters.movie_info.MovieInfoController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,23 +14,55 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DefaultView extends JPanel {
-    protected MovieInfoView movieInfoView;
-    private final Dimension DIMENSIONS = new Dimension(350,275);
-    private java.util.List<Movie> movieList;
-    private List<UserRating> ratings;
-    private JScrollPane scrollPane;
-    private JPanel panelList;
-    private String user;
+    public MovieInfoView movieInfoView;
+    public ViewModel viewModel;
+    public final Dimension DIMENSIONS = new Dimension(250,275);
+    public List<Movie> movieList;
+    public List<UserRating> ratings;
+    public JScrollPane scrollPane;
+
+    public DefaultView() {
+        setBackground(new Color(0, 0, 0));
+    }
+
+    public void createWatchlistPanel() {;
+        setLayout(new BorderLayout());
+
+        // Create a scroll pane to hold the panel list
+        this.movieList = viewModel.getState().getMovieList();
+        this.ratings = viewModel.getState().getRatings();
+        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        this.scrollPane.setPreferredSize(DIMENSIONS);
+
+        this.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void UpdateView() {
+        this.movieList = viewModel.getState().getMovieList();
+        this.ratings = viewModel.getState().getRatings();
+        if (scrollPane != null) {
+            this.remove(scrollPane);
+        }
+        scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        scrollPane.setPreferredSize(DIMENSIONS);
+        this.add(scrollPane);
+        this.revalidate();
+        this.repaint();
+        this.firePropertyChanged();
+    }
 
     public JPanel createPanelList(List<Movie> movieList, List<UserRating> ratings) {
-        panelList = new JPanel(); // Initialize the panelList field
+        JPanel panelList = new JPanel(); // Initialize the panelList field
         panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
         this.ratings = ratings;
@@ -57,6 +91,7 @@ public abstract class DefaultView extends JPanel {
         try {
             url = new URL(path);
         } catch (MalformedURLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
@@ -139,6 +174,15 @@ public abstract class DefaultView extends JPanel {
         });
 
         return panel;
+    }
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    public void firePropertyChanged() {
+        support.firePropertyChange("updateTab", null, this);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
 }

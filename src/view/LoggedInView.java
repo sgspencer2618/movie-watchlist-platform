@@ -16,18 +16,19 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public class LoggedInView extends DefaultView implements ActionListener, PropertyChangeListener {
+public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     private final WatchlistView watchlistView;
     private final RatingsView ratingsView;
+    private final SearchView searchView;
+
     private List<Movie> movieList;
     private List<UserRating> ratings;
     private JScrollPane scrollPane;
     private JPanel panelList;
     private final Dimension DIMENSIONS = new Dimension(350,275);
-    private String user;
 
 
     JLabel username;
@@ -46,8 +47,9 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView, SearchView searchView) {
         this.loggedInViewModel = loggedInViewModel;
+        this.searchView = searchView;
         this.watchlistView = watchlistView;
         this.ratingsView = ratingsView;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -58,34 +60,26 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
 
         tabbedPane = new JTabbedPane();
         tabbedPane.setSize(800,800);
-        //create new watchlist tab
-        mywatchlist = new JPanel();
-        mywatchlist.setLayout(new BorderLayout());
 
+        tabbedPane.addTab("My Watch List", watchlistView);
+        tabbedPane.addTab("My Ratings", ratingsView);
+        tabbedPane.addTab("Movie Search", searchView);
 
-        LoggedInState state = loggedInViewModel.getState();
-        user = state.getUsername();
-
-
-        //create new ratings tab
-        myratings = new JPanel();
-        myratings.setLayout(new BorderLayout());
-
-        //create new search tab
-        moviesearch = new JPanel();
-
-        tabbedPane.addTab("My Watch List", mywatchlist);
-        tabbedPane.addTab("My Ratings", myratings);
-        tabbedPane.addTab("Movie Search", moviesearch);
+        // add property change support to update panes
+        watchlistView.addPropertyChangeListener(this);
+        searchView.addPropertyChangeListener(this);
+        ratingsView.addPropertyChangeListener(this);
 
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 System.out.println("Tab: " + tabbedPane.getSelectedIndex());
                 if (tabbedPane.getSelectedIndex() == 0) {
-                    fetchWatchlist(user);
+                    fetchWatchlist();
                 }
                 else if (tabbedPane.getSelectedIndex() == 1) {
-                    fetchRatings(user);
+                    fetchRatings();
+                } else if (tabbedPane.getSelectedIndex() == 2) {
+                    fetchSearch();
                 }
                 // Prints the string 3 times if there are 3 tabs etc
             }
@@ -97,16 +91,22 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
 
     }
 
-    private void fetchWatchlist(String user) {
-        watchlistView.showWatchlist(user);
+    private void fetchWatchlist() {
+        watchlistView.showWatchlist(loggedInViewModel.getState().getUsername());
         watchlistView.createWatchlistPanel();
-        mywatchlist.add(watchlistView);
+        tabbedPane.setSelectedComponent(watchlistView);
     }
 
-    private void fetchRatings(String user) {
-        ratingsView.showRatings(user);
-        ratingsView.createRatingsPanel();
-        myratings.add(ratingsView);
+    private void fetchRatings() {
+        ratingsView.showRatings(loggedInViewModel.getState().getUsername());
+        ratingsView.createWatchlistPanel();
+        tabbedPane.setSelectedComponent(ratingsView);
+    }
+
+    private void fetchSearch() {
+        searchView.showSearchView(loggedInViewModel.getState().getUsername());
+        searchView.createWatchlistPanel();
+        tabbedPane.setSelectedComponent(searchView);
     }
 
     /**
@@ -118,9 +118,15 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoggedInState state = (LoggedInState) evt.getNewValue();
-        String user = state.getUsername();
-        System.out.println("logged in: " + user);
-        fetchWatchlist(user);
+        if (evt.getPropertyName().equals("updateTab")) {
+            tabbedPane.setSelectedComponent(searchView);
+            this.revalidate();
+            this.repaint();
+        } else {
+            LoggedInState state = (LoggedInState) evt.getNewValue();
+            String user = state.getUsername();
+            System.out.println("logged in: " + user);
+            fetchWatchlist();
+        }
     }
 }

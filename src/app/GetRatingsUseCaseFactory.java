@@ -26,7 +26,7 @@ public class GetRatingsUseCaseFactory {
 
     public static GetRatingsController createGetRatingsUseCase(GetRatingsViewModel getRatingsViewModel, ViewManagerModel viewManagerModel, GetRatingsDataAccessInterface ratingsDataAccessObject,
                                                                    GetWatchlistDataAccessInterface watchlistAccessObject, ApiInterface api) {
-        GetRatingsOutputBoundary getRatingsPresenter = new GetRatingsPresenter(getRatingsViewModel, viewManagerModel);
+        GetRatingsOutputBoundary getRatingsPresenter = new GetRatingsPresenter(getRatingsViewModel);
         GetRatingsInputBoundary getRatingsInteractor = new GetRatingsInteractor(ratingsDataAccessObject, watchlistAccessObject, getRatingsPresenter, api);
 
         return new GetRatingsController(getRatingsInteractor);

@@ -11,6 +11,7 @@ import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginViewModel;
 import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.movie_info.MovieInfoViewModel;
+import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
 import interface_adapters.remove_rating.RemoveRatingViewModel;
 import interface_adapters.update_rating.UpdateRatingViewModel;
@@ -45,6 +46,7 @@ public class Main {
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel();
         RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
         UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
 
@@ -60,7 +62,7 @@ public class Main {
         }
 
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
-        GetWatchlistDataAccessInterface watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
+        WatchlistAccessObject  watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
@@ -72,7 +74,9 @@ public class Main {
         WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoView);
         RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView);
+        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
+
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, searchView);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

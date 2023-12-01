@@ -26,7 +26,7 @@ public class GetWatchlistUseCaseFactory {
 
     public static GetWatchlistController createGetWatchlistUseCase(GetWatchlistViewModel getWatchlistViewModel, ViewManagerModel viewManagerModel, GetWatchlistDataAccessInterface getWatchlistAccessObject,
                                                                    UserRatingAccessObject ratingAccessObject, ApiInterface api) {
-        GetWatchlistOutputBoundary getWatchlistPresenter = new GetWatchlistPresenter(getWatchlistViewModel, viewManagerModel);
+        GetWatchlistOutputBoundary getWatchlistPresenter = new GetWatchlistPresenter(getWatchlistViewModel);
         GetWatchlistInputBoundary getWatchlistInteractor = new GetWatchlistInteractor(getWatchlistAccessObject, ratingAccessObject, api, getWatchlistPresenter);
 
         return new GetWatchlistController(getWatchlistInteractor);
