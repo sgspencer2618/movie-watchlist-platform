@@ -1,7 +1,5 @@
 package app;
 
-import entity.CommonUserFactory;
-import entity.UserFactory;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;

@@ -6,11 +6,8 @@ import interface_adapters.get_ratings.GetRatingsState;
 import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 
-import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class RatingsView extends DefaultView implements PropertyChangeListener {
     private final GetRatingsController getRatingsController;

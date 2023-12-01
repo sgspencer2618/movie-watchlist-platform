@@ -1,6 +1,5 @@
 package app;
 
-import interface_adapters.ViewManagerModel;
 import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.get_ratings.GetRatingsController;
 import interface_adapters.get_ratings.GetRatingsPresenter;

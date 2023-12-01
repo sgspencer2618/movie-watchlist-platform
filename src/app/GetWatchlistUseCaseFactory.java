@@ -1,7 +1,6 @@
 package app;
 
 import data_access.UserRatingAccessObject;
-import interface_adapters.ViewManagerModel;
 import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistPresenter;

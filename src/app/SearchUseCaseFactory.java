@@ -6,7 +6,6 @@ import utility.ApiInterface;
 import view.SearchView;
 import data_access.UserRatingAccessObject;
 import data_access.WatchlistAccessObject;
-import interface_adapters.ViewManagerModel;
 import view.MovieInfoView;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchPresenter;

@@ -14,8 +14,6 @@ import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
-import interface_adapters.remove_rating.RemoveRatingViewModel;
-import interface_adapters.update_rating.UpdateRatingViewModel;
 import utility.ApiInterface;
 import utility.OMDBCaller;
 import view.*;

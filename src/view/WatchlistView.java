@@ -6,14 +6,11 @@ import interface_adapters.get_watchlist.GetWatchlistState;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 
-import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class WatchlistView extends DefaultView implements PropertyChangeListener {
-    private GetWatchlistController getWatchlistController;
+    private final GetWatchlistController getWatchlistController;
 
 
     public WatchlistView(GetWatchlistController getWatchlistController, GetWatchlistViewModel getWatchlistViewModel, MovieInfoView movieInfoView,
