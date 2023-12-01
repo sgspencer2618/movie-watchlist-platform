@@ -24,7 +24,6 @@ import entity.User;
 public class SearchView extends DefaultView implements PropertyChangeListener, ActionListener{
 
     SearchController searchController;
-    MovieInfoController movieInfoController;
     SearchViewModel searchViewModel;
     public final String viewName = "Search";
     private String username;
@@ -32,9 +31,9 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
     final JTextField searchInputField = new JTextField(15);
     final JButton searchButton;
 
-    public SearchView(SearchController controller, MovieInfoController movieInfoController, SearchViewModel searchViewModel) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, MovieInfoView movieInfoView) {
         this.searchController = controller;
-        this.movieInfoController = movieInfoController;
+        this.movieInfoView = movieInfoView;
         this.searchViewModel = searchViewModel;
         this.viewModel = searchViewModel;
         searchViewModel.addPropertyChangeListener(this);
