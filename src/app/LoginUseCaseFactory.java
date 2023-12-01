@@ -3,10 +3,13 @@ package app;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapters.ViewManagerModel;
+import interface_adapters.get_ratings.GetRatingsViewModel;
+import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginController;
 import interface_adapters.login.LoginPresenter;
 import interface_adapters.login.LoginViewModel;
+import interface_adapters.search.SearchViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -25,10 +28,14 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) {
+            LoginUserDataAccessInterface userDataAccessObject,
+            GetWatchlistViewModel getWatchlistViewModel,
+            GetRatingsViewModel getRatingsViewModel,
+            SearchViewModel searchViewModel) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,
+                    getWatchlistViewModel, getRatingsViewModel, searchViewModel);
             return new LoginView(loginViewModel, loginController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -41,12 +48,12 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) throws IOException {
+            LoginUserDataAccessInterface userDataAccessObject,
+            GetWatchlistViewModel getWatchlistViewModel,
+            GetRatingsViewModel getRatingsViewModel,
+            SearchViewModel searchViewModel) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
-
-        UserFactory userFactory = new CommonUserFactory();
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel, getWatchlistViewModel ,getRatingsViewModel, searchViewModel);
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);

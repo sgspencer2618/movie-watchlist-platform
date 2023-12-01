@@ -1,10 +1,10 @@
 package view;
 
-import entity.Movie;
-import entity.UserRating;
+import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistState;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
+import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,44 +14,15 @@ import java.util.List;
 
 public class WatchlistView extends DefaultView implements PropertyChangeListener {
     private GetWatchlistController getWatchlistController;
-    private GetWatchlistViewModel getWatchlistViewModel;
-    private final Dimension DIMENSIONS = new Dimension(350,275);
-    public List<Movie> movieList;
-    public List<UserRating> ratings;
-    private JScrollPane scrollPane;
-    private JPanel panelList;
 
-    public WatchlistView(GetWatchlistController getWatchlistController, GetWatchlistViewModel getWatchlistViewModel, MovieInfoView movieInfoView) {
+
+    public WatchlistView(GetWatchlistController getWatchlistController, GetWatchlistViewModel getWatchlistViewModel, MovieInfoView movieInfoView,
+                         AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
+        super(addToWatchlistController, removeFromWatchlistController);
         this.getWatchlistController = getWatchlistController;
         this.movieInfoView = movieInfoView;
-        this.getWatchlistViewModel = getWatchlistViewModel;
+        this.viewModel = getWatchlistViewModel;
         getWatchlistViewModel.addPropertyChangeListener(this);
-    }
-
-    public void createWatchlistPanel() {
-        setLayout(new BorderLayout());
-
-        // Create a scroll pane to hold the panel list
-        movieList = getWatchlistViewModel.getState().getMovieList();
-        ratings = getWatchlistViewModel.getState().getRatings();
-        scrollPane = new JScrollPane(createPanelList(movieList, ratings));
-        scrollPane.setPreferredSize(DIMENSIONS);
-
-        this.add(scrollPane, BorderLayout.CENTER);
-    }
-
-    public JPanel createPanelList(List<Movie> movieList) {
-        panelList = new JPanel(); // Initialize the panelList field
-        panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
-
-        // Add some sample data
-        if (movieList != null) {
-            for (Movie movie : movieList) {
-                panelList.add(createClickablePanel(movie));
-            }
-        }
-
-        return panelList;
     }
 
     private void UpdateView(GetWatchlistState state) {
@@ -67,5 +38,9 @@ public class WatchlistView extends DefaultView implements PropertyChangeListener
     public void propertyChange(PropertyChangeEvent evt) {
         GetWatchlistState state = (GetWatchlistState) evt.getNewValue();
         UpdateView(state);
+    }
+
+    public String getCurrUser() {
+        return viewModel.getState().getUsername();
     }
 }

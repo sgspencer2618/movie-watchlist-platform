@@ -10,24 +10,23 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-import interface_adapters.movie_info.MovieInfoController;
+
+import interface_adapters.add_to_watchlist.AddToWatchlistController;
+import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchState;
 import interface_adapters.search.SearchViewModel;
 
-import entity.User;
-
 public class SearchView extends DefaultView implements PropertyChangeListener, ActionListener{
 
     SearchController searchController;
-    public final String viewName = "Search";
-    private String username = "";
 
     final JTextField searchInputField = new JTextField(15);
     final JButton searchButton;
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, MovieInfoView movieInfoView) {
-        super();
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, MovieInfoView movieInfoView,
+                      AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
+        super(addToWatchlistController, removeFromWatchlistController);
         setBackground(new Color(0, 0, 0));
         this.searchController = controller;
         this.movieInfoView = movieInfoView;
@@ -45,14 +44,12 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
         buttons.add(searchButton, BorderLayout.NORTH);
 
         searchButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed (ActionEvent evt) {
+                evt -> {
                     if (evt.getSource().equals(searchButton)) {
                         SearchState currState = searchViewModel.getState();
-                        searchController.execute(username, currState.getSearchQuery());
+                        searchController.execute(currState.getUsername(), currState.getSearchQuery());
                     }
                 }
-            }
         );
 
         searchInputField.addKeyListener(new KeyListener() {
@@ -73,18 +70,20 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
         this.add(searchInfo, BorderLayout.PAGE_START);
         searchInfo.add(buttons, BorderLayout.LINE_END);
     }
+
     @Override
     public void createWatchlistPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a scroll pane to hold the panel list
         this.movieList = viewModel.getState().getMovieList();
         this.ratings = viewModel.getState().getRatings();
-        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        this.watchlist = viewModel.getState().getWatchlist();
+        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings, watchlist));
         this.scrollPane.setPreferredSize(DIMENSIONS);
     }
 
+
     public void showSearchView(String user) {
-        this.username = user;
         searchController.execute(user, "");
     }
 
@@ -94,7 +93,12 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
         this.UpdateView();
     }
 
+    public String getCurrUser() {
+        return viewModel.getState().getUsername();
+    }
+
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+
 }

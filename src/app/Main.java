@@ -5,17 +5,17 @@ import data_access.UserRatingAccessObject;
 import data_access.WatchlistAccessObject;
 import entity.CommonUserFactory;
 import interface_adapters.ViewManagerModel;
+import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginViewModel;
-import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.movie_info.MovieInfoViewModel;
+import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
 import interface_adapters.remove_rating.RemoveRatingViewModel;
 import interface_adapters.update_rating.UpdateRatingViewModel;
-import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
 import view.*;
@@ -40,6 +40,9 @@ public class Main {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
+
+
+        // ViewModels
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
@@ -47,8 +50,6 @@ public class Main {
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
-        RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
-        UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
 
 
         //API initializer
@@ -64,18 +65,28 @@ public class Main {
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
         WatchlistAccessObject  watchlistAccessObject = new WatchlistAccessObject("./watchlist.csv");
 
+        // Controllers
+        AddToWatchlistController addToWatchlistController = AddToWatchlistUseCaseFactory.createAddToWatchlistUseCase(watchlistAccessObject);
+        RemoveFromWatchlistController removeFromWatchlistController = RemoveFromWatchlistUseCaseFactory.createRemoveFromWatchlistUseCase(watchlistAccessObject);
+
+        // Creating signup view
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        assert signupView != null;
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        // Creating login view
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, getWatchlistViewModel, getRatingsViewModel, searchViewModel);
+        assert loginView != null;
         views.add(loginView, loginView.viewName);
 
+
         MovieInfoView movieInfoView = MovieInfoUseCaseFactory.create(api, movieInfoViewModel);
-        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoView);
-        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
+        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, watchlistAccessObject, ratingAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController);
+        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, ratingAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController);
 
-        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
+        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, ratingAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController);
 
+        // Creating logged in view
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, searchView);
         views.add(loggedInView, loggedInView.viewName);
 
