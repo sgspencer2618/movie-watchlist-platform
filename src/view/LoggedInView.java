@@ -59,7 +59,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.setSize(800,800);
+        //tabbedPane.setSize(800,800);
 
         tabbedPane.addTab("My Watch List", watchlistView);
         tabbedPane.addTab("My Ratings", ratingsView);

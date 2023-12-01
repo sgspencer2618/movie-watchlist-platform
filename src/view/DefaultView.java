@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -31,9 +32,7 @@ public abstract class DefaultView extends JPanel {
     public List<UserRating> ratings;
     public JScrollPane scrollPane;
 
-    public DefaultView() {
-        setBackground(new Color(0, 0, 0));
-    }
+    public DefaultView() {}
 
     public void createWatchlistPanel() {;
         setLayout(new BorderLayout());
@@ -44,17 +43,17 @@ public abstract class DefaultView extends JPanel {
         this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
         this.scrollPane.setPreferredSize(DIMENSIONS);
 
-        this.add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public void UpdateView() {
         this.movieList = viewModel.getState().getMovieList();
         this.ratings = viewModel.getState().getRatings();
-        if (scrollPane != null) {
-            this.remove(scrollPane);
+        if (this.scrollPane != null) {
+            this.remove(1);
         }
-        scrollPane = new JScrollPane(createPanelList(movieList, ratings));
-        scrollPane.setPreferredSize(DIMENSIONS);
+        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        this.scrollPane.setPreferredSize(DIMENSIONS);
         this.add(scrollPane);
         this.revalidate();
         this.repaint();
