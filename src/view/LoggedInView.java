@@ -24,7 +24,6 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
     private final RatingsView ratingsView;
     private final SearchView searchView;
 
-    private final MovieInfoController movieInfoController;
     private List<Movie> movieList;
     private List<UserRating> ratings;
     private JScrollPane scrollPane;
@@ -49,13 +48,12 @@ public class LoggedInView extends DefaultView implements ActionListener, Propert
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView, SearchView searchView, MovieInfoController movieInfoController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, WatchlistView watchlistView, RatingsView ratingsView, SearchView searchView) {
         this.loggedInViewModel = loggedInViewModel;
         this.searchView = searchView;
         this.watchlistView = watchlistView;
         this.ratingsView = ratingsView;
         this.loggedInViewModel.addPropertyChangeListener(this);
-        this.movieInfoController = movieInfoController;
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Logged In Screen");

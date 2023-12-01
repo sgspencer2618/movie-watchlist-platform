@@ -13,6 +13,8 @@ import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
+import interface_adapters.remove_rating.RemoveRatingViewModel;
+import interface_adapters.update_rating.UpdateRatingViewModel;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
@@ -45,6 +47,9 @@ public class Main {
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
+        RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
+        UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
+
 
         //API initializer
         ApiInterface api = new OMDBCaller();
@@ -69,9 +74,9 @@ public class Main {
         WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, viewManagerModel, watchlistAccessObject, ratingAccessObject, movieInfoView);
         RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
 
-        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoViewModel);
+        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, viewManagerModel, ratingAccessObject, watchlistAccessObject, movieInfoView);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, searchView, movieInfoController);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, searchView);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
