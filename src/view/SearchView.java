@@ -1,8 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,11 +8,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import interface_adapters.movie_info.MovieInfoController;
 import interface_adapters.search.SearchController;
@@ -44,6 +38,7 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel searchInfo = new LabelTextPanel(new JLabel("Search"), searchInputField);
+        searchInfo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
         JPanel buttons = new JPanel();
         searchButton = new JButton("SEARCH");
@@ -75,9 +70,17 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
             public void keyReleased(KeyEvent e) {}
         });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        searchInfo.add(buttons, BorderLayout.NORTH);
-        this.add(title);
-        this.add(searchInfo);
+        this.add(searchInfo, BorderLayout.PAGE_START);
+        searchInfo.add(buttons, BorderLayout.LINE_END);
+    }
+    @Override
+    public void createWatchlistPanel() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Create a scroll pane to hold the panel list
+        this.movieList = viewModel.getState().getMovieList();
+        this.ratings = viewModel.getState().getRatings();
+        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        this.scrollPane.setPreferredSize(DIMENSIONS);
     }
 
     public void showSearchView(String user) {
