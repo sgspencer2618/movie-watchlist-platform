@@ -25,7 +25,7 @@ public class UpdateRatingInteractorTest {
         String username = "Alex";
         int r = 5;
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
-        ratingAccessObject.updateRating(imdb, username, r);
+        ratingAccessObject.updateRating(username, imdb, r);
         UpdateRatingOutputBoundary presenter = new UpdateRatingOutputBoundary() {
             @Override
             public void prepareSuccessView(UpdateRatingOutputData rating) {
