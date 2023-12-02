@@ -58,7 +58,7 @@ public class AddToWatchlistInteractorTest {
         };
 
         AddToWatchlistInputBoundary interactor = new AddToWatchlistInteractor(addToWatchlistDAO, successPresenter);
-        interactor.execute(inputData);
+        interactor.execute(inputData); // Will send output data to successPresenter to be checked
 
     }
 

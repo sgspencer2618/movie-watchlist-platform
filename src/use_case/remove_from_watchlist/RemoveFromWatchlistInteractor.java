@@ -17,7 +17,7 @@ public class RemoveFromWatchlistInteractor implements RemoveFromWatchlistInputBo
         if (watchlistAccessObject.removeFromWatchlist(removeFromWatchlistInputData.getUser(), removeFromWatchlistOutputData.getMovie().getImdbID())) {
             removeFromWatchlistPresenter.prepareSuccessView(removeFromWatchlistOutputData);
         }  else {
-            removeFromWatchlistPresenter.prepareFailView(String.format("Unable to remove %s from watchlist", removeFromWatchlistInputData.getMovie().getTitle()));
+            removeFromWatchlistPresenter.prepareFailView(String.format("Unable to remove %s from the watchlist", removeFromWatchlistInputData.getMovie().getTitle()));
         }
     }
 }
