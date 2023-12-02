@@ -14,8 +14,10 @@ public class UpdateRatingPresenter implements UpdateRatingOutputBoundary {
     @Override
     public void prepareSuccessView(UpdateRatingOutputData response) {
         UpdateRatingState updateRatingState = updateRatingViewModel.getState();
-        updateRatingState.setNewRating(response.getNewRating());
-        this.updateRatingViewModel.setState(updateRatingState);
-        updateRatingViewModel.firePropertyChanged();
+        if(updateRatingState != null) {
+            updateRatingState.setNewRating(response.getNewRating());
+            this.updateRatingViewModel.setState(updateRatingState);
+            updateRatingViewModel.firePropertyChanged();
+        }
     }
 }
