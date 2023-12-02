@@ -155,6 +155,7 @@ public abstract class DefaultView extends JPanel {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {
+                    ratingsDropdown.getUI().setPopupVisible(ratingsDropdown, false);
                     String item = (String) e.getItem();
 
                     if(item.equals("-")) {
