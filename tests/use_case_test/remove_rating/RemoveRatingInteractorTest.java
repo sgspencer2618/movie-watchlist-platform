@@ -18,7 +18,10 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 public class RemoveRatingInteractorTest {
-
+    //Checks if a rating will be correctly deleted from database.
+    //First we set up our userRating
+    //We then call our interactor and it should delete the userRating object from our database.
+    //We will check if the userRating does not exist and the output Data is true (deleted).
     @Test
     public void testRemoveRatingSuccess() {
         String imdb = "tt0345950";
@@ -42,9 +45,14 @@ public class RemoveRatingInteractorTest {
 
         RemoveRatingInputData inputData = new RemoveRatingInputData(username, imdb);
         RemoveRatingInputBoundary interactor = new RemoveRatingInteractor(ratingAccessObject, presenter);
-        interactor.execute(inputData); // Will send output data to successPresenter to be checked
+        interactor.execute(inputData); // Will send output data to presenter to be checked
     }
 
+    //Checks if a rating is failed to be deleted.
+    //If we don't initialize our userRating object by not adding it to the csv file
+    //(note that we don't call the updateRating method which creates a new userRating object),
+    //then the fail view should occur since the username and movieId is not found in
+    //the database.
     @Test
     public void testRemoveRatingFail() {
         String imdb = "tt0345950";
@@ -64,7 +72,7 @@ public class RemoveRatingInteractorTest {
 
         RemoveRatingInputData inputData = new RemoveRatingInputData(username, imdb);
         RemoveRatingInputBoundary interactor = new RemoveRatingInteractor(ratingAccessObject, presenter);
-        interactor.execute(inputData); // Will send output data to successPresenter to be checked
+        interactor.execute(inputData); // Will send output data to presenter to be checked
     }
 
 }
