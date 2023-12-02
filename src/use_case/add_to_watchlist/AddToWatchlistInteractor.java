@@ -16,7 +16,7 @@ public class AddToWatchlistInteractor implements AddToWatchlistInputBoundary {
         if (watchlistAccessObject.addToWatchlist(addToWatchlistInputData.getUser(), addToWatchlistInputData.getMovie().getImdbID())) {
             addToWatchListPresenter.prepareSuccessView(addToWatchlistOutputData);
         } else {
-            addToWatchListPresenter.prepareFailView(String.format("Unable to add movie %s to the watchlist", addToWatchlistInputData.getMovie().getTitle()));
+            addToWatchListPresenter.prepareFailView(String.format("Unable to add %s to the watchlist", addToWatchlistInputData.getMovie().getTitle()));
         }
     }
 }

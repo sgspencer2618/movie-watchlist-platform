@@ -92,19 +92,4 @@ public class Movie implements Serializable {
     public Integer getRuntime() {
         return runtime;
     }
-
-    public int getUserRating() {
-        return userRating;
-    }
-    public void setUserRating(int userRating) {
-        this.userRating = userRating;
-    }
-
-    public boolean isInWatchlist() {
-        return inWatchlist;
-    }
-
-    public void setInWatchlist(boolean inWatchlist) {
-        this.inWatchlist = inWatchlist;
-    }
 }

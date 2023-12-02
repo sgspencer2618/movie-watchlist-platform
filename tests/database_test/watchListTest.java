@@ -1,6 +1,11 @@
 package database_test;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import data_access.UserAccessObject;
@@ -11,10 +16,19 @@ import entity.UserFactory;
 import entity.Watchlist;
 
 public class watchListTest {
-    WatchlistAccessObject watchlistAccess = new WatchlistAccessObject("./testWatchlist.csv");
-    UserAccessObject userAccess = new UserAccessObject();
+
+    private String testFilePath = "./testWatchlist.csv";
+    WatchlistAccessObject watchlistAccess = new WatchlistAccessObject(testFilePath);
     UserFactory userFac = new CommonUserFactory();
     int user_count = 0;
+
+    private List<String> originalFileContent;
+
+    @Before
+    public void setUp() throws IOException {
+        // Save the original file content
+        originalFileContent = Files.readAllLines(Paths.get(testFilePath));
+    }
 
     @Test
     public void addToWatchlistTest() {
@@ -49,5 +63,11 @@ public class watchListTest {
         Watchlist watchlist = watchlistAccess.getWatchlist(username);
         List<String> movieIDS = watchlist.getMovieIDs();
         assert (movieIDS.contains("NEW ITEM") == false);
+    }
+
+    @After
+    public void tearDown() throws IOException {
+        // Restore the original file content
+        Files.write(Paths.get(testFilePath), originalFileContent);
     }
 }
