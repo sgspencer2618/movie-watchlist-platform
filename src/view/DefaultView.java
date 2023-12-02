@@ -43,6 +43,7 @@ public abstract class DefaultView extends JPanel {
     }
 
     public void createWatchlistPanel() {
+        removeAll();
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
@@ -53,6 +54,8 @@ public abstract class DefaultView extends JPanel {
         this.scrollPane.setPreferredSize(DIMENSIONS);
 
         add(scrollPane, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     public void UpdateView() {
@@ -145,12 +148,15 @@ public abstract class DefaultView extends JPanel {
 
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
-        String addText = "+";
+        JButton add;
+        ImageIcon checkIcon = new ImageIcon("assets/icons/checkmark.png");
+        ImageIcon plusIcon = new ImageIcon("assets/icons/plus.png");
         if(inWatchlist){
-            addText = "-";
+            add = new JButton(checkIcon);
         }
-        JButton add = new JButton(addText);
-        add.setPreferredSize(new Dimension(40,40));
+        else{
+            add = new JButton(plusIcon);
+        }
         controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
         add.setPreferredSize(new Dimension(50,50));
         add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
@@ -171,12 +177,12 @@ public abstract class DefaultView extends JPanel {
         // Add a click listener to the add button
         add.addActionListener(e -> {
             String user = getCurrUser();
-            if (add.getText().equals("+")) {
+            if (add.getIcon().equals(plusIcon)) {
                 addToWatchlistController.execute(movie, user);
-                add.setText("-");
+                add.setIcon(checkIcon);
             } else {
                 removeFromWatchlistController.execute(movie, user);
-                add.setText("+");
+                add.setIcon(plusIcon);
             }
         });
 
