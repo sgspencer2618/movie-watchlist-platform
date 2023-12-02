@@ -11,7 +11,7 @@ import use_case.update_rating.UpdateRatingOutputBoundary;
 public class UpdateRatingUseCaseFactory {
     private UpdateRatingUseCaseFactory() {}
 
-    private static UpdateRatingController createUpdateRatingUseCase(UpdateRatingViewModel viewmodel, UpdateRatingDataAccessInterface updateRatingDataAccessInterface) {
+    public static UpdateRatingController createUpdateRatingUseCase(UpdateRatingViewModel viewmodel, UpdateRatingDataAccessInterface updateRatingDataAccessInterface) {
         UpdateRatingOutputBoundary updateRatingPresenter = new UpdateRatingPresenter(viewmodel);
         UpdateRatingInputBoundary updateRatingInteractor = new UpdateRatingInteractor(updateRatingDataAccessInterface, updateRatingPresenter);
         return new UpdateRatingController(updateRatingInteractor);

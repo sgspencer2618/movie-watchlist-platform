@@ -14,7 +14,7 @@ public class RemoveRatingUseCaseFactory {
     /** Prevent instantiation. */
     private RemoveRatingUseCaseFactory() {}
 
-    private static RemoveRatingController createRemoveRatingUseCase(RemoveRatingViewModel viewmodel, RemoveRatingDataAccessInterface removeRatingDataAccessInterface) {
+    public static RemoveRatingController createRemoveRatingUseCase(RemoveRatingViewModel viewmodel, RemoveRatingDataAccessInterface removeRatingDataAccessInterface) {
         RemoveRatingOutputBoundary removeRatingPresenter = new RemoveRatingPresenter(viewmodel);
         RemoveRatingInputBoundary removeRatingInteractor = new RemoveRatingInteractor(removeRatingDataAccessInterface, removeRatingPresenter);
         return new RemoveRatingController(removeRatingInteractor);

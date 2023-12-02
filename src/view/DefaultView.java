@@ -6,13 +6,14 @@ import entity.Watchlist;
 import interface_adapters.ViewModel;
 import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
+import interface_adapters.remove_rating.RemoveRatingController;
+import interface_adapters.update_rating.UpdateRatingController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -32,14 +33,16 @@ public abstract class DefaultView extends JPanel {
     public JScrollPane scrollPane;
 
     private final AddToWatchlistController addToWatchlistController;
-
     private final RemoveFromWatchlistController removeFromWatchlistController;
+    private final UpdateRatingController updateRatingController;
+    private final RemoveRatingController removeRatingController;
 
-    public DefaultView(AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
+    public DefaultView(AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController, UpdateRatingController updateRatingController, RemoveRatingController removeRatingController) {
         setBackground(new Color(0, 0, 0));
         this.removeFromWatchlistController = removeFromWatchlistController;
         this.addToWatchlistController = addToWatchlistController;
-
+        this.updateRatingController = updateRatingController;
+        this.removeRatingController = removeRatingController;
     }
 
     public void createWatchlistPanel() {
@@ -98,16 +101,18 @@ public abstract class DefaultView extends JPanel {
 
         //placeholder url to test image path
         String path = movie.getPosterURL();
-        URL url;
+        URL url = null;
         try {
+            System.out.println(path);
             url = new URL(path);
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
         }
 
         try {
-            BufferedImage image = ImageIO.read(url);
+            BufferedImage image = null;
+            if(url != null) image = ImageIO.read(url);
+
             if (image != null) {
 
                 Image scaledimage = image.getScaledInstance(60, 90,
@@ -146,6 +151,22 @@ public abstract class DefaultView extends JPanel {
             }
         }
 
+        ratingsDropdown.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED) {
+                    ratingsDropdown.getUI().setPopupVisible(ratingsDropdown, false);
+                    String item = (String) e.getItem();
+
+                    if(item.equals("-")) {
+                        removeRatingController.execute(getCurrUser(), movie.getImdbID());
+                    } else {
+                        updateRatingController.execute(Integer.parseInt(item), getCurrUser(), movie.getImdbID());
+                    }
+                }
+            }
+        });
+
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
         JButton add;
@@ -169,7 +190,6 @@ public abstract class DefaultView extends JPanel {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //PLACEHOLDER - to be replaced with showing the information pane of the movie
                 movieInfoView.showMovie(movie.getImdbID());
             }
         });
@@ -195,11 +215,13 @@ public abstract class DefaultView extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 panel.setBackground(hoverColor);
+                controlsubpanel.setBackground(hoverColor);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 panel.setBackground(normalColor);
+                controlsubpanel.setBackground(normalColor);
             }
         });
 
