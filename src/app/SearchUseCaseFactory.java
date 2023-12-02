@@ -2,6 +2,8 @@ package app;
 
 import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
+import interface_adapters.remove_rating.RemoveRatingController;
+import interface_adapters.update_rating.UpdateRatingController;
 import utility.ApiInterface;
 import view.SearchView;
 import data_access.UserRatingAccessObject;
@@ -18,9 +20,10 @@ public class SearchUseCaseFactory {
     public static SearchView create(ApiInterface api, SearchViewModel searchModel,
                                     UserRatingAccessObject userRatingAccessObject, WatchlistAccessObject watchlistAccessObject,
                                     MovieInfoView movieInfoView, AddToWatchlistController addToWatchlistController,
-                                    RemoveFromWatchlistController removeFromWatchlistController) {
+                                    RemoveFromWatchlistController removeFromWatchlistController,
+                                    UpdateRatingController updateRatingController, RemoveRatingController removeRatingController) {
         SearchController searchController = createSearchController(searchModel, watchlistAccessObject, userRatingAccessObject, api);
-        return new SearchView(searchController, searchModel, movieInfoView, addToWatchlistController, removeFromWatchlistController);
+        return new SearchView(searchController, searchModel, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
     }
 
     public static SearchController createSearchController (SearchViewModel searchViewModel, WatchlistAccessObject watchlistAccessObject, UserRatingAccessObject userRatingAccessObject, ApiInterface api) {
