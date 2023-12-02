@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import use_case.add_to_watchlist.*;
-import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 
 import java.io.IOException;
 import java.nio.file.Files;
