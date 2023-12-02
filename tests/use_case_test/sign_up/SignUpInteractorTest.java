@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import use_case.signup.*;
 import use_case.signup.SignupInputBoundary;
-import use_case.update_rating.*;
 import entity.CommonUserFactory;
-import entity.User;
 
 
 import java.io.IOException;
