@@ -5,7 +5,6 @@ import use_case.update_rating.*;
 import org.junit.Test;
 import data_access.UserRatingAccessObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
