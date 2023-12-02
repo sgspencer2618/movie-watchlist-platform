@@ -79,6 +79,9 @@ public class WatchlistAccessObject implements GetWatchlistDataAccessInterface, A
         if (watchlistMap.containsKey(username)) {
             Watchlist entry = watchlistMap.get(username);
             List<String> movieIDs = entry.getMovieIDs();
+            if (movieIDs.contains(imdbID)) {
+                return false;
+            }
             movieIDs.add(imdbID);
         } else {
             Watchlist entry = new Watchlist(username);

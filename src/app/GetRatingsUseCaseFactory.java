@@ -5,6 +5,8 @@ import interface_adapters.get_ratings.GetRatingsController;
 import interface_adapters.get_ratings.GetRatingsPresenter;
 import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
+import interface_adapters.remove_rating.RemoveRatingController;
+import interface_adapters.update_rating.UpdateRatingController;
 import use_case.get_ratings.*;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
 import utility.ApiInterface;
@@ -20,10 +22,14 @@ public class GetRatingsUseCaseFactory {
     public static RatingsView create(ApiInterface api, GetRatingsViewModel getRatingsViewModel,
                                      GetRatingsDataAccessInterface ratingsDataAccessObject,
                                      GetWatchlistDataAccessInterface watchlistAccessObject,
-                                     MovieInfoView movieInfoView, AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
+                                     MovieInfoView movieInfoView, AddToWatchlistController addToWatchlistController,
+                                     RemoveFromWatchlistController removeFromWatchlistController,
+                                     UpdateRatingController updateRatingController,
+                                     RemoveRatingController removeRatingController) {
         GetRatingsController getRatingsController = createGetRatingsUseCase(getRatingsViewModel, ratingsDataAccessObject, watchlistAccessObject, api);
 
-        return new RatingsView(getRatingsController, getRatingsViewModel, movieInfoView, addToWatchlistController, removeFromWatchlistController);
+        return new RatingsView(getRatingsController, getRatingsViewModel, movieInfoView, addToWatchlistController,
+                removeFromWatchlistController, updateRatingController, removeRatingController);
     }
 
     public static GetRatingsController createGetRatingsUseCase(GetRatingsViewModel getRatingsViewModel, GetRatingsDataAccessInterface ratingsDataAccessObject,

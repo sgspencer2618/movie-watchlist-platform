@@ -6,6 +6,8 @@ import interface_adapters.get_watchlist.GetWatchlistController;
 import interface_adapters.get_watchlist.GetWatchlistPresenter;
 import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
+import interface_adapters.remove_rating.RemoveRatingController;
+import interface_adapters.update_rating.UpdateRatingController;
 import use_case.get_watchlist.*;
 import utility.ApiInterface;
 import view.MovieInfoView;
@@ -19,9 +21,9 @@ public class GetWatchlistUseCaseFactory {
 
     public static WatchlistView create(ApiInterface api, GetWatchlistViewModel getWatchlistViewModel,
                                        GetWatchlistDataAccessInterface watchlistDataAccessObject, UserRatingAccessObject ratingAccessObject,
-                                       MovieInfoView movieInfoView, AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
+                                       MovieInfoView movieInfoView, AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController, UpdateRatingController updateRatingController, RemoveRatingController removeRatingController) {
         GetWatchlistController getWatchlistController = createGetWatchlistUseCase(getWatchlistViewModel, watchlistDataAccessObject, ratingAccessObject, api);
-        return new WatchlistView(getWatchlistController, getWatchlistViewModel, movieInfoView, addToWatchlistController, removeFromWatchlistController);
+        return new WatchlistView(getWatchlistController, getWatchlistViewModel, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
     }
 
     public static GetWatchlistController createGetWatchlistUseCase(GetWatchlistViewModel getWatchlistViewModel, GetWatchlistDataAccessInterface getWatchlistAccessObject,

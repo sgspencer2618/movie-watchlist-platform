@@ -13,9 +13,11 @@ import javax.swing.*;
 
 import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
+import interface_adapters.remove_rating.RemoveRatingController;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchState;
 import interface_adapters.search.SearchViewModel;
+import interface_adapters.update_rating.UpdateRatingController;
 
 public class SearchView extends DefaultView implements PropertyChangeListener, ActionListener{
 
@@ -25,8 +27,9 @@ public class SearchView extends DefaultView implements PropertyChangeListener, A
     final JButton searchButton;
 
     public SearchView(SearchController controller, SearchViewModel searchViewModel, MovieInfoView movieInfoView,
-                      AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
-        super(addToWatchlistController, removeFromWatchlistController);
+                      AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController,
+                      UpdateRatingController updateRatingController, RemoveRatingController removeRatingController) {
+        super(addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
         setBackground(new Color(0, 0, 0));
         this.searchController = controller;
         this.movieInfoView = movieInfoView;

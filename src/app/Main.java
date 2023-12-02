@@ -12,8 +12,12 @@ import interface_adapters.logged_in.LoggedInViewModel;
 import interface_adapters.login.LoginViewModel;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
+import interface_adapters.remove_rating.RemoveRatingController;
+import interface_adapters.remove_rating.RemoveRatingViewModel;
 import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
+import interface_adapters.update_rating.UpdateRatingController;
+import interface_adapters.update_rating.UpdateRatingViewModel;
 import utility.ApiInterface;
 import utility.OMDBCaller;
 import view.*;
@@ -46,6 +50,8 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
+        UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
+        RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
 
@@ -66,6 +72,8 @@ public class Main {
         // Controllers
         AddToWatchlistController addToWatchlistController = AddToWatchlistUseCaseFactory.createAddToWatchlistUseCase(watchlistAccessObject);
         RemoveFromWatchlistController removeFromWatchlistController = RemoveFromWatchlistUseCaseFactory.createRemoveFromWatchlistUseCase(watchlistAccessObject);
+        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(updateRatingViewModel, ratingAccessObject);
+        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(removeRatingViewModel, ratingAccessObject);
 
         // Creating signup view
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -79,10 +87,9 @@ public class Main {
 
 
         MovieInfoView movieInfoView = MovieInfoUseCaseFactory.create(api, movieInfoViewModel);
-        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, watchlistAccessObject, ratingAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController);
-        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, ratingAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController);
-
-        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, ratingAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController);
+        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(api, getWatchlistViewModel, watchlistAccessObject, ratingAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
+        RatingsView ratingsView = GetRatingsUseCaseFactory.create(api, getRatingsViewModel, ratingAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
+        SearchView searchView =  SearchUseCaseFactory.create(api, searchViewModel, ratingAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
 
         // Creating logged in view
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, watchlistView, ratingsView, searchView);

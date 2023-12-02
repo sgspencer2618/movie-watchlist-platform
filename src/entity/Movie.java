@@ -14,10 +14,6 @@ public class Movie implements Serializable {
     private final String posterURL;
     private final Integer year, runtime;
 
-    private int userRating;
-
-    private boolean inWatchlist;
-
     public Movie(String imdbID, String title, String posterURL, int year) {
         this.title = title;
         this.posterURL = posterURL;
@@ -91,20 +87,5 @@ public class Movie implements Serializable {
 
     public Integer getRuntime() {
         return runtime;
-    }
-
-    public int getUserRating() {
-        return userRating;
-    }
-    public void setUserRating(int userRating) {
-        this.userRating = userRating;
-    }
-
-    public boolean isInWatchlist() {
-        return inWatchlist;
-    }
-
-    public void setInWatchlist(boolean inWatchlist) {
-        this.inWatchlist = inWatchlist;
     }
 }
