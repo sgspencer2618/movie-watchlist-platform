@@ -26,7 +26,7 @@ public class UpdateRatingInteractorTest {
         String imdb = "tt0345950";
         String username = "Alex";
         int r = 5;
-        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
+        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatingsTest.csv");
         ratingAccessObject.updateRating(username, imdb, r);
         UpdateRatingOutputBoundary presenter = new UpdateRatingOutputBoundary() {
             @Override

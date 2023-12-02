@@ -27,7 +27,7 @@ public class RemoveRatingInteractorTest {
         String imdb = "tt0345950";
         String username = "Alex";
         int rating = 5;
-        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
+        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatingsTest.csv");
         ratingAccessObject.updateRating(username, imdb, rating);
         RemoveRatingOutputBoundary presenter = new RemoveRatingOutputBoundary() {
             @Override
@@ -58,7 +58,7 @@ public class RemoveRatingInteractorTest {
         String imdb = "tt0345950";
         String username = "Alex";
         int rating = 5;
-        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
+        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatingsTest.csv");
         RemoveRatingOutputBoundary presenter = new RemoveRatingOutputBoundary() {
             @Override
             public void prepareSuccessView(RemoveRatingOutputData deletedRating) {
