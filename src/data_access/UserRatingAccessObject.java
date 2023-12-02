@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
                     String[] col = row.split(",");
                     String movieID = String.valueOf(col[headers.get("movieID")]);
                     String username = String.valueOf(col[headers.get("username")]);
-                    Integer ratingValue = Integer.parseInt(String.valueOf(col[headers.get("rating")]));
+                    int ratingValue = Integer.parseInt(String.valueOf(col[headers.get("rating")]));
                     UserRating rating = new UserRating(movieID, username, ratingValue);
                     ratings.add(rating);
                 }
@@ -58,20 +57,14 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
     }
 
     public void removeRating(String username, String movieID){
-        Iterator<UserRating> itr = ratings.iterator();
-        while(itr.hasNext()) { //Iterator as we are changing the arraylist
-            UserRating rat = itr.next();
-            if (rat.getMovieId().equals(movieID) && rat.getUsername().equals(username)) {
-                itr.remove();
-            }
-        }
+        //Iterator as we are changing the arraylist
+        ratings.removeIf(rat -> rat.getMovieId().equals(movieID) && rat.getUsername().equals(username));
         this.save();
     }
     public void updateRating(String username, String movieID, int newRating){
-        ArrayList<UserRating> loopRat = ratings;
         boolean found = false;
-        for (UserRating rat : loopRat) {
-            if ((rat.getMovieId() == movieID) && (rat.getUsername() == username)) {
+        for (UserRating rat : ratings) {
+            if ((rat.getMovieId().equals(movieID)) && (rat.getUsername().equals(username))) {
                 rat.setRating(newRating);
                 found = true;
             }
@@ -87,7 +80,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
 
     public boolean userRatingExists(String user, String movieID){
         for (UserRating rat : ratings) {
-            if ((rat.getMovieId() == movieID) && (rat.getUsername() == user)) {
+            if ((rat.getMovieId().equals(movieID)) && (rat.getUsername().equals(user))) {
                 return true;
             }
         }
@@ -96,7 +89,7 @@ public class UserRatingAccessObject implements GetRatingsDataAccessInterface,
 
     public UserRating getUserRating(String user, String movieID){
        for (UserRating rat : ratings) {
-            if ((rat.getMovieId() == movieID) && (rat.getUsername() == user)) {
+            if ((rat.getMovieId().equals(movieID)) && (rat.getUsername().equals(user))) {
                 return rat;
             }
         }

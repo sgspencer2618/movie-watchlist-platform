@@ -1,20 +1,14 @@
 package view;
 
-import entity.Movie;
-import entity.UserRating;
 import interface_adapters.logged_in.LoggedInState;
 import interface_adapters.logged_in.LoggedInViewModel;
-import interface_adapters.movie_info.MovieInfoController;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -24,25 +18,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final RatingsView ratingsView;
     private final SearchView searchView;
 
-    private List<Movie> movieList;
-    private List<UserRating> ratings;
-    private JScrollPane scrollPane;
-    private JPanel panelList;
-    private final Dimension DIMENSIONS = new Dimension(350,275);
-
-
-    JLabel username;
     JTabbedPane tabbedPane;
-    //create new watchlist tab
-    JPanel mywatchlist;
-
-    //create new ratings tab
-    JPanel myratings;
-
-    //create new search tab
-    JPanel moviesearch;
-
-    //final JButton logOut;
 
     /**
      * A window with a title and a JButton.
@@ -70,19 +46,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         searchView.addPropertyChangeListener(this);
         ratingsView.addPropertyChangeListener(this);
 
-        tabbedPane.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                System.out.println("Tab: " + tabbedPane.getSelectedIndex());
-                if (tabbedPane.getSelectedIndex() == 0) {
-                    fetchWatchlist();
-                }
-                else if (tabbedPane.getSelectedIndex() == 1) {
-                    fetchRatings();
-                } else if (tabbedPane.getSelectedIndex() == 2) {
-                    fetchSearch();
-                }
-                // Prints the string 3 times if there are 3 tabs etc
+        tabbedPane.addChangeListener(e -> {
+            System.out.println("Tab: " + tabbedPane.getSelectedIndex());
+            if (tabbedPane.getSelectedIndex() == 0) {
+                fetchWatchlist();
             }
+            else if (tabbedPane.getSelectedIndex() == 1) {
+                fetchRatings();
+            } else if (tabbedPane.getSelectedIndex() == 2) {
+                fetchSearch();
+            }
+            // Prints the string 3 times if there are 3 tabs etc
         });
 
         add(tabbedPane);
@@ -92,7 +66,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     }
 
     private void fetchWatchlist() {
-        watchlistView.showWatchlist(loggedInViewModel.getState().getUsername());
+        String username = loggedInViewModel.getState().getUsername();
+        watchlistView.showWatchlist(username);
         watchlistView.createWatchlistPanel();
         tabbedPane.setSelectedComponent(watchlistView);
     }

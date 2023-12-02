@@ -3,10 +3,8 @@ package interface_adapters.get_watchlist;
 import entity.Movie;
 import entity.UserRating;
 import entity.Watchlist;
-import interface_adapters.ViewManagerModel;
 import use_case.get_watchlist.GetWatchlistOutputBoundary;
 import use_case.get_watchlist.GetWatchlistOutputData;
-import view.WatchlistView;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class GetWatchlistPresenter implements GetWatchlistOutputBoundary {
 
     @Override
     public void prepareGetWatchlistView(GetWatchlistOutputData getWatchlistOutputData) {
-        GetWatchlistState state = new GetWatchlistState();
+        GetWatchlistState state = getWatchlistViewModel.getState();
 
         Watchlist watchlist = getWatchlistOutputData.getWatchlist();
         List<UserRating> ratings = getWatchlistOutputData.getRatings();

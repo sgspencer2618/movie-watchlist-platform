@@ -2,10 +2,10 @@ package view;
 
 import entity.Movie;
 import entity.UserRating;
+import entity.Watchlist;
 import interface_adapters.ViewModel;
-import interface_adapters.get_watchlist.GetWatchlistController;
-import interface_adapters.get_watchlist.GetWatchlistViewModel;
-import interface_adapters.movie_info.MovieInfoController;
+import interface_adapters.add_to_watchlist.AddToWatchlistController;
+import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,9 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,20 +28,34 @@ public abstract class DefaultView extends JPanel {
     public final Dimension DIMENSIONS = new Dimension(250,275);
     public List<Movie> movieList;
     public List<UserRating> ratings;
+    public Watchlist watchlist;
     public JScrollPane scrollPane;
 
-    public DefaultView() {}
+    private final AddToWatchlistController addToWatchlistController;
 
-    public void createWatchlistPanel() {;
+    private final RemoveFromWatchlistController removeFromWatchlistController;
+
+    public DefaultView(AddToWatchlistController addToWatchlistController, RemoveFromWatchlistController removeFromWatchlistController) {
+        setBackground(new Color(0, 0, 0));
+        this.removeFromWatchlistController = removeFromWatchlistController;
+        this.addToWatchlistController = addToWatchlistController;
+
+    }
+
+    public void createWatchlistPanel() {
+        removeAll();
         setLayout(new BorderLayout());
 
         // Create a scroll pane to hold the panel list
         this.movieList = viewModel.getState().getMovieList();
         this.ratings = viewModel.getState().getRatings();
-        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        this.watchlist = viewModel.getState().getWatchlist();
+        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings, watchlist));
         this.scrollPane.setPreferredSize(DIMENSIONS);
 
         add(scrollPane, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     public void UpdateView() {
@@ -52,7 +64,7 @@ public abstract class DefaultView extends JPanel {
         if (this.scrollPane != null) {
             this.remove(1);
         }
-        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings));
+        this.scrollPane = new JScrollPane(createPanelList(movieList, ratings, watchlist));
         this.scrollPane.setPreferredSize(DIMENSIONS);
         this.add(scrollPane);
         this.revalidate();
@@ -60,7 +72,7 @@ public abstract class DefaultView extends JPanel {
         this.firePropertyChanged();
     }
 
-    public JPanel createPanelList(List<Movie> movieList, List<UserRating> ratings) {
+    public JPanel createPanelList(List<Movie> movieList, List<UserRating> ratings, Watchlist watchlist) {
         JPanel panelList = new JPanel(); // Initialize the panelList field
         panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
@@ -69,15 +81,15 @@ public abstract class DefaultView extends JPanel {
         // Add some sample data
         if (movieList != null) {
             for (Movie movie : movieList) {
-                panelList.add(createClickablePanel(movie));
+                boolean inWatchlist = watchlist.getMovieIDs().contains(movie.getImdbID());
+                panelList.add(createClickablePanel(movie, inWatchlist));
             }
         }
 
         return panelList;
     }
 
-
-    public JPanel createClickablePanel(Movie movie) {
+    public JPanel createClickablePanel(Movie movie, boolean inWatchlist) {
         JPanel panel = new JPanel();
         //panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panel.setBorder(new EmptyBorder(0, 10, 0, 10));
@@ -136,8 +148,15 @@ public abstract class DefaultView extends JPanel {
 
         JPanel controlsubpanel = new JPanel();
         controlsubpanel.setLayout(new BorderLayout(20,0));
-        JButton add = new JButton("+");
-        add.setPreferredSize(new Dimension(40,40));
+        JButton add;
+        ImageIcon checkIcon = new ImageIcon("assets/icons/checkmark.png");
+        ImageIcon plusIcon = new ImageIcon("assets/icons/plus.png");
+        if(inWatchlist){
+            add = new JButton(checkIcon);
+        }
+        else{
+            add = new JButton(plusIcon);
+        }
         controlsubpanel.setBorder(new EmptyBorder(30, 0, 30, 0));
         add.setPreferredSize(new Dimension(50,50));
         add.setFont(new Font("Arial", Font.PLAIN, 20)); // adjust font size
@@ -152,6 +171,18 @@ public abstract class DefaultView extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 //PLACEHOLDER - to be replaced with showing the information pane of the movie
                 movieInfoView.showMovie(movie.getImdbID());
+            }
+        });
+
+        // Add a click listener to the add button
+        add.addActionListener(e -> {
+            String user = getCurrUser();
+            if (add.getIcon().equals(plusIcon)) {
+                addToWatchlistController.execute(movie, user);
+                add.setIcon(checkIcon);
+            } else {
+                removeFromWatchlistController.execute(movie, user);
+                add.setIcon(plusIcon);
             }
         });
 
@@ -174,6 +205,9 @@ public abstract class DefaultView extends JPanel {
 
         return panel;
     }
+
+    abstract String getCurrUser();
+
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public void firePropertyChanged() {

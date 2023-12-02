@@ -11,6 +11,8 @@ public abstract class defaultState {
     private List<UserRating> ratings;
     private Watchlist watchlist;
 
+    private String username;
+
     public List<UserRating> getRatings() {
         return ratings;
     }
@@ -33,5 +35,13 @@ public abstract class defaultState {
 
     public void setMovieList(List<Movie> movies) {
         this.movies = movies;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

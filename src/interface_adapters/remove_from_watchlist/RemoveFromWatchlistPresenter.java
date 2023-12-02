@@ -12,7 +12,5 @@ public class RemoveFromWatchlistPresenter implements RemoveFromWatchlistOutputBo
 
     @Override
     public void prepareSuccessView(RemoveFromWatchlistOutputData movie) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'prepareSuccessView'");
     }
 }
