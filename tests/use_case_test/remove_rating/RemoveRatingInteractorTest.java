@@ -25,7 +25,7 @@ public class RemoveRatingInteractorTest {
         String username = "Alex";
         int rating = 5;
         UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./userRatings.csv");
-        ratingAccessObject.updateRating(imdb, username, rating);
+        ratingAccessObject.updateRating(username, imdb, rating);
         RemoveRatingOutputBoundary presenter = new RemoveRatingOutputBoundary() {
             @Override
             public void prepareSuccessView(RemoveRatingOutputData deletedRating) {
