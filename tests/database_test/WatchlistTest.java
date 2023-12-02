@@ -8,16 +8,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data_access.UserAccessObject;
 import data_access.WatchlistAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
 import entity.Watchlist;
 
-public class watchListTest {
+public class WatchlistTest {
 
-    private String testFilePath = "./testWatchlist.csv";
+    private final String testFilePath = "./testWatchlist.csv";
     WatchlistAccessObject watchlistAccess = new WatchlistAccessObject(testFilePath);
     UserFactory userFac = new CommonUserFactory();
     int user_count = 0;
@@ -57,12 +56,12 @@ public class watchListTest {
     public void removeWatchListTest() {
         this.addToWatchlistTest();
         String username = String.format("test%d", user_count-1);
-        assert (watchlistAccess.removeFromWatchlist(username, "CLEARLY NOT A MOVIE") == false);
+        assert (!watchlistAccess.removeFromWatchlist(username, "CLEARLY NOT A MOVIE"));
         assert watchlistAccess.removeFromWatchlist(username, "NEW ITEM");
         assert watchlistAccess.removeFromWatchlist(username, "Don't look");
         Watchlist watchlist = watchlistAccess.getWatchlist(username);
         List<String> movieIDS = watchlist.getMovieIDs();
-        assert (movieIDS.contains("NEW ITEM") == false);
+        assert (!movieIDS.contains("NEW ITEM"));
     }
 
     @After

@@ -8,19 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 import use_case.add_to_watchlist.*;
 import use_case.get_watchlist.GetWatchlistDataAccessInterface;
-import utility.ApiInterface;
-import utility.OMDBCaller;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
 public class AddToWatchlistInteractorTest {
-    private String testFilePath = "./testWatchlist.csv";
+    private final String testFilePath = "./testWatchlist.csv";
     private List<String> originalFileContent;
 
     @Before
@@ -38,7 +35,6 @@ public class AddToWatchlistInteractorTest {
         AddToWatchlistInputData inputData = new AddToWatchlistInputData(testMovie, "testUser");
 
         WatchlistAccessObject addToWatchlistDAO = new WatchlistAccessObject(testFilePath);
-        GetWatchlistDataAccessInterface getWatchlistDAO = new WatchlistAccessObject(testFilePath);
 
         AddToWatchlistOutputBoundary successPresenter = new AddToWatchlistOutputBoundary() {
             @Override
@@ -76,7 +72,6 @@ public class AddToWatchlistInteractorTest {
         AddToWatchlistInputData inputData = new AddToWatchlistInputData(testMovie, "testUser");
 
         WatchlistAccessObject addToWatchlistDAO = new WatchlistAccessObject(testFilePath);
-        GetWatchlistDataAccessInterface getWatchlistDAO = new WatchlistAccessObject(testFilePath);
 
         AddToWatchlistOutputBoundary failurePresenter = new AddToWatchlistOutputBoundary() {
             @Override

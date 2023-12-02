@@ -14,10 +14,6 @@ public class Movie implements Serializable {
     private final String posterURL;
     private final Integer year, runtime;
 
-    private int userRating;
-
-    private boolean inWatchlist;
-
     public Movie(String imdbID, String title, String posterURL, int year) {
         this.title = title;
         this.posterURL = posterURL;
