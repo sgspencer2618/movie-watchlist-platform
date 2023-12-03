@@ -10,6 +10,7 @@ public class UpdateRatingViewModel extends ViewModel {
 
     public UpdateRatingViewModel() {
         super("Update Rating");
+        this.state = new UpdateRatingState();
     }
 
     public UpdateRatingState getState() {
