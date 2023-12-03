@@ -37,39 +37,39 @@ import static org.junit.Assert.*;
 
 public class WatchlistViewTest {
 
-    private List<String> originalFileContent;
+    private final String watchlistFilePath = "./testWatchlist.csv";
+    private final String ratingsFilePath = "./testUserRating.csv";
+    private List<String> originalWatchlistContent, originalRatingsContent;
 
     @Before
     public void setUp() throws IOException {
         // Save the original file content
-        originalFileContent = Files.readAllLines(Paths.get("./testWatchlist.csv"));
+        originalWatchlistContent = Files.readAllLines(Paths.get(watchlistFilePath));
+        originalRatingsContent = Files.readAllLines(Paths.get(ratingsFilePath));
     }
 
     @Test
     public void testWatchlistView() {
         ApiInterface apiCaller = new OMDBCaller();
+        UserRatingAccessObject ratingsAccessObject = new UserRatingAccessObject(ratingsFilePath);
+        WatchlistAccessObject watchlistAccessObject = new WatchlistAccessObject(watchlistFilePath);
 
-        WatchlistAccessObject watchlistAccessObject = new WatchlistAccessObject("./testWatchlist.csv");
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
 
-        UserRatingAccessObject ratingAccessObject = new UserRatingAccessObject("./testUserRating.csv");
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
         MovieInfoView movieInfoView = MovieInfoUseCaseFactory.create(apiCaller, movieInfoViewModel);
 
         AddToWatchlistController addToWatchlistController = AddToWatchlistUseCaseFactory.createAddToWatchlistUseCase(watchlistAccessObject);
 
-        RemoveFromWatchlistDataAccessInterface removeFromWatchlistAccessObject = new WatchlistAccessObject("./testWatchlist.csv");
-        RemoveFromWatchlistController removeFromWatchlistController = RemoveFromWatchlistUseCaseFactory.createRemoveFromWatchlistUseCase(removeFromWatchlistAccessObject);
+        RemoveFromWatchlistController removeFromWatchlistController = RemoveFromWatchlistUseCaseFactory.createRemoveFromWatchlistUseCase(watchlistAccessObject);
 
         UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
-        UpdateRatingDataAccessInterface updateRatingAccessObject = new UserRatingAccessObject("./testUserRating.csv");
-        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(updateRatingViewModel, updateRatingAccessObject);
+        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(updateRatingViewModel, ratingsAccessObject);
 
         RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
-        RemoveRatingDataAccessInterface removeRatingAccessObject = new UserRatingAccessObject("./testUserRating.csv");
-        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(removeRatingViewModel, removeRatingAccessObject);
+        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(removeRatingViewModel, ratingsAccessObject);
 
-        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(apiCaller, getWatchlistViewModel, watchlistAccessObject, ratingAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
+        WatchlistView watchlistView = GetWatchlistUseCaseFactory.create(apiCaller, getWatchlistViewModel, watchlistAccessObject, ratingsAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
 
         JFrame testFrame = new JFrame("testWatchlistView");
         testFrame.setMinimumSize(new Dimension(600,500));
@@ -77,18 +77,16 @@ public class WatchlistViewTest {
         watchlistView.setPreferredSize(new Dimension(600, 500));
 
         // add test data for watchlist
-        addToWatchlistController.execute(apiCaller.getMovie("tt3896198"), "testUser");
+        addToWatchlistController.execute(apiCaller.getMovie("tt3896198"), "watchlistViewTestUser");
 
         // show UI
-        watchlistView.showWatchlist("testUser");
+        watchlistView.showWatchlist("watchlistViewTestUser");
         watchlistView.createWatchlistPanel();
 
         testFrame.add(watchlistView);
         testFrame.setVisible(true);
 
-        GetWatchlistDataAccessInterface watchlistDataAccessInterface = new WatchlistAccessObject("./testWatchlist.csv");
-
-        List<String> dataList = watchlistDataAccessInterface.getWatchlist("testUser").getMovieIDs();
+        List<String> dataList = watchlistAccessObject.getWatchlist("watchlistViewTestUser").getMovieIDs();
         List<Movie> viewList = watchlistView.viewModel.getState().getMovieList();
 
         // wait for view to be safe
@@ -107,6 +105,7 @@ public class WatchlistViewTest {
     @After
     public void tearDown() throws IOException {
         // Restore the original file content
-        Files.write(Paths.get("./testWatchlist.csv"), originalFileContent);
+        Files.write(Paths.get(watchlistFilePath), originalWatchlistContent);
+        Files.write(Paths.get(ratingsFilePath), originalRatingsContent);
     }
 }
