@@ -7,7 +7,13 @@ import org.junit.Test;
 import use_case.login.*;
 import use_case.login.LoginInputBoundary;
 import entity.CommonUserFactory;
-import  entity.User;
+import entity.User;
+import interface_adapters.login.*;
+import interface_adapters.ViewManagerModel;
+import interface_adapters.logged_in.*;
+import interface_adapters.get_watchlist.*;
+import interface_adapters.get_ratings.*;
+import interface_adapters.search.*;
 
 
 import java.io.IOException;
@@ -37,23 +43,24 @@ public class LoginInteractorTest {
         User alex = x.create(username, password);
         FileUserDataAccessObject accessObject = new FileUserDataAccessObject("./usersTest.csv", x);
         accessObject.save(alex);
-        LoginOutputBoundary presenter = new LoginOutputBoundary() {
-            @Override
-            public void prepareSuccessView(LoginOutputData user) {
 
-                String u = user.getUsername();
-                assertEquals(u, username);
-            }
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
+        GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel();
 
-            @Override
-            public void prepareFailView(String error){
-                fail();
-            }
-        };
+        LoginOutputBoundary presenter = new LoginPresenter(viewManagerModel, loggedInViewModel,
+                loginViewModel, getWatchlistViewModel, getRatingsViewModel, searchViewModel);
 
-        LoginInputData inputData = new LoginInputData(username, password);
+
         LoginInputBoundary interactor = new LoginInteractor(accessObject, presenter);
-        interactor.execute(inputData); // Will send output data to presenter to be checked
+        LoginController loginController = new LoginController(interactor);
+        loginController.execute(username, password);
+
+        assertEquals(username, loggedInViewModel.getState().getUsername());
+
     }
 
     @Test

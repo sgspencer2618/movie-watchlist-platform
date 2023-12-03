@@ -1,12 +1,20 @@
 package use_case_test.sign_up;
 
+import app.SignupUseCaseFactory;
 import data_access.FileUserDataAccessObject;
+import interface_adapters.signup.SignupPresenter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
 import use_case.signup.*;
 import use_case.signup.SignupInputBoundary;
 import entity.CommonUserFactory;
+import interface_adapters.login.*;
+import interface_adapters.ViewManagerModel;
+import interface_adapters.signup.*;
+import view.SignupView;
 
 
 import java.io.IOException;
@@ -34,28 +42,19 @@ public class SignUpInteractorTest {
         String password = "alex";
         CommonUserFactory x = new CommonUserFactory();
         FileUserDataAccessObject accessObject = new FileUserDataAccessObject("./usersTest.csv", x);
-        SignupOutputBoundary presenter = new SignupOutputBoundary() {
-            @Override
-            public void prepareSuccessView(SignupOutputData user) {
 
-                String u = user.getUsername();
-                assertEquals(u, username);
-            }
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
-            @Override
-            public void prepareReturningView(){
-                fail();
-            }
+        SignupOutputBoundary presenter = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
-            @Override
-            public void prepareFailView(String error){
-                fail();
-            }
-        };
-
-        SignupInputData inputData = new SignupInputData(username, password, password, false);
         SignupInputBoundary interactor = new SignupInteractor(accessObject, presenter, x);
-        interactor.execute(inputData); // Will send output data to presenter to be checked
+        SignupController signupController = new SignupController(interactor);
+        signupController.execute(username, password, password, false);
+
+        SignupView view = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, accessObject);
+        assertEquals(username, loginViewModel.getState().getUsername());
     }
 
     @Test
@@ -89,24 +88,18 @@ public class SignUpInteractorTest {
         String password = "alex";
         CommonUserFactory x = new CommonUserFactory();
         FileUserDataAccessObject accessObject = new FileUserDataAccessObject("./usersTest.csv", x);
-        SignupOutputBoundary presenter = new SignupOutputBoundary() {
-            @Override
-            public void prepareSuccessView(SignupOutputData user) {
-                fail();
-            }
 
-            @Override
-            public void prepareReturningView(){
-                fail();
-            }
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
 
-            @Override
-            public void prepareFailView(String error){}
-        };
+        SignupOutputBoundary presenter = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
-        SignupInputData inputData = new SignupInputData(username, password, "wrongPassword", false);
         SignupInputBoundary interactor = new SignupInteractor(accessObject, presenter, x);
-        interactor.execute(inputData); // Will send output data to presenter to be checked
+        SignupController signupController = new SignupController(interactor);
+        signupController.execute(username, password, "wrongPassword", false);
+
+        assertEquals("Passwords don't match.", signupViewModel.getState().getUsernameError());
     }
 
     @After
