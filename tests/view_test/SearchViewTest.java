@@ -74,7 +74,7 @@ public class SearchViewTest {
 
         // wait for view to be safe
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (Exception e) {
             e.printStackTrace();
         }
