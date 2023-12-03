@@ -9,6 +9,7 @@ public class RemoveRatingViewModel extends ViewModel {
 
     public RemoveRatingViewModel() {
         super("Remove Rating");
+        state = new RemoveRatingState();
     }
 
     public RemoveRatingState getState() {
