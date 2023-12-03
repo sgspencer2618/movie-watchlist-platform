@@ -7,7 +7,6 @@ import entity.Movie;
 import entity.UserRating;
 import interface_adapters.add_to_watchlist.AddToWatchlistController;
 import interface_adapters.get_ratings.GetRatingsViewModel;
-import interface_adapters.get_watchlist.GetWatchlistViewModel;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 import interface_adapters.remove_rating.RemoveRatingController;
@@ -17,16 +16,10 @@ import interface_adapters.update_rating.UpdateRatingViewModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import use_case.add_to_watchlist.AddToWatchlistDataAccessInterface;
-import use_case.get_watchlist.GetWatchlistDataAccessInterface;
-import use_case.remove_from_watchlist.RemoveFromWatchlistDataAccessInterface;
-import use_case.remove_rating.RemoveRatingDataAccessInterface;
-import use_case.update_rating.UpdateRatingDataAccessInterface;
 import utility.ApiInterface;
 import utility.OMDBCaller;
 import view.MovieInfoView;
 import view.RatingsView;
-import view.WatchlistView;
 
 import javax.swing.*;
 
