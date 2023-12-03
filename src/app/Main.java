@@ -13,11 +13,9 @@ import interface_adapters.login.LoginViewModel;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 import interface_adapters.remove_rating.RemoveRatingController;
-import interface_adapters.remove_rating.RemoveRatingViewModel;
 import interface_adapters.search.SearchViewModel;
 import interface_adapters.signup.SignupViewModel;
 import interface_adapters.update_rating.UpdateRatingController;
-import interface_adapters.update_rating.UpdateRatingViewModel;
 import utility.ApiInterface;
 import utility.OMDBCaller;
 import view.*;
@@ -50,8 +48,6 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         GetWatchlistViewModel getWatchlistViewModel = new GetWatchlistViewModel();
         GetRatingsViewModel getRatingsViewModel = new GetRatingsViewModel();
-        UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
-        RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
         MovieInfoViewModel movieInfoViewModel = new MovieInfoViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
 
@@ -72,8 +68,8 @@ public class Main {
         // Controllers
         AddToWatchlistController addToWatchlistController = AddToWatchlistUseCaseFactory.createAddToWatchlistUseCase(watchlistAccessObject);
         RemoveFromWatchlistController removeFromWatchlistController = RemoveFromWatchlistUseCaseFactory.createRemoveFromWatchlistUseCase(watchlistAccessObject);
-        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(updateRatingViewModel, ratingAccessObject);
-        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(removeRatingViewModel, ratingAccessObject);
+        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(ratingAccessObject);
+        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(ratingAccessObject);
 
         // Creating signup view
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);

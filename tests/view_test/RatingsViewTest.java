@@ -10,9 +10,8 @@ import interface_adapters.get_ratings.GetRatingsViewModel;
 import interface_adapters.movie_info.MovieInfoViewModel;
 import interface_adapters.remove_from_watchlist.RemoveFromWatchlistController;
 import interface_adapters.remove_rating.RemoveRatingController;
-import interface_adapters.remove_rating.RemoveRatingViewModel;
 import interface_adapters.update_rating.UpdateRatingController;
-import interface_adapters.update_rating.UpdateRatingViewModel;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,11 +58,9 @@ public class RatingsViewTest {
 
         RemoveFromWatchlistController removeFromWatchlistController = RemoveFromWatchlistUseCaseFactory.createRemoveFromWatchlistUseCase(watchlistAccessObject);
 
-        UpdateRatingViewModel updateRatingViewModel = new UpdateRatingViewModel();
-        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(updateRatingViewModel, ratingsAccessObject);
+        UpdateRatingController updateRatingController = UpdateRatingUseCaseFactory.createUpdateRatingUseCase(ratingsAccessObject);
 
-        RemoveRatingViewModel removeRatingViewModel = new RemoveRatingViewModel();
-        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(removeRatingViewModel, ratingsAccessObject);
+        RemoveRatingController removeRatingController = RemoveRatingUseCaseFactory.createRemoveRatingUseCase(ratingsAccessObject);
 
         RatingsView ratingsView = GetRatingsUseCaseFactory.create(apiCaller, getRatingsViewModel, ratingsAccessObject, watchlistAccessObject, movieInfoView, addToWatchlistController, removeFromWatchlistController, updateRatingController, removeRatingController);
 
