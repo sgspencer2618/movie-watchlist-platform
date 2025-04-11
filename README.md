@@ -1,4 +1,4 @@
-# CSC207 - Movie list project!!!
+# CSC207 - Movie Watchist Java Project (Clean Architecture)
 ## Problem Domain
 The problem domain we are planning to focus on is a movie watchlist platform which allows users to consolidate movies they intend to watch, while also enabling them to record and reference their personal ratings post-viewing.
 
